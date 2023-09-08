@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.3'
 	id 'io.spring.dependency-management' version '1.1.3'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'lk.slt.marketplacer'
@@ -15,6 +16,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	querydsl.extendsFrom implementation, compileOnly, runtimeOnly, annotationProcessor
 }
 
 repositories {
@@ -22,12 +24,33 @@ repositories {
 }
 
 dependencies {
+	// spring dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	// db driver
+	runtimeOnly 'org.postgresql:postgresql'
+	// query dsl
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+	// test dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'org.postgresql:postgresql'
+	testImplementation 'org.testcontainers:postgresql'
+}
+
+querydsl {
+	jpa = true
+	library = 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+	querydslSourcesDir = "$buildDir/generated/sources/annotationProcessor/java/main"
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
 }
 
 tasks.named('test') {

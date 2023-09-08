@@ -1,5 +1,5 @@
 server:
-  port: 8077
+  port: 8089
 
 spring:
   datasource:
@@ -12,3 +12,19 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: marketplacer-backend
+            client-secret: fcd16ac0-d243-4da5-95ef-c889d6fdeef9
+            authorization-grant-type: authorization_code
+            scope: openid
+
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8090/realms/marketplacer
+            user-name-attribute: preferred_username
