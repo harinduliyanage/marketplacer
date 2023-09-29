@@ -1,0 +1,1517 @@
+{
+  "allowRemoteResourceManagement": true,
+  "policyEnforcementMode": "ENFORCING",
+  "resources": [
+    {
+      "name": "Default Resource",
+      "type": "urn:surge-hub-client:resources:default",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "af84074c-6847-4d40-b17f-eae0dbda89b4",
+      "uris": [
+        "/*"
+      ]
+    },
+    {
+      "name": "revenue-report",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "6069c252-7db4-4bd4-ab35-04c07e87dde1",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "organization",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "c50aed7c-d7e4-42de-8a78-722044cab38e",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "deployment",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "f4c542e5-a61c-470e-99a4-1824a7ec8122",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "user-permission",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "1b84b726-91aa-4646-83f9-0e2e406ec047",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "link",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "f1b97d31-1790-49fa-8b30-be0952297787",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "repository",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "5ebb732a-963f-41b8-a3ed-b8982bfecf74",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "b712cc60-12e7-41eb-8040-0f185b1f28d2",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "salary",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "5c00c5c4-f78f-4300-8fb0-056986adcee8",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "project-external-users",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "58b2183d-0f3c-4064-9ea8-ae10490ea5bc",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "user-organization",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "7e915de1-ab3b-4e38-9164-078942c1cbe3",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "project-allocation",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "def9a042-4ed6-462f-bb17-af0ec3853fed",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "ticket-handle",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "e4bfeda9-ae3d-4b43-8ed6-d36f6d01646b",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "skill",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "13b6e19d-1004-4fba-a7c3-c77e6aa6b172",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "tool",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "789a1575-d3c3-4a74-91fd-22c751bd1af1",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "config",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "9607dbdc-043f-41a5-80d0-4aa4e3d17e1d",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "role",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "16477f65-1eb9-4f1b-ac24-aad9021106d9",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "client",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "b0130704-f9df-4bef-97a9-2de0dc7249e4",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "opex",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "0b3e90b5-4677-473f-91d5-cf913cf61a44",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    },
+    {
+      "name": "project",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "e3433ccd-0b97-4d05-abcf-96f1732ac5c6",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "read"
+        },
+        {
+          "name": "update"
+        },
+        {
+          "name": "delete"
+        },
+        {
+          "name": "create"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "id": "9a2f1249-dc89-438e-865c-063e19670e73",
+      "name": "Default Policy",
+      "description": "A policy that grants access only for users within this realm",
+      "type": "js",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "code": "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
+      }
+    },
+    {
+      "id": "823e60c0-ec88-4bf6-a369-4f479240fa6f",
+      "name": "super_admin",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"super_admin\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "3fd0db95-cdd2-4b80-92eb-006dc1bb226e",
+      "name": "asd2",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[]"
+      }
+    },
+    {
+      "id": "0cb62aa7-13ef-4423-a0cf-2987b4b2a35b",
+      "name": "magekyji@hexi.pics-policy",
+      "type": "user",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "users": "[\"magekyji@hexi.pics\"]"
+      }
+    },
+    {
+      "id": "bc75a107-9f1b-495d-b7c1-f236a0c4023a",
+      "name": "wikoda2742@anwarb.com-policy",
+      "type": "user",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "users": "[\"wikoda2742@anwarb.com\"]"
+      }
+    },
+    {
+      "id": "1f0eef60-3d49-48c4-b245-983b16c0547c",
+      "name": "fgh2",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[]"
+      }
+    },
+    {
+      "id": "2754f6a7-f592-425a-bb35-db67487841e0",
+      "name": "jkl2",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[]"
+      }
+    },
+    {
+      "id": "323b5f86-4970-49dd-9e4f-a57e9a5fead4",
+      "name": "testuserpb@surge.global-policy",
+      "type": "user",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "users": "[\"testuserpb@surge.global\"]"
+      }
+    },
+    {
+      "id": "b6073099-925b-4d07-9b0b-4741da9f71f8",
+      "name": "qwe7",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"qwe7\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "075f91e0-f1b9-4dd0-b05f-f4430bc7b111",
+      "name": "test role",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"test role\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "a02e1634-cd9a-4c67-bf19-a66c54f26423",
+      "name": "lambda_executor",
+      "description": "",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"surge-hub-client/lambda_executor\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "b7c436ce-e36d-4c03-ab79-35d92fa26c22",
+      "name": "besado4517@aaorsi.com-policy",
+      "type": "user",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "users": "[\"besado4517@aaorsi.com\"]"
+      }
+    },
+    {
+      "id": "32a0b251-92d1-4e0f-abca-de8e4672b8d4",
+      "name": "hello 1",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[]"
+      }
+    },
+    {
+      "id": "43354da1-a4fb-47f2-bffa-92c366004361",
+      "name": "chaplain 2",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[]"
+      }
+    },
+    {
+      "id": "2ace65b6-8316-49a8-a6fc-8966c1c3680d",
+      "name": "default_internal",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"default_internal\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "ffd26d17-384d-4d12-91d1-742b431d2a42",
+      "name": "default_external",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"default_external\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "36418c05-85ca-43cd-a9c3-be4e1a8829fa",
+      "name": "dev role 1",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[]"
+      }
+    },
+    {
+      "id": "d51093a4-6266-4193-a8a3-3a52c270e2b9",
+      "name": "Default Permission",
+      "description": "A permission that applies to the default resource type",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "defaultResourceType": "urn:surge-hub-client:resources:default",
+        "applyPolicies": "[\"Default Policy\"]"
+      }
+    },
+    {
+      "id": "28939f63-03f1-4f54-a15b-fef11ff95bde",
+      "name": "project-create",
+      "description": "Allows the create operation on project entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"magekyji@hexi.pics-policy\",\"super_admin\",\"dev role 1\"]"
+      }
+    },
+    {
+      "id": "2d8693ee-0bc3-4987-a721-2ee0f77d5a64",
+      "name": "project-update",
+      "description": "Allows the update operation on project entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\",\"dev role 1\"]"
+      }
+    },
+    {
+      "id": "66aeea17-9967-4a72-8a0d-83ab9ac7a0a3",
+      "name": "project-external-users-read",
+      "description": "Allows the read operation on project-external-users entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-external-users\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "0d10a97f-2edf-4b1e-b984-15bfd4663966",
+      "name": "revenue-report-read",
+      "description": "Allows the read operation on revenue-report entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"revenue-report\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "9fc49c5a-bfb0-41fc-af4d-a83e7c4e1f1f",
+      "name": "role-update",
+      "description": "Allows the update operation on role entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"role\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "017b7ddb-7a4b-4d51-95fe-8c56498a3b41",
+      "name": "ticket-handle-read",
+      "description": "Allows the read operation on ticket-handle entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"ticket-handle\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "96c181f4-7a37-441a-9f47-57dd468e8e6c",
+      "name": "user-permission-read",
+      "description": "Allows the read operation on user-permission entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user-permission\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"hello 1\",\"super_admin\",\"qwe7\",\"dev role 1\",\"chaplain 2\"]"
+      }
+    },
+    {
+      "id": "8822322c-b1a5-48ed-b321-f290ba97a6f0",
+      "name": "project-allocation-read",
+      "description": "Allows the read operation on project-allocation entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-allocation\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "79980698-1e9a-421d-b611-7276be28b694",
+      "name": "user-permission-update",
+      "description": "Allows the update operation on user-permission entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user-permission\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"hello 1\",\"super_admin\",\"qwe7\",\"dev role 1\",\"chaplain 2\"]"
+      }
+    },
+    {
+      "id": "d84f0250-c7cd-453c-ac25-65d8fc0dae0d",
+      "name": "opex-update",
+      "description": "Allows the update operation on opex entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"opex\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "b477bb0c-b552-4a3b-9da8-2f2a98ce95f5",
+      "name": "repository-read",
+      "description": "Allows the read operation on repository entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"repository\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "13b8ff51-daeb-4878-a960-eae196fa538b",
+      "name": "deployment-delete",
+      "description": "Allows the delete operation on deployment entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"deployment\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "dc6ec5cd-261e-446b-bcdb-c218117c3747",
+      "name": "salary-update",
+      "description": "Allows the update operation on salary entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"salary\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"lambda_executor\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "0f3ae25f-22b3-4386-b8d1-1f312a227e51",
+      "name": "opex-create",
+      "description": "Allows the create operation on opex entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"opex\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "88af70fc-8785-4228-94c2-6e3938076b33",
+      "name": "client-create",
+      "description": "Allows the create operation on client entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"client\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"wikoda2742@anwarb.com-policy\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "51c85e1f-8a6a-43eb-995f-27827af2eb19",
+      "name": "tool-create",
+      "description": "Allows the create operation on tool entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"tool\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "06cf193b-2c65-4b8a-a1ac-449c757d6fba",
+      "name": "skill-delete",
+      "description": "Allows the delete operation on skill entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"skill\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "af7cba8b-4c0c-497c-a4d8-91978b1698f2",
+      "name": "client-update",
+      "description": "Allows the update operation on client entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"client\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"wikoda2742@anwarb.com-policy\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "c61c2536-0298-4de6-ac12-c4e82bf3e90e",
+      "name": "repository-create",
+      "description": "Allows the create operation on repository entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"repository\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "451e1465-7069-4e14-b998-5c7cc6c294cc",
+      "name": "user-organization-delete",
+      "description": "Allows the delete operation on user-organization entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user-organization\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"hello 1\",\"super_admin\",\"chaplain 2\"]"
+      }
+    },
+    {
+      "id": "1dd27067-4d6c-4350-83ba-e8a603bec953",
+      "name": "user-update",
+      "description": "Allows the update operation on user entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"jkl2\",\"hello 1\",\"super_admin\",\"asd2\",\"qwe7\",\"test role\",\"besado4517@aaorsi.com-policy\",\"dev role 1\",\"chaplain 2\",\"fgh2\"]"
+      }
+    },
+    {
+      "id": "864842db-d49a-4618-8165-4f346589ac68",
+      "name": "project-external-users-create",
+      "description": "Allows the create operation on project-external-users entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-external-users\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "bf9bd932-9e11-432e-8739-96b9ab320b53",
+      "name": "organization-read",
+      "description": "Allows the read operation on organization entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"organization\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"default_internal\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "05542d4e-0c25-4304-bc37-5a69bea385e4",
+      "name": "user-read",
+      "description": "Allows the read operation on user entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"jkl2\",\"lambda_executor\",\"hello 1\",\"super_admin\",\"asd2\",\"qwe7\",\"test role\",\"besado4517@aaorsi.com-policy\",\"dev role 1\",\"chaplain 2\",\"fgh2\"]"
+      }
+    },
+    {
+      "id": "ac660773-110c-4dd0-86cb-d6fcf3e023f3",
+      "name": "user-delete",
+      "description": "Allows the delete operation on user entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"jkl2\",\"hello 1\",\"super_admin\",\"asd2\",\"qwe7\",\"test role\",\"besado4517@aaorsi.com-policy\",\"dev role 1\",\"chaplain 2\",\"fgh2\"]"
+      }
+    },
+    {
+      "id": "4f254186-77a6-4373-a958-1654de5c4a66",
+      "name": "salary-delete",
+      "description": "Allows the delete operation on salary entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"salary\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "043c8297-3f55-4123-b43b-684f36842a89",
+      "name": "user-organization-read",
+      "description": "Allows the read operation on user-organization entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user-organization\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"hello 1\",\"super_admin\",\"chaplain 2\"]"
+      }
+    },
+    {
+      "id": "31ba67cf-d27e-49a9-abac-1911f991dce4",
+      "name": "project-allocation-delete",
+      "description": "Allows the delete operation on project-allocation entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-allocation\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "19b85f8a-a6d4-441a-9371-e657cae69ba8",
+      "name": "project-allocation-create",
+      "description": "Allows the create operation on project-allocation entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-allocation\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "eedbc98e-1823-4d2a-8575-24ff89489cc3",
+      "name": "project-allocation-update",
+      "description": "Allows the update operation on project-allocation entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-allocation\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "5349b05e-e26e-4f99-a485-c25949594667",
+      "name": "salary-read",
+      "description": "Allows the read operation on salary entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"salary\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"lambda_executor\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "a9fc1371-e876-4399-bedd-39bd2ad18e87",
+      "name": "config-update",
+      "description": "Allows the update operation on config entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"config\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"testuserpb@surge.global-policy\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "fbf74366-3e62-41fd-a63b-36b5b0980ceb",
+      "name": "project-delete",
+      "description": "Allows the delete operation on project entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\",\"dev role 1\"]"
+      }
+    },
+    {
+      "id": "e7bec852-27e0-43bd-a9e1-eac04a3e0432",
+      "name": "project-read",
+      "description": "Allows the read operation on project entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"magekyji@hexi.pics-policy\",\"default_internal\",\"super_admin\",\"dev role 1\"]"
+      }
+    },
+    {
+      "id": "11dd8638-5a47-489f-8b54-1d5e1e9fac0b",
+      "name": "role-read",
+      "description": "Allows the read operation on role entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"role\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "847a592a-c577-4820-9d43-72d1381b4ade",
+      "name": "revenue-report-delete",
+      "description": "Allows the delete operation on revenue-report entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"revenue-report\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "83a741ea-a106-4b0e-8d7b-15758da45c51",
+      "name": "skill-create",
+      "description": "Allows the create operation on skill entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"skill\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "de7ac350-7547-474a-b6b5-7b98d951f1e3",
+      "name": "deployment-read",
+      "description": "Allows the read operation on deployment entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"deployment\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "833bae8e-f575-4724-8142-e5b217772318",
+      "name": "user-organization-update",
+      "description": "Allows the update operation on user-organization entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user-organization\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"hello 1\",\"super_admin\",\"chaplain 2\"]"
+      }
+    },
+    {
+      "id": "539ec030-3bad-4572-a2fa-5bddcde9cb31",
+      "name": "deployment-create",
+      "description": "Allows the create operation on deployment entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"deployment\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "8a2c62b4-4d96-4288-9237-06ccbf2a6ee4",
+      "name": "project-external-users-delete",
+      "description": "Allows the delete operation on project-external-users entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-external-users\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "a31cdcc0-fa0b-4506-b642-f3425c867ad7",
+      "name": "salary-create",
+      "description": "Allows the create operation on salary entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"salary\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"lambda_executor\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "d3d2a00e-0264-4d1e-85c1-450a992922d9",
+      "name": "link-read",
+      "description": "Allows the read operation on link entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"link\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "28903a0d-dd62-442a-aff8-14afa4fd3989",
+      "name": "repository-delete",
+      "description": "Allows the delete operation on repository entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"repository\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "dc3248b1-43eb-4cf7-b81b-4fe448745138",
+      "name": "role-create",
+      "description": "Allows the create operation on role entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"role\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "bc0da73a-30cb-43b2-8229-f3c8b7c98328",
+      "name": "organization-update",
+      "description": "Allows the update operation on organization entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"organization\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "433df67c-04c0-43bf-b098-ac838c03440b",
+      "name": "ticket-handle-delete",
+      "description": "Allows the delete operation on ticket-handle entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"ticket-handle\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "55742575-ed71-4c74-a1a5-5ddc5ef3bcaf",
+      "name": "skill-update",
+      "description": "Allows the update operation on skill entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"skill\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "2f57f8e2-d568-4255-b8a3-7dcea9b8b696",
+      "name": "opex-delete",
+      "description": "Allows the delete operation on opex entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"opex\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "be945f19-7531-40df-9104-e0846694232f",
+      "name": "organization-create",
+      "description": "Allows the create operation on organization entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"organization\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "d83efeec-1ed7-4844-8bb7-3b7913a306ea",
+      "name": "revenue-report-update",
+      "description": "Allows the update operation on revenue-report entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"revenue-report\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "1ba5c98a-af84-4398-b0a4-ab8e19e40f4c",
+      "name": "ticket-handle-update",
+      "description": "Allows the update operation on ticket-handle entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"ticket-handle\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "1d8a83c9-dca2-49d2-b5d4-f7dc7368cffb",
+      "name": "tool-delete",
+      "description": "Allows the delete operation on tool entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"tool\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "716ceae1-b0b8-4582-8ea1-f7a3ccf7c327",
+      "name": "config-delete",
+      "description": "Allows the delete operation on config entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"config\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"testuserpb@surge.global-policy\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "d2d744e2-8bb1-4391-85f5-177b29e200d2",
+      "name": "organization-delete",
+      "description": "Allows the delete operation on organization entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"organization\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "37b270a0-736d-4b51-b7de-c000adc56a9d",
+      "name": "link-create",
+      "description": "Allows the create operation on link entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"link\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "f4780807-2773-4452-bcf4-4dec6c63eff0",
+      "name": "client-delete",
+      "description": "Allows the delete operation on client entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"client\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"wikoda2742@anwarb.com-policy\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "03a38498-432a-4cb4-a38b-ee0dda4c6322",
+      "name": "skill-read",
+      "description": "Allows the read operation on skill entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"skill\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "b7ab0ec8-6c7f-4cef-9e84-41be82baa20f",
+      "name": "tool-update",
+      "description": "Allows the update operation on tool entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"tool\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "d69e3b9e-0528-49bc-b432-e7f05fe9ab80",
+      "name": "link-delete",
+      "description": "Allows the delete operation on link entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"link\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "c139376f-4f03-4426-9013-426dc5783998",
+      "name": "user-permission-delete",
+      "description": "Allows the delete operation on user-permission entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user-permission\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"hello 1\",\"super_admin\",\"qwe7\",\"dev role 1\",\"chaplain 2\"]"
+      }
+    },
+    {
+      "id": "3bf61160-f5a9-4f7b-9dd7-7d5f96da044f",
+      "name": "role-delete",
+      "description": "Allows the delete operation on role entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"role\"]",
+        "scopes": "[\"delete\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "d994318b-4431-456d-908b-8cf201265821",
+      "name": "project-external-users-update",
+      "description": "Allows the update operation on project-external-users entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"project-external-users\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "b5a10bbf-fa9b-4c70-9893-e651f6fe4f18",
+      "name": "client-read",
+      "description": "Allows the read operation on client entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"client\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"wikoda2742@anwarb.com-policy\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "9f98f89d-f1e8-4fdd-b405-2f8ce57d50ee",
+      "name": "config-read",
+      "description": "Allows the read operation on config entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"config\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"testuserpb@surge.global-policy\",\"super_admin\"]"
+      }
+    },
+    {
+      "id": "e6bccfa7-fcb4-40fa-ba97-bb01c4e23f2c",
+      "name": "link-update",
+      "description": "Allows the update operation on link entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"link\"]",
+        "scopes": "[\"update\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "68d9c0f5-1e5a-4276-b1bb-635db6f7e6c7",
+      "name": "opex-read",
+      "description": "Allows the read operation on opex entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"opex\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    },
+    {
+      "id": "75cb0249-0c94-45be-9203-59a36f52f1c5",
+      "name": "user-create",
+      "description": "Allows the create operation on user entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"user\"]",
+        "scopes": "[\"create\"]",
+        "applyPolicies": "[\"wikoda2742@anwarb.com-policy\",\"jkl2\",\"lambda_executor\",\"hello 1\",\"super_admin\",\"asd2\",\"qwe7\",\"test role\",\"besado4517@aaorsi.com-policy\",\"dev role 1\",\"chaplain 2\",\"fgh2\"]"
+      }
+    },
+    {
+      "id": "49ba8e50-3bdc-430e-9a8a-9bddbc139ba9",
+      "name": "tool-read",
+      "description": "Allows the read operation on tool entities",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"tool\"]",
+        "scopes": "[\"read\"]",
+        "applyPolicies": "[\"super_admin\"]"
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "id": "8c785361-28f8-48a7-b14d-d232213a23d0",
+      "name": "create"
+    },
+    {
+      "id": "694e7517-3edb-4235-8a78-336cb8a2230c",
+      "name": "update"
+    },
+    {
+      "id": "1e6288f1-1e7b-41de-95eb-995cc911b950",
+      "name": "read"
+    },
+    {
+      "id": "6bb319ca-d878-46ed-a632-38ef229cdd06",
+      "name": "delete"
+    }
+  ],
+  "decisionStrategy": "UNANIMOUS"
+}
