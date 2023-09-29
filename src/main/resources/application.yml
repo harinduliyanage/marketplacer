@@ -1,11 +1,11 @@
 server:
-  port: 8089
+  port: ${SERVER_PORT:8089}
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/slt-marketplacer?createDatabaseIfNotExist=true
-    username: root
-    password: password
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:slt-marketplacer}?createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${DB_USER:root}
+    password: ${DB_PWD:password}
   jpa:
     properties:
       hibernate:
@@ -16,15 +16,7 @@ spring:
 
   security:
     oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: marketplacer-backend
-            client-secret: fcd16ac0-d243-4da5-95ef-c889d6fdeef9
-            authorization-grant-type: authorization_code
-            scope: openid
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_HOST:http://localhost:8090}/realms/marketplacer/protocol/openid-connect/certs
 
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8090/realms/marketplacer
-            user-name-attribute: preferred_username
