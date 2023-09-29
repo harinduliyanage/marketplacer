@@ -18,5 +18,5 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: ${KEYCLOAK_HOST:http://localhost:8090}/realms/marketplacer/protocol/openid-connect/certs
+          jwk-set-uri: ${KEYCLOAK_HOST:http://localhost:8090}/realms/${KEYCLOAK_RELAM:marketplacer}/protocol/openid-connect/certs
 
