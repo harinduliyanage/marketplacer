@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
+import lk.slt.marketplacer.util.StoreStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,5 +40,7 @@ public class Store implements Serializable {
     private String email;
     private String website;
     //
+    @Enumerated(EnumType.STRING)
+    private StoreStatus storeStatus;
 
 }

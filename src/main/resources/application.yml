@@ -1,5 +1,7 @@
 server:
   port: ${SERVER_PORT:8089}
+  servlet:
+    context-path: /
 
 spring:
   datasource:
@@ -20,3 +22,13 @@ spring:
         jwt:
           jwk-set-uri: ${KEYCLOAK_HOST:http://localhost:8090}/realms/${KEYCLOAK_RELAM:marketplacer}/protocol/openid-connect/certs
 
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /api/docs/swagger-ui.html
+    syntaxHighlight:
+      activated: true
+
+  api-docs:
+    path: /api/docs

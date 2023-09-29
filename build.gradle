@@ -29,6 +29,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	// open api spec
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	// aws s3
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.560'
 	// keycloak dependencies
 	implementation 'org.keycloak:keycloak-policy-enforcer:22.0.3'
 	implementation 'org.keycloak:keycloak-core:22.0.3'

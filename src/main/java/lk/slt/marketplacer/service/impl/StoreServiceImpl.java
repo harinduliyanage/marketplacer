@@ -9,6 +9,7 @@ import lk.slt.marketplacer.repository.StoreRepository;
 import lk.slt.marketplacer.service.StoreService;
 import lk.slt.marketplacer.service.UserService;
 import lk.slt.marketplacer.util.Constants;
+import lk.slt.marketplacer.util.StoreStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class StoreServiceImpl implements StoreService {
     public Store createStore(String userId, Store store) {
         User user = userService.findById(userId);
         store.setUser(user);
+        store.setStoreStatus(StoreStatus.PENDING);
         //
         Store savedStore = storeRepository.save(store);
         log.info("store has been successfully created {}", savedStore);

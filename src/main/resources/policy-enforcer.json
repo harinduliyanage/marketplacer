@@ -1,6 +1,6 @@
 {
   "allowRemoteResourceManagement": true,
-  "policyEnforcementMode": "ENFORCING",
+  "enforcement-mode": "ENFORCING",
   "resources": [
     {
       "name": "Default Resource",

@@ -31,15 +31,19 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated()
+                        // Permit access to Swagger UI
+                        .requestMatchers("api/docs/**").permitAll()
+                        // todo: Secure all other requests
+                        .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
                         oauth2ResourceServer
                                 .jwt(jwt -> jwt.decoder(jwtDecoder()))
-                )
-                .addFilterAfter(createPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
+                );
+                //.addFilterAfter(createPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
         return http.build();
     }
+
 
     private ServletPolicyEnforcerFilter createPolicyEnforcerFilter() {
         return new ServletPolicyEnforcerFilter(new ConfigurationResolver() {

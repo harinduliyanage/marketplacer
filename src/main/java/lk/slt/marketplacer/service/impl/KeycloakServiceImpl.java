@@ -10,6 +10,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author harindu.sul@gmail.com
+ */
 @Service
 public class KeycloakServiceImpl {
 
@@ -48,7 +51,7 @@ public class KeycloakServiceImpl {
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            params.add("grant_type", "YOUR_PAT_GRANT_TYPE");
+            params.add("grant_type", "client_credentials");
             params.add("client_id", clientId);
             params.add("client_secret", clientSecret);
 
@@ -67,4 +70,61 @@ public class KeycloakServiceImpl {
         }
     }
 
+    public Map<String, String> login(String code, String codeVerifier, String redirectUri) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            Map<String, String> params = new HashMap<>();
+            params.put("grant_type", "authorization_code");
+            params.put("client_id", clientId);
+            params.put("client_secret", clientSecret);
+            params.put("code", code);
+            params.put("code_verifier", codeVerifier);
+            params.put("redirect_uri", redirectUri);
+
+            String url = baseUrl + "/realms/" + realm + "/YOUR_OIDC_TOKEN_URL";
+
+            HttpEntity<Map<String, String>> request = new HttpEntity<>(params, headers);
+
+            ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+                Map<String, Object> responseBody = response.getBody();
+                String accessToken = (String) responseBody.get("access_token");
+                String idToken = (String) responseBody.get("id_token");
+                String refreshToken = (String) responseBody.get("refresh_token");
+
+                Map<String, String> result = new HashMap<>();
+                result.put("accessToken", accessToken);
+                result.put("idToken", idToken);
+                result.put("refreshToken", refreshToken);
+
+                // Assuming __getRptTokens is a method in this class
+                String rptAccessToken = getRptTokens(accessToken);
+                result.put("rptAccessToken", rptAccessToken);
+
+                return result;
+            } else {
+                throw new HttpClientErrorException(response.getStatusCode());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error while login: " + e.getMessage());
+        }
+    }
 }
+
+/**
+ * # Keycloak
+ * KC_BASE_URL="https://kc.dev.tmdsandbox.tk"
+ * KC_REALM="surge-hub"
+ * KC_TOKEN_URL="protocol/openid-connect/token"
+ * KC_USER_INFO_URL="protocol/openid-connect/userinfo"
+ * KC_TOKEN_EXCHANGE_GRANT_TYPE="authorization_code"
+ * KC_CLIENT_ID="surge-hub-client"
+ * KC_CLIENT_SECRET="deC3KyNf2Caxi0XqIuva9JFBCUCFPeaw"
+ * KC_RPT_TOKEN_EXCHANGE_GRANT_TYPE="urn:ietf:params:oauth:grant-type:uma-ticket"
+ * KC_REFRESH_TOKEN_GRANT_TYPE="refresh_token"
+ * KC_PAT_GRANT_TYPE="client_credentials"
+ * KC_REDIRECT_URI="login/callback"
+ */
