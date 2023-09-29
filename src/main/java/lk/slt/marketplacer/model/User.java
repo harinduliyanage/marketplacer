@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * @author harindu.sul@gmail.com
@@ -22,9 +21,8 @@ import java.util.UUID;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "id", columnDefinition = "VARCHAR(36)")
-    private UUID id;
+    @UuidGenerator
+    private String id;
 
     private String username;
     private String firstName;
