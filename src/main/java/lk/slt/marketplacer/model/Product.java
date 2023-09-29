@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
+import lk.slt.marketplacer.util.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +24,12 @@ public class Product implements Serializable {
     @ManyToOne
     @JoinColumn(name = "store_id", insertable = false, updatable = false)
     private Store store;
+
+    private String name;
+    @Lob
+    private String description;
+    private Double price;
+    private Double units;
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 }
