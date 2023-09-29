@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -32,4 +33,9 @@ public class Product implements Serializable {
     private Double units;
     @Enumerated(EnumType.STRING)
     private Currency currency;
+
+    @ElementCollection
+    @CollectionTable(name="products_medias", joinColumns=@JoinColumn(name="product_id"))
+    @Column(name="medias")
+    private List<String> medias;
 }
