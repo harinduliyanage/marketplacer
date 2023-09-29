@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Tag(name = "user-services")
 @RequestMapping("/api/v1")
 public interface UserController {
-    @GetMapping(value = "/users", consumes = {"application/json"}, produces = {"application/json"})
+    @GetMapping(value = "/users", produces = {"application/json"})
     public void getUsers();
 }
