@@ -36,6 +36,6 @@ public class Product implements Serializable {
 
     @ElementCollection
     @CollectionTable(name="products_medias", joinColumns=@JoinColumn(name="product_id"))
-    @Column(name="medias")
+    @Column(name="media")
     private List<String> medias;
 }
