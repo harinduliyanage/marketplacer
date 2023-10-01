@@ -1,6 +1,9 @@
 package lk.slt.marketplacer.controller.impl;
 
 import lk.slt.marketplacer.controller.UserController;
+import lk.slt.marketplacer.dto.ListResponseDto;
+import lk.slt.marketplacer.dto.UserDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserControllerImpl implements UserController {
     @Override
-    public void getUsers() {
-        System.out.println("hi");
+    public ListResponseDto<UserDto> getUsers(Pageable pageable) {
+        return ListResponseDto.<UserDto>builder()
+                .build();
     }
 }
