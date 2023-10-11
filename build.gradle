@@ -45,6 +45,9 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+	// pojo mapper
+	implementation "org.mapstruct:mapstruct:1.5.5.Final"
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
 	// test dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.testcontainers:postgresql'

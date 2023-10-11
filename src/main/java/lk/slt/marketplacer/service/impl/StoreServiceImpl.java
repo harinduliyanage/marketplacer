@@ -12,6 +12,8 @@ import lk.slt.marketplacer.util.Constants;
 import lk.slt.marketplacer.util.StoreStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,7 +32,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store createStore(String userId, Store store) {
-        User user = userService.findById(userId);
+        User user = userService.getUserById(userId);
         store.setUser(user);
         store.setStoreStatus(StoreStatus.PENDING);
         //
@@ -41,7 +43,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store getStore(String userId, String storeId) {
-        User user = userService.findById(userId);
+        User user = userService.getUserById(userId);
         //
         QStore qStore = QStore.store;
         BooleanExpression expression = qStore.user.eq(user).and(qStore.id.eq(storeId));
@@ -52,5 +54,18 @@ public class StoreServiceImpl implements StoreService {
         } else {
             throw new StoreNotFoundException(String.format(Constants.STORE_NOT_FOUND_MSG, storeId, user));
         }
+    }
+
+    @Override
+    public Page<Store> getUserStores(String userId, Pageable pageable) {
+        User user = userService.getUserById(userId);
+        QStore qStore = QStore.store;
+        BooleanExpression expression = qStore.user.eq(user);
+        return storeRepository.findAll(expression, pageable);
+    }
+
+    @Override
+    public Page<Store> getStores(Pageable pageable) {
+        return storeRepository.findAll(pageable);
     }
 }
