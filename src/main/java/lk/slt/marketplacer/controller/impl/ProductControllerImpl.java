@@ -24,7 +24,7 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ProductDto getProduct(String userId, String storeId, String productId, Pageable pageable) {
+    public ProductDto getProduct(String userId, String storeId, String productId) {
         return ProductMapper.INSTANCE.productToProductDto(productService.getProduct(userId, storeId, productId));
     }
 
@@ -38,5 +38,10 @@ public class ProductControllerImpl implements ProductController {
                 .totalResults(page.getNumberOfElements())
                 .totalPages(page.getTotalPages())
                 .build();
+    }
+
+    @Override
+    public ProductDto removeProduct(String userId, String storeId, String productId) {
+        return ProductMapper.INSTANCE.productToProductDto(productService.removeProduct(userId, storeId, productId));
     }
 }

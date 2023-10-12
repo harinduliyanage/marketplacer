@@ -63,4 +63,12 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getProducts(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
+
+    @Override
+    public Product removeProduct(String userId, String storeId, String productId) {
+        Product product = getProduct(userId,storeId,productId);
+        productRepository.delete(product);
+        log.info("product has been successfully deleted {}", product);
+        return product;
+    }
 }

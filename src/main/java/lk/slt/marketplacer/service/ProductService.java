@@ -9,4 +9,5 @@ public interface ProductService {
     public Product getProduct(String userId, String storeId, String productId);
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable);
     public Page<Product> getProducts(Pageable pageable);
+    public Product removeProduct(String userId, String storeId, String productId);
 }

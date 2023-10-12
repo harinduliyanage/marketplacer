@@ -15,8 +15,11 @@ public interface ProductController {
     public ProductDto createProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @RequestBody CreateProductDto createProductDto);
 
     @GetMapping(value = "/users/{userId}/stores/{storeId}/products/{productId}", consumes = {"application/json"}, produces = {"application/json"})
-    public ProductDto getProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @PathVariable("productId") String productId, @ParameterObject Pageable pageable);
+    public ProductDto getProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @PathVariable("productId") String productId);
 
     @GetMapping(value = "/users/{userId}/stores/{storeId}/products", consumes = {"application/json"}, produces = {"application/json"})
     public ListResponseDto<ProductDto> getProducts(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @ParameterObject Pageable pageable);
+
+    @DeleteMapping(value = "/users/{userId}/stores/{storeId}/products/{productId}", consumes = {"application/json"}, produces = {"application/json"})
+    public ProductDto removeProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @PathVariable("productId") String productId);
 }
