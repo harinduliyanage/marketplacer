@@ -4,6 +4,7 @@ import lk.slt.marketplacer.controller.ProductController;
 import lk.slt.marketplacer.dto.CreateProductDto;
 import lk.slt.marketplacer.dto.ListResponseDto;
 import lk.slt.marketplacer.dto.ProductDto;
+import lk.slt.marketplacer.dto.UpdateProductDto;
 import lk.slt.marketplacer.dto.mapper.ProductMapper;
 import lk.slt.marketplacer.model.Product;
 import lk.slt.marketplacer.service.ProductService;
@@ -29,7 +30,7 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ListResponseDto<ProductDto> getProducts(String userId, String storeId, Pageable pageable) {
+    public ListResponseDto<ProductDto> getStoreProducts(String userId, String storeId, Pageable pageable) {
         Page<Product> page = productService.getStoreProducts(userId, storeId, pageable);
         return ListResponseDto.<ProductDto>builder()
                 .data(ProductMapper.INSTANCE.productListToProductDtoList(page.getContent()))
@@ -38,6 +39,28 @@ public class ProductControllerImpl implements ProductController {
                 .totalResults(page.getNumberOfElements())
                 .totalPages(page.getTotalPages())
                 .build();
+    }
+
+    @Override
+    public ListResponseDto<ProductDto> getProducts(Pageable pageable) {
+        Page<Product> page = productService.getProducts(pageable);
+        return ListResponseDto.<ProductDto>builder()
+                .data(ProductMapper.INSTANCE.productListToProductDtoList(page.getContent()))
+                .page(pageable.getPageNumber())
+                .limit(pageable.getPageSize())
+                .totalResults(page.getNumberOfElements())
+                .totalPages(page.getTotalPages())
+                .build();
+    }
+
+    @Override
+    public ProductDto updateProduct(String userId, String storeId, String productId, UpdateProductDto updateProductDto) {
+        Product product = ProductMapper.INSTANCE.updateProductDtoToProduct(updateProductDto);
+        product.setId(productId);
+
+        Product updatedProduct =productService.updateProduct(userId,storeId,productId,product);
+
+        return ProductMapper.INSTANCE.productToProductDto(updatedProduct);
     }
 
     @Override
