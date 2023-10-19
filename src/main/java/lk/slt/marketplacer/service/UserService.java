@@ -10,6 +10,12 @@ import org.springframework.data.domain.Pageable;
 public interface UserService {
 
     public User createUser(User user);
+
     public User getUserById(String id);
+
     public Page<User> getUsers(Pageable pageable);
+
+    public User updateUser(String id, User user);
+
+    public User removeUser(String id);
 }
