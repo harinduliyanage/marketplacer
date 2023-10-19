@@ -14,6 +14,6 @@ public interface StoreController {
     @PostMapping(value = "/users/{userId}/stores", consumes = {"application/json"}, produces = {"application/json"})
     public StoreDto createStore(@PathVariable("userId") String userId, @RequestBody CreateStoreDto createStoreDto);
 
-    @GetMapping(value = "/users/{userId}/stores", consumes = {"application/json"}, produces = {"application/json"})
+    @GetMapping(value = "/users/{userId}/stores", produces = {"application/json"})
     public ListResponseDto<StoreDto> getStores(@PathVariable("userId") String userId, @ParameterObject Pageable pageable);
 }
