@@ -23,7 +23,7 @@ public class Product implements Serializable {
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "store_id", insertable = false, updatable = false)
+    @JoinColumn(name = "store_id", updatable = false)
     private Store store;
 
     private String name;

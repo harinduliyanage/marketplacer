@@ -15,5 +15,11 @@ public interface StoreController {
     public StoreDto createStore(@PathVariable("userId") String userId, @RequestBody CreateStoreDto createStoreDto);
 
     @GetMapping(value = "/users/{userId}/stores", produces = {"application/json"})
-    public ListResponseDto<StoreDto> getStores(@PathVariable("userId") String userId, @ParameterObject Pageable pageable);
+    public ListResponseDto<StoreDto> getUserStores(@PathVariable("userId") String userId, @ParameterObject Pageable pageable);
+
+    @GetMapping(value = "/users/{userId}/stores/{storeId}", produces = {"application/json"})
+    public StoreDto getStore(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId);
+
+    @GetMapping(value = "/stores", produces = {"application/json"})
+    public ListResponseDto<StoreDto> getStores(@ParameterObject Pageable pageable);
 }

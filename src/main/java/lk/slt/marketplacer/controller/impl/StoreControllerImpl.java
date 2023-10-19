@@ -22,12 +22,29 @@ public class StoreControllerImpl implements StoreController {
 
     @Override
     public StoreDto createStore(String userId, CreateStoreDto createStoreDto) {
-        Store store = storeService.createStore(userId,storeMapper.createStoreDtoToStore(createStoreDto));
+        Store store = storeService.createStore(userId, storeMapper.createStoreDtoToStore(createStoreDto));
         return storeMapper.storeToStoreDto(store);
     }
 
     @Override
-    public ListResponseDto<StoreDto> getStores(String userId, Pageable pageable) {
+    public ListResponseDto<StoreDto> getUserStores(String userId, Pageable pageable) {
+        Page<Store> page = storeService.getUserStores(userId, pageable);
+        return ListResponseDto.<StoreDto>builder()
+                .data(storeMapper.storeListToStoreDtoList(page.getContent()))
+                .page(pageable.getPageNumber())
+                .limit(pageable.getPageSize())
+                .totalResults(page.getNumberOfElements())
+                .totalPages(page.getTotalPages())
+                .build();
+    }
+
+    @Override
+    public StoreDto getStore(String userId, String storeId) {
+        return storeMapper.storeToStoreDto(storeService.getStore(userId, storeId));
+    }
+
+    @Override
+    public ListResponseDto<StoreDto> getStores(Pageable pageable) {
         Page<Store> page = storeService.getStores(pageable);
         return ListResponseDto.<StoreDto>builder()
                 .data(storeMapper.storeListToStoreDtoList(page.getContent()))

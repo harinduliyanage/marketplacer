@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                         //
                         .requestMatchers("api/docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/v1/stores/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/users/{userId}/stores/**").permitAll()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
