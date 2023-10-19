@@ -5,7 +5,7 @@ import lk.slt.marketplacer.model.SocialLink;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SocialLinkMapper {
     SocialLinkMapper INSTANCE = Mappers.getMapper( SocialLinkMapper.class );
     SocialLinkDto socialLinkToSocialLinkDto(SocialLink socialLink);
