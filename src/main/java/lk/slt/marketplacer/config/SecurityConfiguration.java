@@ -8,11 +8,11 @@ import org.keycloak.util.JsonSerialization;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.io.IOException;
@@ -34,14 +34,16 @@ public class SecurityConfiguration {
                         // Permit access to Swagger UI
                         .requestMatchers("api/docs/**").permitAll()
                         // todo: Secure all other requests
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/users/{userId}/stores/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "api/v1/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/v1/users/{userId}/stores/{storeId}/products**").permitAll()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
                         oauth2ResourceServer
                                 .jwt(jwt -> jwt.decoder(jwtDecoder()))
                 );
-                //.addFilterAfter(createPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
         return http.build();
+
     }
 
 
