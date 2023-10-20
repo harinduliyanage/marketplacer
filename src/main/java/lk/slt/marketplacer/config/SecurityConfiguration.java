@@ -31,7 +31,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        //
+                        //Authenticate access
                         .requestMatchers("api/v1/users").authenticated()
                         .requestMatchers("api/v1/users/*").authenticated()
                         .requestMatchers(HttpMethod.POST, "api/v1/users/{userId}/stores/**").authenticated()
