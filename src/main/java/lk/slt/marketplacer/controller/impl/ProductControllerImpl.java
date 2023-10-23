@@ -60,9 +60,7 @@ public class ProductControllerImpl implements ProductController {
         Product product = productMapper.updateProductDtoToProduct(updateProductDto);
         product.setId(productId);
 
-        Product updatedProduct =productService.updateProduct(userId,storeId,productId,product);
-
-        return productMapper.productToProductDto(updatedProduct);
+        return productMapper.productToProductDto(productService.updateProduct(userId, storeId, productId, product));
     }
 
     @Override
