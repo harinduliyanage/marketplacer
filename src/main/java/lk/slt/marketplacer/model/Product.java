@@ -35,7 +35,7 @@ public class Product implements Serializable {
     private Currency currency;
 
     @ElementCollection
-    @CollectionTable(name="products_medias", joinColumns=@JoinColumn(name="product_id"))
-    @Column(name="media")
+    @CollectionTable(name = "products_medias", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "media")
     private List<String> medias;
 }
