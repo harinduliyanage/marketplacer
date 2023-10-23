@@ -4,6 +4,7 @@ import lk.slt.marketplacer.controller.StoreController;
 import lk.slt.marketplacer.dto.CreateStoreDto;
 import lk.slt.marketplacer.dto.ListResponseDto;
 import lk.slt.marketplacer.dto.StoreDto;
+import lk.slt.marketplacer.dto.UpdateStoreDto;
 import lk.slt.marketplacer.dto.mapper.StoreMapper;
 import lk.slt.marketplacer.model.Store;
 import lk.slt.marketplacer.service.StoreService;
@@ -41,6 +42,19 @@ public class StoreControllerImpl implements StoreController {
     @Override
     public StoreDto getStore(String userId, String storeId) {
         return storeMapper.storeToStoreDto(storeService.getStore(userId, storeId));
+    }
+
+    @Override
+    public StoreDto updateStore(String userId, String storeId, UpdateStoreDto updateStoreDto) {
+        Store store = storeMapper.updateStoreDtoToStore(updateStoreDto);
+        store.setId(storeId);
+
+        return storeMapper.storeToStoreDto(storeService.updateStore(userId,storeId,store));
+    }
+
+    @Override
+    public StoreDto removeStore(String userId, String storeId) {
+        return storeMapper.storeToStoreDto(storeService.removeStore(userId,storeId));
     }
 
     @Override

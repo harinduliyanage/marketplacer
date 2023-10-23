@@ -2,6 +2,7 @@ package lk.slt.marketplacer.dto.mapper;
 
 import lk.slt.marketplacer.dto.CreateStoreDto;
 import lk.slt.marketplacer.dto.StoreDto;
+import lk.slt.marketplacer.dto.UpdateStoreDto;
 import lk.slt.marketplacer.model.Store;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -14,5 +15,6 @@ public interface StoreMapper {
     StoreDto storeToStoreDto(Store store);
     Store storeDtoToStore(StoreDto storeDto);
     Store createStoreDtoToStore(CreateStoreDto createStoreDto);
+    Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto);
     List<StoreDto> storeListToStoreDtoList(List<Store> storeList);
 }
