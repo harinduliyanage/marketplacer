@@ -31,17 +31,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        //Authenticate access
-                        .requestMatchers("api/v1/users").authenticated()
-                        .requestMatchers("api/v1/users/*").authenticated()
-                        .requestMatchers(HttpMethod.POST, "api/v1/users/{userId}/stores/**").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "api/v1/users/{userId}/stores/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "api/v1/users/{userId}/stores/**").authenticated()
                         //Permit access
                         .requestMatchers("api/docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/stores/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/users/{userId}/stores/**").permitAll()
+                        //Authenticate access
+                        .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
                         oauth2ResourceServer
