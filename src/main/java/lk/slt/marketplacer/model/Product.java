@@ -27,7 +27,7 @@ public class Product implements Serializable {
     private Store store;
 
     private String name;
-    @Lob
+    //@Lob
     private String description;
     private Double price;
     private Double units;
