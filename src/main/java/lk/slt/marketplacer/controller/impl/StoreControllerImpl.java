@@ -48,7 +48,7 @@ public class StoreControllerImpl implements StoreController {
     public StoreDto updateStore(String userId, String storeId, UpdateStoreDto updateStoreDto) {
         Store store = storeMapper.updateStoreDtoToStore(updateStoreDto);
         store.setId(storeId);
-
+        //
         return storeMapper.storeToStoreDto(storeService.updateStore(userId,storeId,store));
     }
 

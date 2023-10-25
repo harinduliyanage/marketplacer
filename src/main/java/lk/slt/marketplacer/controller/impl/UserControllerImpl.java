@@ -51,6 +51,7 @@ public class UserControllerImpl implements UserController {
     public UserDto updateUser(String userId, UpdateUserDto updateUserDto) {
         User user = userMapper.updateUserDtoToUser(updateUserDto);
         user.setId(userId);
+        //
         return userMapper.userToUserDto(userService.updateUser(userId, user));
     }
 

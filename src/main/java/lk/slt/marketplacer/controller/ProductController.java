@@ -14,19 +14,14 @@ import org.springframework.web.bind.annotation.*;
 public interface ProductController {
     @PostMapping(value = "/users/{userId}/stores/{storeId}/products", consumes = {"application/json"}, produces = {"application/json"})
     public ProductDto createProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @RequestBody CreateProductDto createProductDto);
-
     @GetMapping(value = "/users/{userId}/stores/{storeId}/products/{productId}", produces = {"application/json"})
     public ProductDto getStoreProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @PathVariable("productId") String productId);
-
     @GetMapping(value = "/users/{userId}/stores/{storeId}/products", produces = {"application/json"})
     public ListResponseDto<ProductDto> getStoreProducts(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @ParameterObject Pageable pageable);
-
     @GetMapping(value = "/products", produces = {"application/json"})
     public ListResponseDto<ProductDto> getProducts(@ParameterObject Pageable pageable);
-
     @PatchMapping(value = "/users/{userId}/stores/{storeId}/products/{productId}", consumes = {"application/json"}, produces = {"application/json"})
     public ProductDto updateProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @PathVariable("productId") String productId, @RequestBody UpdateProductDto updateProductDto);
-
     @DeleteMapping(value = "/users/{userId}/stores/{storeId}/products/{productId}", produces = {"application/json"})
     public ProductDto removeProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @PathVariable("productId") String productId);
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = SocialLinkMapper.class)
 public interface StoreMapper {
     StoreMapper INSTANCE = Mappers.getMapper( StoreMapper.class );
+    //
     StoreDto storeToStoreDto(Store store);
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
