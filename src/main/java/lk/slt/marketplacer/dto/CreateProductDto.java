@@ -1,10 +1,10 @@
 package lk.slt.marketplacer.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lk.slt.marketplacer.util.Currency;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,8 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateProductDto {
+    @NotEmpty
     private String name;
     private String description;
+    @PositiveOrZero
     private String price;
     private String units;
     private Currency currency;
