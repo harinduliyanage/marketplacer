@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public interface UserController {
     @PostMapping(value = "/users", consumes = {"application/json"}, produces = {"application/json"})
-    public UserDto createUser(@Valid @RequestBody CreateUserDto createUserDto);
+    public UserDto createUser(@RequestBody @Valid CreateUserDto createUserDto);
 
     @GetMapping(value = "/users", produces = {"application/json"})
     public ListResponseDto<UserDto> getUsers(@ParameterObject Pageable pageable);

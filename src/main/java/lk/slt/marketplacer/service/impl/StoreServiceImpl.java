@@ -59,7 +59,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store updateStore(String userId, String storeId, Store store) {
         getStore(userId, storeId);
-
+        //
         Store updatedStore = storeRepository.save(store);
         log.info("Store has been successfully updated {}", updatedStore);
         return updatedStore;
@@ -68,7 +68,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store removeStore(String userId, String storeId) {
         Store store = getStore(userId, storeId);
-
+        //
         storeRepository.deleteById(storeId);
         return store;
     }
