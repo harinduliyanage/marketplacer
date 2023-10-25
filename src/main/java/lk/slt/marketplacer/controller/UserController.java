@@ -17,16 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public interface UserController {
     @PostMapping(value = "/users", consumes = {"application/json"}, produces = {"application/json"})
     public UserDto createUser(@RequestBody CreateUserDto createUserDto);
-
     @GetMapping(value = "/users", produces = {"application/json"})
     public ListResponseDto<UserDto> getUsers(@ParameterObject Pageable pageable);
-
     @GetMapping(value = "/users/{userId}", produces = {"application/json"})
     public UserDto getUser(@PathVariable("userId") String userId);
-
     @PatchMapping(value = "/users/{userId}", consumes = {"application/json"}, produces = {"application/json"})
     public UserDto updateUser(@PathVariable("userId") String userId, @RequestBody UpdateUserDto updateUserDto);
-
     @DeleteMapping(value = "/users/{userId}", produces = {"application/json"})
     public UserDto removeUser(@PathVariable("userId") String userId);
 }

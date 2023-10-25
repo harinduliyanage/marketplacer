@@ -1,7 +1,7 @@
 {
-  "realm": "quickstart",
-  "auth-server-url": "http://localhost:8080",
-  "resource": "authz-servlet",
+  "realm": "marketplace",
+  "auth-server-url": "https://auth.fitoncollection.com",
+  "resource": "marketplace-client",
   "credentials": {
     "secret": "secret"
   }
