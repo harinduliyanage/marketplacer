@@ -2,10 +2,7 @@ package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.Currency;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
@@ -24,6 +21,7 @@ public class Product implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "store_id", updatable = false)
+    @ToString.Exclude
     private Store store;
 
     private String name;

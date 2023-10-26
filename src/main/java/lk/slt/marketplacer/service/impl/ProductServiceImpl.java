@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @Slf4j
+@Transactional
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
@@ -66,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(String userId, String storeId, String productId, Product product) {
-        getProduct(userId,storeId,productId);
+        getProduct(userId, storeId, productId);
         //
         Product updatedProduct = productRepository.save(product);
         log.info("product has been successfully updated {}", updatedProduct);
@@ -75,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product removeProduct(String userId, String storeId, String productId) {
-        Product product = getProduct(userId,storeId,productId);
+        Product product = getProduct(userId, storeId, productId);
         productRepository.deleteById(productId);
         log.info("product has been successfully deleted {}", product);
         return product;

@@ -24,7 +24,6 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class StoreServiceImpl implements StoreService {
-
     @Autowired
     private UserService userService;
     @Autowired
