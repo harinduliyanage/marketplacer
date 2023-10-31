@@ -26,7 +26,7 @@ public class Store implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Product> products;
     @OneToMany(fetch = FetchType.LAZY)
     private List<SocialLink> socialLinks;
