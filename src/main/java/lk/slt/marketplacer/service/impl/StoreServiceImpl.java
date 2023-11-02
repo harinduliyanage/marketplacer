@@ -24,7 +24,6 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class StoreServiceImpl implements StoreService {
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -49,11 +48,28 @@ public class StoreServiceImpl implements StoreService {
         BooleanExpression expression = qStore.user.eq(user).and(qStore.id.eq(storeId));
         Optional<Store> found = storeRepository.findOne(expression);
         //
-        if(found.isPresent()) {
+        if (found.isPresent()) {
             return found.get();
         } else {
             throw new StoreNotFoundException(String.format(Constants.STORE_NOT_FOUND_MSG, storeId, user));
         }
+    }
+
+    @Override
+    public Store updateStore(String userId, String storeId, Store store) {
+        getStore(userId, storeId);
+        //
+        Store updatedStore = storeRepository.save(store);
+        log.info("Store has been successfully updated {}", updatedStore);
+        return updatedStore;
+    }
+
+    @Override
+    public Store removeStore(String userId, String storeId) {
+        Store store = getStore(userId, storeId);
+        //
+        storeRepository.deleteById(storeId);
+        return store;
     }
 
     @Override

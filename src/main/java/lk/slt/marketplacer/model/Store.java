@@ -24,11 +24,11 @@ public class Store implements Serializable {
     private String id;
     //
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", updatable = false)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "store", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Product> products;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<SocialLink> socialLinks;
     //
     private String name;

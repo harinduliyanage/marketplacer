@@ -2,10 +2,7 @@ package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.Currency;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
@@ -23,11 +20,12 @@ public class Product implements Serializable {
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "store_id", insertable = false, updatable = false)
+    @JoinColumn(name = "store_id", updatable = false)
+    @ToString.Exclude
     private Store store;
 
     private String name;
-    @Lob
+    //@Lob
     private String description;
     private Double price;
     private Double units;
@@ -35,7 +33,7 @@ public class Product implements Serializable {
     private Currency currency;
 
     @ElementCollection
-    @CollectionTable(name="products_medias", joinColumns=@JoinColumn(name="product_id"))
-    @Column(name="media")
+    @CollectionTable(name = "products_medias", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "media")
     private List<String> medias;
 }
