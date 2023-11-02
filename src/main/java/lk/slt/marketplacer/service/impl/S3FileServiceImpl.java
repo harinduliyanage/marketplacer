@@ -25,15 +25,16 @@ public class S3FileServiceImpl implements FileService {
     /**
      * Create a presigned URL for uploading with a PUT request.
      *
-     * @param fileName - The name of the object.
+     * @param filePath - The name of the object.
      * @return - The presigned URL for an HTTP PUT.
      */
-    public URL createUploadUrl(String fileName) {
+    public URL createUploadUrl(String filePath) {
+        System.out.println(bucketName);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.MINUTE, 10);
+        calendar.add(Calendar.HOUR, 72);
         //
-        URL presignedUrl = amazonS3.generatePresignedUrl(bucketName, fileName, calendar.getTime(), HttpMethod.PUT);
+        URL presignedUrl = amazonS3.generatePresignedUrl(bucketName, filePath, calendar.getTime(), HttpMethod.PUT);
         log.info("Presigned URL to upload a file to: [{}]", presignedUrl.toString());
         //
         return  presignedUrl;
@@ -42,15 +43,15 @@ public class S3FileServiceImpl implements FileService {
     /**
      * Create a presigned URL for downloading with a GET request.
      *
-     * @param fileName - The name of the object.
+     * @param filePath - The name of the object.
      * @return - The presigned URL for an HTTP GET.
      */
-    public URL createDownloadUrl(String fileName) {
+    public URL createDownloadUrl(String filePath) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.MINUTE, 10);
+        calendar.add(Calendar.HOUR, 72);
         //
-        URL presignedUrl = amazonS3.generatePresignedUrl(bucketName, fileName, calendar.getTime(), HttpMethod.GET);
+        URL presignedUrl = amazonS3.generatePresignedUrl(bucketName, filePath, calendar.getTime(), HttpMethod.GET);
         log.info("Presigned URL to download a file to: [{}]", presignedUrl.toString());
         //
         return  presignedUrl;
