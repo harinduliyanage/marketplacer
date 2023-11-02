@@ -26,7 +26,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        //
+        log.info("user has been successfully created {}", savedUser);
+        //
+        return savedUser;
     }
 
     @Override
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new UserNotFoundException(String.format(Constants.USR_NOT_FOUND_MSG, id));
+            throw new UserNotFoundException(String.format(Constants.USER_NOT_FOUND_MSG, id));
         }
     }
 

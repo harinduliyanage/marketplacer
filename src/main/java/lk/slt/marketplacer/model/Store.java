@@ -28,7 +28,7 @@ public class Store implements Serializable {
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Product> products;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<SocialLink> socialLinks;
     //
     private String name;
