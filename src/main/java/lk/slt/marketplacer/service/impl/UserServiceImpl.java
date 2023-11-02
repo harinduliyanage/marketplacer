@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import lk.slt.marketplacer.exceptions.UserAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.UserNotFoundException;
 import lk.slt.marketplacer.model.QUser;
 import lk.slt.marketplacer.model.User;
@@ -26,11 +27,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        User savedUser = userRepository.save(user);
-        //
-        log.info("user has been successfully created {}", savedUser);
-        //
-        return savedUser;
+        if (isUserNameAlreadyExists(user.getUsername())) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, user.getUsername()));
+        } else if (isEmailAlreadyExists(user.getEmail())) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, user.getEmail()));
+        } else {
+            User savedUser = userRepository.save(user);
+            //
+            log.info("user has been successfully created {}", savedUser);
+            //
+            return savedUser;
+        }
     }
 
     @Override
@@ -52,10 +59,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(String id, User user) {
-        getUserById(id);
-        User updatedUser = userRepository.save(user);
-        log.info("user has been successfully updated {}", updatedUser);
-        return updatedUser;
+        User userResponse = getUserById(id);
+        String username = user.getUsername();
+        String email = user.getEmail();
+        if (!userResponse.getUsername().equals(username) && isUserNameAlreadyExists(username)) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, username));
+        } else if (!userResponse.getEmail().equals(email) && isEmailAlreadyExists(email)) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, email));
+        } else {
+            User updatedUser = userRepository.save(user);
+            log.info("user has been successfully updated {}", updatedUser);
+            return updatedUser;
+        }
     }
 
     @Override
@@ -64,5 +79,17 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
         log.info("user has been successfully deleted {}", user);
         return user;
+    }
+
+    private Boolean isUserNameAlreadyExists(String username) {
+        QUser qUser = QUser.user;
+        BooleanExpression expression = qUser.username.eq(username);
+        return userRepository.exists(expression);
+    }
+
+    private Boolean isEmailAlreadyExists(String email) {
+        QUser qUser = QUser.user;
+        BooleanExpression expression = qUser.email.eq(email);
+        return userRepository.exists(expression);
     }
 }
