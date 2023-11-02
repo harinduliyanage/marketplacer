@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import lk.slt.marketplacer.exceptions.StoreAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.StoreNotFoundException;
 import lk.slt.marketplacer.model.QStore;
 import lk.slt.marketplacer.model.Store;
@@ -31,13 +32,17 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store createStore(String userId, Store store) {
-        User user = userService.getUserById(userId);
-        store.setUser(user);
-        store.setStoreStatus(StoreStatus.PENDING);
-        //
-        Store savedStore = storeRepository.save(store);
-        log.info("store has been successfully created {}", savedStore);
-        return savedStore;
+        if (isNameAlreadyExists(store.getName())) {
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS, store.getName()));
+        } else {
+            User user = userService.getUserById(userId);
+            store.setUser(user);
+            store.setStoreStatus(StoreStatus.PENDING);
+            //
+            Store savedStore = storeRepository.save(store);
+            log.info("store has been successfully created {}", savedStore);
+            return savedStore;
+        }
     }
 
     @Override
@@ -57,11 +62,15 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store updateStore(String userId, String storeId, Store store) {
-        getStore(userId, storeId);
-        //
-        Store updatedStore = storeRepository.save(store);
-        log.info("Store has been successfully updated {}", updatedStore);
-        return updatedStore;
+        Store storeResponse = getStore(userId, storeId);
+        if (!storeResponse.getName().equals(store.getName()) && isNameAlreadyExists(store.getName())) {
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS, store.getName()));
+        } else {
+            //
+            Store updatedStore = storeRepository.save(store);
+            log.info("Store has been successfully updated {}", updatedStore);
+            return updatedStore;
+        }
     }
 
     @Override
@@ -83,5 +92,11 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Page<Store> getStores(Pageable pageable) {
         return storeRepository.findAll(pageable);
+    }
+
+    private Boolean isNameAlreadyExists(String name) {
+        QStore qStore = QStore.store;
+        BooleanExpression expression = qStore.name.eq(name);
+        return storeRepository.exists(expression);
     }
 }
