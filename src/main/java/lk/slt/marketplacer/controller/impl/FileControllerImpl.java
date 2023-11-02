@@ -18,23 +18,29 @@ public class FileControllerImpl implements FileController {
 
     @Override
     public FileDto getUploadUrl(CreateFileDto createFileDto) {
+        FolderType fileType = createFileDto.getType();
         UUID uuid = UUID.randomUUID();
-        String filePath = "";
-        if (createFileDto.getType() == FolderType.PROFILE_PICTURE) {
-            filePath += "users/" + createFileDto.getUserId() + "/profile-picture/" + uuid + "." + createFileDto.getExtension().toString().toLowerCase();
-        } else if (createFileDto.getType() == FolderType.STORE_LOGO) {
-            filePath += "stores/" + createFileDto.getStoreId() + "/asset/" + uuid + "." + createFileDto.getExtension().toString().toLowerCase();
-        } else if (createFileDto.getType() == FolderType.PRODUCT_IMAGE) {
-            filePath += "stores/" + createFileDto.getStoreId() + "/products/" + createFileDto.getProductId() + "/images/" + uuid + "." + createFileDto.getExtension().toString().toLowerCase();
-        } else if (createFileDto.getType() == FolderType.PRODUCT_VIDEO) {
-            filePath += "stores/" + createFileDto.getStoreId() + "/products/" + createFileDto.getProductId() + "/videos/" + uuid + "." + createFileDto.getExtension().toString().toLowerCase();
+        StringBuilder filePathBuilder = new StringBuilder();
+        //
+        if (fileType == FolderType.PROFILE_PICTURE) {
+            filePathBuilder.append("users/").append(createFileDto.getUserId()).append("/profile-picture/");
+
+        } else if (fileType == FolderType.STORE_LOGO) {
+            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/asset/");
+        } else if (fileType == FolderType.PRODUCT_IMAGE) {
+            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/products/").append(createFileDto.getProductId()).append("/images/");
+        } else if (fileType == FolderType.PRODUCT_VIDEO) {
+            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/products/").append(createFileDto.getProductId()).append("/videos/");
         } else {
-            filePath += "stores/" + createFileDto.getStoreId() + "/documents/business-registrations/" + uuid + "." + createFileDto.getExtension().toString().toLowerCase();
+            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/documents/business-registrations/");
         }
         //
-        System.out.println(filePath);
+        filePathBuilder.append(uuid).append(".").append(createFileDto.getExtension().toString().toLowerCase());
+        String filePath = filePathBuilder.toString();
         URL url = s3FileService.createUploadUrl(filePath);
+        //
         FileDto fileDto = new FileDto();
+        fileDto.setKey(uuid.toString());
         fileDto.setUrl(url);
         //
         return fileDto;

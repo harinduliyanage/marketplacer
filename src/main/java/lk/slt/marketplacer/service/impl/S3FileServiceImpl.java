@@ -29,7 +29,6 @@ public class S3FileServiceImpl implements FileService {
      * @return - The presigned URL for an HTTP PUT.
      */
     public URL createUploadUrl(String filePath) {
-        System.out.println(bucketName);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.HOUR, 72);
