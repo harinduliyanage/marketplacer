@@ -8,8 +8,10 @@ import java.net.URL;
 public class FileDto {
     private URL url;
     private String key;
-    private String XAmzAlgorithm;
-    private String XAmzCredential;
-    private String XAmzDate;
-    private String XAmzSignature;
+    private String fileName;
+    private String xAmzAlgorithm;
+    private String xAmzCredential;
+    private String xAmzDate;
+    private String xAmzSignature;
+    private String xAmzExpires;
 }
