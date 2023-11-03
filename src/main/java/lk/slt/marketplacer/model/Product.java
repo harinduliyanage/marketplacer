@@ -24,6 +24,11 @@ public class Product implements Serializable {
     @ToString.Exclude
     private Store store;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @ToString.Exclude
+    private Category category;
+
     private String name;
     //@Lob
     private String description;
