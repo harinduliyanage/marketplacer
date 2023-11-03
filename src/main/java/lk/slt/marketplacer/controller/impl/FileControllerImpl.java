@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -24,7 +28,6 @@ public class FileControllerImpl implements FileController {
         //
         if (fileType == FolderType.PROFILE_PICTURE) {
             filePathBuilder.append("users/").append(createFileDto.getUserId()).append("/profile-picture/");
-
         } else if (fileType == FolderType.STORE_LOGO) {
             filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/asset/");
         } else if (fileType == FolderType.PRODUCT_IMAGE) {
@@ -35,13 +38,22 @@ public class FileControllerImpl implements FileController {
             filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/documents/business-registrations/");
         }
         //
-        filePathBuilder.append(uuid).append(".").append(createFileDto.getExtension().toString().toLowerCase());
+        String fileName = String.format("%s.%s", uuid, createFileDto.getExtension().toString().toLowerCase());
+        filePathBuilder.append(uuid).append(".").append(fileName);
         String filePath = filePathBuilder.toString();
         URL url = s3FileService.createUploadUrl(filePath);
+        //
+        Map<String, String> query = splitQuery(url);
         //
         FileDto fileDto = new FileDto();
         fileDto.setKey(uuid.toString());
         fileDto.setUrl(url);
+        fileDto.setXAmzAlgorithm(query.get("X-Amz-Algorithm"));
+        fileDto.setXAmzSignature(query.get("X-Amz-Signature"));
+        fileDto.setXAmzDate(query.get("X-Amz-Date"));
+        fileDto.setXAmzCredential(query.get("X-Amz-Credential"));
+        fileDto.setXAmzExpires(query.get("X-Amz-Expires"));
+        fileDto.setFileName(fileName);
         //
         return fileDto;
     }
@@ -49,5 +61,16 @@ public class FileControllerImpl implements FileController {
     @Override
     public FileDto getDownloadUrl() {
         return null;
+    }
+
+    private static Map<String, String> splitQuery(URL url) {
+        Map<String, String> queryPairs = new LinkedHashMap<String, String>();
+        String query = url.getQuery();
+        String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            int idx = pair.indexOf("=");
+            queryPairs.put(URLDecoder.decode(pair.substring(0, idx), StandardCharsets.UTF_8), URLDecoder.decode(pair.substring(idx + 1), StandardCharsets.UTF_8));
+        }
+        return queryPairs;
     }
 }
