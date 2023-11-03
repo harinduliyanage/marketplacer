@@ -28,7 +28,6 @@ public class FileControllerImpl implements FileController {
         //
         if (fileType == FolderType.PROFILE_PICTURE) {
             filePathBuilder.append("users/").append(createFileDto.getUserId()).append("/profile-picture/");
-
         } else if (fileType == FolderType.STORE_LOGO) {
             filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/asset/");
         } else if (fileType == FolderType.PRODUCT_IMAGE) {
