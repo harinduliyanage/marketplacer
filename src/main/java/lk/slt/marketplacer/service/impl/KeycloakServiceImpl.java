@@ -1,5 +1,12 @@
 package lk.slt.marketplacer.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.keycloak.OAuth2Constants;
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.representations.AccessTokenResponse;
+import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -7,21 +14,57 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author harindu.sul@gmail.com
  */
 @Service
+@Slf4j
 public class KeycloakServiceImpl {
 
-    private final String baseUrl = "YOUR_KEYCLOAK_BASE_URL";
-    private final String clientId = "YOUR_CLIENT_ID";
-    private final String clientSecret = "YOUR_CLIENT_SECRET";
-    private final String realm = "YOUR_REALM";
+    @Value("${keycloak.baseUrl}")
+    private String baseUrl;
+    @Value("${keycloak.adminClientId}")
+    private String clientId;
+    @Value("${keycloak.adminClientSecret}")
+    private String clientSecret;
+    @Value("${keycloak.targetRealm}")
+    private String realm;
+    private Keycloak keycloak;
 
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @PostConstruct
+    private void init() {
+        keycloak = KeycloakBuilder.builder()
+                .serverUrl(baseUrl)
+                .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
+                .realm(realm)
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .build();
+        this.searchByUsername("harindu@surge.global");
+    }
+
+
+    public void searchByUsername(String username) {
+        keycloak.tokenManager().getAccessToken();
+        log.info("searching user on keycloak by username: {} ", username);
+        try {
+            List<UserRepresentation> users = keycloak.realm(realm)
+                    .users()
+                    .searchByUsername(username, true);
+            log.info("called");
+        }catch (Exception e){
+            log.error(e.getMessage(), e);
+        }
+        //return Optional.ofNullable(users.get(0));
+    }
 
     public String getRptTokens(String accessToken) {
         try {
