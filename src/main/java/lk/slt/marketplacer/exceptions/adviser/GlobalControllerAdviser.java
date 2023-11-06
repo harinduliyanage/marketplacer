@@ -8,6 +8,7 @@ import lk.slt.marketplacer.exceptions.base.SystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -44,12 +45,13 @@ public class GlobalControllerAdviser {
     }
 
     @ExceptionHandler({
-            AccessDeniedException.class
+            AccessDeniedException.class,
+            AuthenticationException.class
     })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<ErrorResponse> handleAuthentication(SystemException ex) {
+    public ResponseEntity<ErrorResponse> handleAuthentication(Exception ex) {
         return new ResponseEntity<>(ErrorResponse.builder()
-                .code(ex.getErrorCode())
+                .code("SYS-401")
                 .message(ex.getMessage())
                 .build(), HttpStatus.UNAUTHORIZED);
     }
