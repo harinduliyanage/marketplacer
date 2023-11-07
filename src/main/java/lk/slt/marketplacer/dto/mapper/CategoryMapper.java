@@ -6,19 +6,17 @@ import lk.slt.marketplacer.dto.UpdateCategoryDto;
 import lk.slt.marketplacer.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface CategoryMapper {
-    CategoryMapper INSTANCE = Mappers.getMapper( CategoryMapper.class );
+public abstract class CategoryMapper {
     //
-    CategoryDto categoryToCategoryDto(Category category);
-    Category categoryDtoToCategory(CategoryDto categoryDto);
+    public abstract CategoryDto categoryToCategoryDto(Category category);
+    public abstract  Category categoryDtoToCategory(CategoryDto categoryDto);
     @Mapping(target = "id", ignore = true)
-    Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);
+    public abstract Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);
     @Mapping(target = "id", ignore = true)
-    Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto);
-    List<CategoryDto> categoryListToCategoryDtoList(List<Category> categoryList);
+    public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto);
+    public abstract List<CategoryDto> categoryListToCategoryDtoList(List<Category> categoryList);
 }

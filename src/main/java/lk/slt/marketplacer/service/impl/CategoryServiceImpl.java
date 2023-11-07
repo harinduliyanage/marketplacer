@@ -5,7 +5,6 @@ import lk.slt.marketplacer.exceptions.CategoryAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.CategoryNotFoundException;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QCategory;
-import lk.slt.marketplacer.model.QUser;
 import lk.slt.marketplacer.repository.CategoryRepository;
 import lk.slt.marketplacer.service.CategoryService;
 import lk.slt.marketplacer.util.Constants;
@@ -24,7 +23,12 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     @Override
-    public Category createCategory(Category category) {
+    public Category createCategory(String parentId, Category category) {
+        if (parentId != null) {
+            Category foundParent = getCategoryById(parentId);
+            category.setParentCategory(foundParent);
+        }
+        //
         if (isNameAlreadyExists(category.getName())) {
             throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_ALREADY_EXISTS_MSG, category.getName()));
         } else {
@@ -54,8 +58,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category updateCategory(String id, Category category) {
+    public Category updateCategory(String parentId, String id, Category category) {
         Category found = getCategoryById(id);
+        if (parentId != null) {
+            Category foundParent = getCategoryById(parentId);
+            category.setParentCategory(foundParent);
+        }
         String name = category.getName();
         //
         if (!name.equals(found.getName()) && isNameAlreadyExists(name)) {
@@ -80,6 +88,7 @@ public class CategoryServiceImpl implements CategoryService {
     private Boolean isNameAlreadyExists(String name) {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression = qCategory.name.eq(name);
+        //
         return categoryRepository.exists(expression);
     }
 }

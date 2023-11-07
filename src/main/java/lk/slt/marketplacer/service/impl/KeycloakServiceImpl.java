@@ -39,7 +39,7 @@ public class KeycloakServiceImpl {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @PostConstruct
+    //@PostConstruct
     private void init() {
         keycloak = KeycloakBuilder.builder()
                 .serverUrl(baseUrl)
