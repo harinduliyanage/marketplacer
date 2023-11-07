@@ -25,6 +25,8 @@ public class CreateStoreDto {
     private String telephone;
     private String fax;
     private String address;
+    private String brFilePath;
+    private String logoFilePath;
     @Email
     private String email;
     @URL

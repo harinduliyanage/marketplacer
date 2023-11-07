@@ -22,7 +22,6 @@ public interface StoreMapper {
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
     @Mapping(target = "storeStatus", ignore = true)
-    @Mapping(target = "filePath", ignore = true)
     Store createStoreDtoToStore(CreateStoreDto createStoreDto);
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
