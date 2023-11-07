@@ -3,6 +3,7 @@ package lk.slt.marketplacer.exceptions.adviser;
 import jakarta.servlet.ServletException;
 import lk.slt.marketplacer.dto.ErrorResponse;
 import lk.slt.marketplacer.exceptions.base.DuplicateRecordException;
+import lk.slt.marketplacer.exceptions.base.InvalidException;
 import lk.slt.marketplacer.exceptions.base.RecordNotFoundException;
 import lk.slt.marketplacer.exceptions.base.SystemException;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,17 @@ public class GlobalControllerAdviser {
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> duplicateRecordException(SystemException ex) {
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .code(ex.getErrorCode())
+                .message(ex.getMessage())
+                .build(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({
+            InvalidException.class
+    })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> invalidException(SystemException ex) {
         return new ResponseEntity<>(ErrorResponse.builder()
                 .code(ex.getErrorCode())
                 .message(ex.getMessage())
