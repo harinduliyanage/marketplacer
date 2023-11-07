@@ -32,8 +32,8 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ListResponseDto<UserDto> getUsers(Pageable pageable) {
-        Page<User> page = userService.getUsers(pageable);
+    public ListResponseDto<UserDto> getUsers(String sub, String email,Pageable pageable) {
+        Page<User> page = userService.getUsers(sub, email, pageable);
         return ListResponseDto.<UserDto>builder()
                 .data(userMapper.userListToUserDtoList(page.getContent()))
                 .page(pageable.getPageNumber())

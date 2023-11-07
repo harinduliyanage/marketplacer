@@ -1,5 +1,6 @@
 package lk.slt.marketplacer.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lk.slt.marketplacer.dto.CreateCategoryDto;
 import lk.slt.marketplacer.dto.ListResponseDto;
@@ -9,6 +10,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "category-services")
 @RequestMapping("/api/v1/categories")
 public interface CategoryController {
     @PostMapping( consumes = {"application/json"}, produces = {"application/json"})

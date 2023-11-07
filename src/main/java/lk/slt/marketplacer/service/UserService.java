@@ -13,7 +13,7 @@ public interface UserService {
 
     public User getUserById(String id);
 
-    public Page<User> getUsers(Pageable pageable);
+    public Page<User> getUsers(String sub, String email, Pageable pageable);
 
     public User updateUser(String id, User user);
 

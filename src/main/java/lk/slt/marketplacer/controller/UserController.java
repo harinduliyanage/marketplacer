@@ -20,7 +20,7 @@ public interface UserController {
     public UserDto createUser(@RequestBody @Valid CreateUserDto createUserDto);
 
     @GetMapping(value = "/users", produces = {"application/json"})
-    public ListResponseDto<UserDto> getUsers(@ParameterObject Pageable pageable);
+    public ListResponseDto<UserDto> getUsers(@RequestParam(value = "sub", required = false) String sub, @RequestParam(value = "email", required = false) String email, @ParameterObject Pageable pageable);
 
     @GetMapping(value = "/users/{userId}", produces = {"application/json"})
     public UserDto getUser(@PathVariable("userId") String userId);

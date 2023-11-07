@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private  KeycloakServiceImpl keycloakService;
+    private KeycloakServiceImpl keycloakService;
 
     @Override
     public User createUser(User user) {
@@ -38,14 +38,14 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, user.getEmail()));
         } else {
             try {
-                String sub =  keycloakService.searchByUsername(username).getId();
+                String sub = keycloakService.searchByUsername(username).getId();
                 user.setSub(sub);
                 User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);
                 //
                 return savedUser;
-            }catch (NullPointerException exception){
+            } catch (NullPointerException exception) {
                 throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, username));
             }
         }
@@ -64,8 +64,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getUsers(Pageable pageable) {
-        return this.userRepository.findAll(pageable);
+    public Page<User> getUsers(String sub, String email, Pageable pageable) {
+        if (email != null && sub != null) {
+            QUser qUser = QUser.user;
+            BooleanExpression expression = qUser.email.eq(email).and(qUser.sub.eq(sub));
+            return this.userRepository.findAll(expression, pageable);
+        } else if (email != null) {
+            QUser qUser = QUser.user;
+            BooleanExpression expression = qUser.email.eq(email);
+            return this.userRepository.findAll(expression, pageable);
+        } else if (sub != null) {
+            QUser qUser = QUser.user;
+            BooleanExpression expression = qUser.sub.eq(sub);
+            return this.userRepository.findAll(expression, pageable);
+        } else {
+            return this.userRepository.findAll(pageable);
+        }
+
     }
 
     @Override
