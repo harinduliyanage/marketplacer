@@ -27,6 +27,6 @@ public class Category implements Serializable {
     @ManyToOne
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "parentCategory")
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
     private List<Category> subCategories;
 }
