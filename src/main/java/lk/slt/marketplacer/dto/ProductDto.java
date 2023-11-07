@@ -16,8 +16,10 @@ public class ProductDto {
     private String id;
     private String name;
     private String description;
-    private String price;
+    //private String price;
     private String units;
+    private Boolean publish;
+    private String brand;
     private Currency currency;
     private List<String> medias;
 }
