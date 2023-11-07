@@ -33,13 +33,15 @@ public class KeycloakServiceImpl {
     private String clientId;
     @Value("${keycloak.adminClientSecret}")
     private String clientSecret;
-    @Value("${keycloak.targetRealm}")
+    @Value("${keycloak.realm}")
     private String realm;
+    @Value("${keycloak.targetRealm}")
+    private String targetRealm;
     private Keycloak keycloak;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    //@PostConstruct
+    @PostConstruct
     private void init() {
         keycloak = KeycloakBuilder.builder()
                 .serverUrl(baseUrl)
@@ -48,22 +50,22 @@ public class KeycloakServiceImpl {
                 .clientId(clientId)
                 .clientSecret(clientSecret)
                 .build();
-        this.searchByUsername("harindu@surge.global");
+
     }
 
 
-    public void searchByUsername(String username) {
+    public UserRepresentation searchByUsername(String username) {
         keycloak.tokenManager().getAccessToken();
         log.info("searching user on keycloak by username: {} ", username);
         try {
-            List<UserRepresentation> users = keycloak.realm(realm)
+            List<UserRepresentation> users = keycloak.realm(targetRealm)
                     .users()
                     .searchByUsername(username, true);
-            log.info("called");
-        }catch (Exception e){
+            return users.isEmpty() ? null : users.get(0);
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
+            return null;
         }
-        //return Optional.ofNullable(users.get(0));
     }
 
     public String getRptTokens(String accessToken) {
