@@ -32,8 +32,10 @@ public class Product implements Serializable {
     private String name;
     //@Lob
     private String description;
-    private Double price;
+    //private Double price;
     private Double units;
+    private Boolean publish;
+    private String brand;
     @Enumerated(EnumType.STRING)
     private Currency currency;
 

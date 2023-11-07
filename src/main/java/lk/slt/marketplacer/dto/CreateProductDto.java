@@ -17,8 +17,10 @@ public class CreateProductDto {
     private String name;
     private String description;
     @PositiveOrZero
-    private String price;
+    //private String price;
     private String units;
+    private Boolean publish;
+    private String brand;
     private Currency currency;
     private List<String> medias;
 }
