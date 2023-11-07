@@ -6,13 +6,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface CategoryService {
 
-    public Category createCategory(Category category);
+    public Category createCategory(String parentId, Category category);
 
     public Category getCategoryById(String id);
 
     public Page<Category> getCategories(Pageable pageable);
 
-    public Category updateCategory(String id, Category category);
+    public Category updateCategory(String parentId, String id, Category category);
 
     public Category removeCategory(String id);
 }
