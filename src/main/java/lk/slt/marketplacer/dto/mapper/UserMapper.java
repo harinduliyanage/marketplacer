@@ -18,8 +18,10 @@ public interface UserMapper {
     UserDto userToUserDto(User user);
     User userDtoToUser(UserDto userDto);
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "sub", ignore = true)
     User createUserDtoToUser(CreateUserDto createUserDto);
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "sub", ignore = true)
     User updateUserDtoToUser(UpdateUserDto updateUserDto);
     List<UserDto> userListToUserDtoList(List<User> storeList);
 }
