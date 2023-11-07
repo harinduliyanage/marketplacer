@@ -18,7 +18,7 @@ import java.util.UUID;
 @RestController
 public class FileControllerImpl implements FileController {
     @Autowired
-    S3FileServiceImpl s3FileService;
+    S3FileServiceImpl s3FileService; // todo: use type of interfaces when its come to dependency injection not implemented class
 
     @Override
     public FileDto getUploadUrl(CreateFileDto createFileDto) {

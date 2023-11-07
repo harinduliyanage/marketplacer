@@ -5,5 +5,6 @@ import lombok.Data;
 
 @Data
 public class UpdateStoreDto extends CreateStoreDto{
+    private String filePath;
     private StoreStatus storeStatus;
 }

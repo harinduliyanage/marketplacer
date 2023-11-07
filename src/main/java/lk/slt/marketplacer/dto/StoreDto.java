@@ -25,6 +25,7 @@ public class StoreDto {
     private String address;
     private String email;
     private String website;
+    private String filePath;
     //
     private StoreStatus storeStatus;
 }

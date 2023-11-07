@@ -39,6 +39,7 @@ public class Store implements Serializable {
     private String address;
     private String email;
     private String website;
+    private String filePath;
     //
     @Enumerated(EnumType.STRING)
     private StoreStatus storeStatus;

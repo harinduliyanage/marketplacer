@@ -13,4 +13,8 @@ public class SystemException extends RuntimeException{
         super(message);
         this.errorCode = errorCode;
     }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
 }

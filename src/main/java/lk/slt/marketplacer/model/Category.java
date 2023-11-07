@@ -8,27 +8,25 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.util.List;
 
-/**
- * @author harindu.sul@gmail.com
- */
 @Entity
-@Table(name = "users")
+@Table(name = "categories")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class Category implements Serializable {
 
     @Id
     @UuidGenerator
     private String id;
 
-    private String sub;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
+    private String name;
 
+    @ManyToOne
+    private Category parentCategory;
+
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
+    private List<Category> subCategories;
 }
