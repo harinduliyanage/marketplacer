@@ -24,6 +24,7 @@ public class User implements Serializable {
     @UuidGenerator
     private String id;
 
+    private String sub;
     private String username;
     private String firstName;
     private String lastName;

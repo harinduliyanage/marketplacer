@@ -3,6 +3,7 @@ package lk.slt.marketplacer.service.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.UserAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.UserNotFoundException;
+import lk.slt.marketplacer.exceptions.UsernameInvalidException;
 import lk.slt.marketplacer.model.QUser;
 import lk.slt.marketplacer.model.User;
 import lk.slt.marketplacer.repository.UserRepository;
@@ -24,19 +25,29 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private  KeycloakServiceImpl keycloakService;
 
     @Override
     public User createUser(User user) {
-        if (isUserNameAlreadyExists(user.getUsername())) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, user.getUsername()));
+        String username = user.getUsername();
+        //
+        if (isUserNameAlreadyExists(username)) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, username));
         } else if (isEmailAlreadyExists(user.getEmail())) {
             throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, user.getEmail()));
         } else {
-            User savedUser = userRepository.save(user);
-            //
-            log.info("user has been successfully created {}", savedUser);
-            //
-            return savedUser;
+            try {
+                String sub =  keycloakService.searchByUsername(username).getId();
+                user.setSub(sub);
+                User savedUser = userRepository.save(user);
+                //
+                log.info("user has been successfully created {}", savedUser);
+                //
+                return savedUser;
+            }catch (NullPointerException exception){
+                throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, username));
+            }
         }
     }
 
