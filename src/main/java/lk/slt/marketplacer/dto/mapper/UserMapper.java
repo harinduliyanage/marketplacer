@@ -13,8 +13,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper( UserMapper.class );
-    //
+
     UserDto userToUserDto(User user);
     User userDtoToUser(UserDto userDto);
     @Mapping(target = "id", ignore = true)
