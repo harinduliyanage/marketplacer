@@ -20,7 +20,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: ${KEYCLOAK_HOST:http://localhost:8080}/realms/${KEYCLOAK_TARGET_REALM:marketplacer}/protocol/openid-connect/certs
+          jwk-set-uri: ${KEYCLOAK_BASE_URL:http://localhost:8080}/realms/${KEYCLOAK_TARGET_REALM:marketplacer}/protocol/openid-connect/certs
 
 
 springdoc:
@@ -42,6 +42,7 @@ aws:
 
 keycloak:
   baseUrl: ${KEYCLOAK_BASE_URL:http://localhost:8080}
+  realm: ${KEYCLOAK_REALM:master}
   targetRealm: ${KEYCLOAK_TARGET_REALM:marketplacer}
   adminClientId: ${KEYCLOAK_ADMIN_CLIENT_ID:marketplacer-backend}
-  adminClientSecret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:KQbVNcoYmkeUmKpOCPcKgiMSbMr6DAnQ}
+  adminClientSecret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:xxxx}
