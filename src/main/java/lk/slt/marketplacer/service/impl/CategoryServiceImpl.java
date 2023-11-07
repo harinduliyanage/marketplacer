@@ -53,8 +53,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Page<Category> getCategories(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
+    public Page<Category> getCategories(String parentCategoryId,Pageable pageable) {
+        if (parentCategoryId == null) {
+            return categoryRepository.findAll(pageable);
+        }else {
+            Category found = getCategoryById(parentCategoryId);
+            QCategory qCategory = QCategory.category;
+            BooleanExpression expression = qCategory.parentCategory.eq(found);
+            return categoryRepository.findAll(expression, pageable);
+        }
     }
 
     @Override

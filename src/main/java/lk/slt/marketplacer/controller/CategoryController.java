@@ -17,7 +17,7 @@ public interface CategoryController {
     public CategoryDto createCategory(@RequestBody @Valid CreateCategoryDto createCategoryDto);
 
     @GetMapping( produces = {"application/json"})
-    public ListResponseDto<CategoryDto> getCategories(@ParameterObject Pageable pageable);
+    public ListResponseDto<CategoryDto> getCategories(@RequestParam(value = "parentCategoryId", required = false) String parentCategoryId, @ParameterObject Pageable pageable);
 
     @GetMapping(value = "/{categoryId}", produces = {"application/json"})
     public CategoryDto getCategory(@PathVariable("categoryId") String categoryId);
