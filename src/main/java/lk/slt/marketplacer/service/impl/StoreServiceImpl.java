@@ -33,7 +33,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store createStore(String userId, Store store) {
         if (isNameAlreadyExists(store.getName())) {
-            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS, store.getName()));
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, store.getName()));
         } else {
             User user = userService.getUserById(userId);
             store.setUser(user);
@@ -64,7 +64,7 @@ public class StoreServiceImpl implements StoreService {
     public Store updateStore(String userId, String storeId, Store store) {
         Store storeResponse = getStore(userId, storeId);
         if (!storeResponse.getName().equals(store.getName()) && isNameAlreadyExists(store.getName())) {
-            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS, store.getName()));
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, store.getName()));
         } else {
             //
             Store updatedStore = storeRepository.save(store);

@@ -33,9 +33,9 @@ public class UserServiceImpl implements UserService {
         String username = user.getUsername();
         //
         if (isUserNameAlreadyExists(username)) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, username));
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, username));
         } else if (isEmailAlreadyExists(user.getEmail())) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, user.getEmail()));
+            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, user.getEmail()));
         } else {
             try {
                 String sub = keycloakService.searchByUsername(username).getId();
@@ -89,9 +89,9 @@ public class UserServiceImpl implements UserService {
         String username = user.getUsername();
         String email = user.getEmail();
         if (!userResponse.getUsername().equals(username) && isUserNameAlreadyExists(username)) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, username));
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, username));
         } else if (!userResponse.getEmail().equals(email) && isEmailAlreadyExists(email)) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS, email));
+            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
         } else {
             User updatedUser = userRepository.save(user);
             log.info("user has been successfully updated {}", updatedUser);
