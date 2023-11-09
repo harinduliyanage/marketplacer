@@ -39,7 +39,7 @@ public class FileControllerImpl implements FileController {
         }
         //
         String fileName = String.format("%s.%s", uuid, createFileDto.getExtension().toString().toLowerCase());
-        filePathBuilder.append(uuid).append(".").append(fileName);
+        filePathBuilder.append(fileName);
         String filePath = filePathBuilder.toString();
         URL url = s3FileService.createUploadUrl(filePath);
         //
