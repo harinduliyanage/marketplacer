@@ -2,6 +2,7 @@ package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.Currency;
+import lk.slt.marketplacer.util.DiscountType;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -32,12 +33,17 @@ public class Product implements Serializable {
     private String name;
     //@Lob
     private String description;
-    //private Double price;
+    private Double price;
     private Double units;
+    private Double reOrderLevel;
     private Boolean publish;
     private String brand;
     @Enumerated(EnumType.STRING)
     private Currency currency;
+
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
+    private Double discountAmount;
 
     @ElementCollection
     @CollectionTable(name = "products_medias", joinColumns = @JoinColumn(name = "product_id"))
