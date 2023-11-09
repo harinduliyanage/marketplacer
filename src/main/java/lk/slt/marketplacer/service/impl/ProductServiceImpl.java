@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProduct(String userId, String storeId, String productId) {
+    public Product getProductById(String userId, String storeId, String productId) {
         Store store = storeService.getStore(userId, storeId);
         //
         QProduct qProduct = QProduct.product;
@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(String userId, String storeId, String productId, Product product) {
-        getProduct(userId, storeId, productId);
+        getProductById(userId, storeId, productId);
         //
         Product updatedProduct = productRepository.save(product);
         log.info("product has been successfully updated {}", updatedProduct);
@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product removeProduct(String userId, String storeId, String productId) {
-        Product product = getProduct(userId, storeId, productId);
+        Product product = getProductById(userId, storeId, productId);
         productRepository.deleteById(productId);
         log.info("product has been successfully deleted {}", product);
         return product;

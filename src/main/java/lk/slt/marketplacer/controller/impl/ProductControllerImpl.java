@@ -28,7 +28,7 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ProductDto getStoreProduct(String userId, String storeId, String productId) {
-        return productMapper.productToProductDto(productService.getProduct(userId, storeId, productId));
+        return productMapper.productToProductDto(productService.getProductById(userId, storeId, productId));
     }
 
     @Override
