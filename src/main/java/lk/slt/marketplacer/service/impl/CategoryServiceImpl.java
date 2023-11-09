@@ -54,14 +54,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<Category> getCategories(String parentCategoryId, Pageable pageable) {
+        QCategory qCategory = QCategory.category;
+        BooleanExpression expression;
         if (parentCategoryId == null) {
-            return categoryRepository.findAll(pageable);
+            expression = qCategory.parentCategory.isNull();
         } else {
-            Category found = getCategoryById(parentCategoryId);
-            QCategory qCategory = QCategory.category;
-            BooleanExpression expression = qCategory.parentCategory.eq(found);
-            return categoryRepository.findAll(expression, pageable);
+            expression = qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
         }
+        return categoryRepository.findAll(expression, pageable);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class CategoryServiceImpl implements CategoryService {
         BooleanExpression expression;
         //
         if (parentCategory == null) {
-            expression = qCategory.name.eq(name);
+            expression = qCategory.name.eq(name).and(qCategory.parentCategory.isNull());
         } else {
             expression = qCategory.name.eq(name).and(qCategory.parentCategory.eq(parentCategory));
         }

@@ -17,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * @author harindu.sul@gmail.com
