@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
+import lk.slt.marketplacer.util.CategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Category implements Serializable {
     private String id;
 
     private String name;
+    private CategoryType categoryType;
 
     @ManyToOne
     private Category parentCategory;

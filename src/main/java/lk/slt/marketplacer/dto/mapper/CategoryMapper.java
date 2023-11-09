@@ -17,15 +17,17 @@ public abstract class CategoryMapper {
         CategoryDto target = new CategoryDto();
         target.setId(category.getId());
         target.setName(category.getName());
+        target.setCategoryType(category.getCategoryType());
         //
         if (null!=category.getParentCategory()) {
             CategoryDto parentCategory = CategoryDto.builder()
                     .id(category.getParentCategory().getId())
-                    .name(category.getParentCategory().getName()).build();
+                    .name(category.getParentCategory().getName())
+                    .categoryType(category.getCategoryType()).build();
 
             target.setParentCategory(parentCategory);
         }
-        if (null != category.getSubCategories() && category.getSubCategories().size() > 0)  {
+        if (null != category.getSubCategories() && !category.getSubCategories().isEmpty())  {
             target.setSubCategories(mapSubCategories(category.getSubCategories()));
         }
         return target;
@@ -43,6 +45,7 @@ public abstract class CategoryMapper {
                 .map(sub -> CategoryDto.builder()
                         .id(sub.getId())
                         .name(sub.getName())
+                        .categoryType(sub.getCategoryType())
                         .build())
                 .collect(Collectors.toList());
     }
