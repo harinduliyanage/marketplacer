@@ -5,6 +5,7 @@ import lk.slt.marketplacer.dto.*;
 import lk.slt.marketplacer.dto.mapper.CategoryMapper;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.service.CategoryService;
+import lk.slt.marketplacer.util.CategoryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +28,8 @@ public class CategoryControllerImpl implements CategoryController {
     }
 
     @Override
-    public ListResponseDto<CategoryDto> getCategories(String parentCategoryId, Pageable pageable) {
-        Page<Category> page = categoryService.getCategories(parentCategoryId, pageable);
+    public ListResponseDto<CategoryDto> getCategories(String parentCategoryId, CategoryType categoryType, Pageable pageable) {
+        Page<Category> page = categoryService.getCategories(parentCategoryId, categoryType, pageable);
         return ListResponseDto.<CategoryDto>builder()
                 .data(categoryMapper.categoryListToCategoryDtoList(page.getContent()))
                 .page(pageable.getPageNumber())
