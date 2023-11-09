@@ -3,7 +3,7 @@ package lk.slt.marketplacer.controller.impl;
 import lk.slt.marketplacer.controller.FileController;
 import lk.slt.marketplacer.dto.CreateFileDto;
 import lk.slt.marketplacer.dto.FileDto;
-import lk.slt.marketplacer.service.impl.S3FileServiceImpl;
+import lk.slt.marketplacer.service.FileService;
 import lk.slt.marketplacer.util.FolderType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ import java.util.UUID;
 @RestController
 public class FileControllerImpl implements FileController {
     @Autowired
-    S3FileServiceImpl s3FileService; // todo: use type of interfaces when its come to dependency injection not implemented class
+    FileService fileService;
 
     @Override
     public FileDto getUploadUrl(CreateFileDto createFileDto) {
@@ -41,7 +41,7 @@ public class FileControllerImpl implements FileController {
         String fileName = String.format("%s.%s", uuid, createFileDto.getExtension().toString().toLowerCase());
         filePathBuilder.append(fileName);
         String filePath = filePathBuilder.toString();
-        URL url = s3FileService.createUploadUrl(filePath);
+        URL url = fileService.createUploadUrl(filePath);
         //
         Map<String, String> query = splitQuery(url);
         //
