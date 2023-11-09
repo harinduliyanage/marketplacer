@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
             category.setParentCategory(foundParent);
         }
         //
-        if (isNameAlreadyExists(parentId, category.getName())) {
+        if (isNameAlreadyExists(category.getParentCategory(), category.getName())) {
             throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_ALREADY_EXISTS_MSG, category.getName()));
         } else {
             Category savedCategory = categoryRepository.save(category);
@@ -74,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
             category.setParentCategory(foundParent);
         }
         //
-        if (!name.equals(found.getName()) && isNameAlreadyExists(parentId, name)) {
+        if (!name.equals(found.getName()) && isNameAlreadyExists(category.getParentCategory(), name)) {
             throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_ALREADY_EXISTS_MSG, name));
         } else {
             Category updatedCategory = categoryRepository.save(category);
@@ -93,14 +93,14 @@ public class CategoryServiceImpl implements CategoryService {
         return found;
     }
 
-    private Boolean isNameAlreadyExists(String parentCategoryId, String name) {
+    private Boolean isNameAlreadyExists(Category parentCategory, String name) {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
         //
-        if (parentCategoryId == null) {
+        if (parentCategory == null) {
             expression = qCategory.name.eq(name);
         } else {
-            expression = qCategory.name.eq(name).and(qCategory.parentCategory.id.eq(parentCategoryId));
+            expression = qCategory.name.eq(name).and(qCategory.parentCategory.eq(parentCategory));
         }
         return categoryRepository.exists(expression);
     }

@@ -45,9 +45,11 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     public CategoryDto updateCategory(String categoryId, UpdateCategoryDto updateCategoryDto) {
+        Category category = categoryMapper.updateCategoryDtoToCategory(updateCategoryDto);
+        category.setId(categoryId);
         return categoryMapper.categoryToCategoryDto(
                 categoryService.updateCategory(updateCategoryDto.getParentCategoryId(), categoryId,
-                        categoryMapper.updateCategoryDtoToCategory(updateCategoryDto))
+                        category)
         );
     }
 
