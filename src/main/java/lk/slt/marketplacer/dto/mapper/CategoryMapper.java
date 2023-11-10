@@ -23,7 +23,8 @@ public abstract class CategoryMapper {
             CategoryDto parentCategory = CategoryDto.builder()
                     .id(category.getParentCategory().getId())
                     .name(category.getParentCategory().getName())
-                    .categoryType(category.getCategoryType()).build();
+                    .categoryType(category.getCategoryType())
+                    .parentCategory(categoryToCategoryDto(category.getParentCategory())).build();
 
             target.setParentCategory(parentCategory);
         }
