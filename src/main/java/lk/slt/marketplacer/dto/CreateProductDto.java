@@ -21,5 +21,6 @@ public class CreateProductDto {
     private Boolean publish;
     private String brand;
     private Currency currency;
-    private List<String> medias;
+    private List<String> videos;
+    private List<String> images;
 }
