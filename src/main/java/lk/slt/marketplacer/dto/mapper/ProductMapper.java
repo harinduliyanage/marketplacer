@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
-    @Mapping(target = "categoryId", expression = "java(product.getCategory().getId())")
+    @Mapping(target = "categoryId", expression = "java(product.getCategory()==null? null : product.getCategory().getId())")
     ProductDto productToProductDto(Product product);
 
     @Mapping(target = "store", ignore = true)

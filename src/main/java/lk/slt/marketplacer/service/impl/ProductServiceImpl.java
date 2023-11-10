@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import lk.slt.marketplacer.exceptions.CategoryTypeInvalidException;
 import lk.slt.marketplacer.exceptions.ProductNotFoundException;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.Product;
@@ -10,6 +11,7 @@ import lk.slt.marketplacer.repository.ProductRepository;
 import lk.slt.marketplacer.service.CategoryService;
 import lk.slt.marketplacer.service.ProductService;
 import lk.slt.marketplacer.service.StoreService;
+import lk.slt.marketplacer.util.CategoryType;
 import lk.slt.marketplacer.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class ProductServiceImpl implements ProductService {
         Store store = storeService.getStore(userId, storeId);
         Category category = categoryService.getCategoryById(categoryId);
         product.setStore(store);
+        if (category.getCategoryType() != CategoryType.PRODUCT) {
+            throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+        }
         product.setCategory(category);
         //
         Product savedProduct = productRepository.save(product);
@@ -75,9 +80,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
         getProductById(userId, storeId, productId);
-        Store store = storeService.getStore(userId, storeId);
+        storeService.getStore(userId, storeId);
         Category category = categoryService.getCategoryById(categoryId);
-        product.setStore(store);
+
+        if (category.getCategoryType() != CategoryType.PRODUCT) {
+            throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+        }
         product.setCategory(category);
         //
         Product updatedProduct = productRepository.save(product);

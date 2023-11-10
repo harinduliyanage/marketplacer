@@ -15,6 +15,7 @@ import java.util.List;
 public class CategoryDto {
     private String id;
     private String name;
+    private String categoryId;
     private CategoryType categoryType;
     private CategoryDto parentCategory;
     private List<CategoryDto> subCategories;
