@@ -5,10 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
-    public Product createProduct(String userId,String storeId,Product product);
+    public Product createProduct(String userId, String storeId, String categoryId, Product product);
+
     public Product getProductById(String userId, String storeId, String productId);
+
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable);
+
     public Page<Product> getProducts(Pageable pageable);
-    public Product updateProduct(String userId, String storeId, String productId, Product product);
+
+    public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product);
+
     public Product removeProduct(String userId, String storeId, String productId);
 }

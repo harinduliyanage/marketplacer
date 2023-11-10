@@ -2,10 +2,12 @@ package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.ProductNotFoundException;
+import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.Product;
 import lk.slt.marketplacer.model.QProduct;
 import lk.slt.marketplacer.model.Store;
 import lk.slt.marketplacer.repository.ProductRepository;
+import lk.slt.marketplacer.service.CategoryService;
 import lk.slt.marketplacer.service.ProductService;
 import lk.slt.marketplacer.service.StoreService;
 import lk.slt.marketplacer.util.Constants;
@@ -26,11 +28,15 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
     @Autowired
     StoreService storeService;
+    @Autowired
+    CategoryService categoryService;
 
     @Override
-    public Product createProduct(String userId, String storeId, Product product) {
+    public Product createProduct(String userId, String storeId, String categoryId, Product product) {
         Store store = storeService.getStore(userId, storeId);
+        Category category = categoryService.getCategoryById(categoryId);
         product.setStore(store);
+        product.setCategory(category);
         //
         Product savedProduct = productRepository.save(product);
         log.info("product has been successfully created {}", savedProduct);
@@ -67,8 +73,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(String userId, String storeId, String productId, Product product) {
+    public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
         getProductById(userId, storeId, productId);
+        Store store = storeService.getStore(userId, storeId);
+        Category category = categoryService.getCategoryById(categoryId);
+        product.setStore(store);
+        product.setCategory(category);
         //
         Product updatedProduct = productRepository.save(product);
         log.info("product has been successfully updated {}", updatedProduct);

@@ -19,7 +19,7 @@ public abstract class CategoryMapper {
         target.setName(category.getName());
         target.setCategoryType(category.getCategoryType());
         //
-        if (null!=category.getParentCategory()) {
+        if (null != category.getParentCategory()) {
             CategoryDto parentCategory = CategoryDto.builder()
                     .id(category.getParentCategory().getId())
                     .name(category.getParentCategory().getName())
@@ -27,17 +27,20 @@ public abstract class CategoryMapper {
 
             target.setParentCategory(parentCategory);
         }
-        if (null != category.getSubCategories() && !category.getSubCategories().isEmpty())  {
+        if (null != category.getSubCategories() && !category.getSubCategories().isEmpty()) {
             target.setSubCategories(mapSubCategories(category.getSubCategories()));
         }
         return target;
     }
 
-    public abstract  Category categoryDtoToCategory(CategoryDto categoryDto);
+    public abstract Category categoryDtoToCategory(CategoryDto categoryDto);
+
     @Mapping(target = "id", ignore = true)
     public abstract Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);
+
     @Mapping(target = "id", ignore = true)
     public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto);
+
     public abstract List<CategoryDto> categoryListToCategoryDtoList(List<Category> categoryList);
 
     private List<CategoryDto> mapSubCategories(List<Category> subCategories) {

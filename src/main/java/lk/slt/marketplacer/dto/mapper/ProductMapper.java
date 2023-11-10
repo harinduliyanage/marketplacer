@@ -13,14 +13,19 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
+    @Mapping(target = "categoryId", expression = "java(product.getCategory().getId())")
     ProductDto productToProductDto(Product product);
+
     @Mapping(target = "store", ignore = true)
     Product productDtoToProduct(ProductDto productDto);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "store", ignore = true)
     Product createProductDtoToProduct(CreateProductDto createProductDto);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "store", ignore = true)
     Product updateProductDtoToProduct(UpdateProductDto updateProductDto);
+
     List<ProductDto> productListToProductDtoList(List<Product> productList);
 }
