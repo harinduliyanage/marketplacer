@@ -17,7 +17,7 @@ public class ProductDto {
     private String name;
     private String description;
     //private String price;
-    private String categoryId;
+    private CategoryDto category;
     private String units;
     private Boolean publish;
     private String brand;
