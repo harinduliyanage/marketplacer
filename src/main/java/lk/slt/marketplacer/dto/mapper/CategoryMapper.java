@@ -20,13 +20,7 @@ public abstract class CategoryMapper {
         target.setCategoryType(category.getCategoryType());
         //
         if (null != category.getParentCategory()) {
-            CategoryDto parentCategory = CategoryDto.builder()
-                    .id(category.getParentCategory().getId())
-                    .name(category.getParentCategory().getName())
-                    .categoryType(category.getCategoryType())
-                    .build();
-
-            target.setParentCategory(parentCategory);
+            target.setParentCategory(mapParentCategory(category.getParentCategory()));
         }
         if (null != category.getSubCategories() && !category.getSubCategories().isEmpty()) {
             target.setSubCategories(mapSubCategories(category.getSubCategories()));
@@ -52,5 +46,20 @@ public abstract class CategoryMapper {
                         .categoryType(sub.getCategoryType())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    private CategoryDto mapParentCategory(Category category) {
+        CategoryDto categoryDto = new CategoryDto();
+        if (category.getParentCategory() == null) {
+            categoryDto.setId(category.getId());
+            categoryDto.setName(category.getName());
+            categoryDto.setCategoryType(category.getCategoryType());
+        } else {
+            categoryDto.setId(category.getId());
+            categoryDto.setName(category.getName());
+            categoryDto.setCategoryType(category.getCategoryType());
+            categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
+        }
+        return categoryDto;
     }
 }
