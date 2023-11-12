@@ -23,7 +23,7 @@ public class StoreControllerImpl implements StoreController {
 
     @Override
     public StoreDto createStore(String userId, CreateStoreDto createStoreDto) {
-        Store store = storeService.createStore(userId, storeMapper.createStoreDtoToStore(createStoreDto));
+        Store store = storeService.createStore(userId, createStoreDto.getCategoryId(), storeMapper.createStoreDtoToStore(createStoreDto));
         return storeMapper.storeToStoreDto(store);
     }
 
@@ -49,12 +49,14 @@ public class StoreControllerImpl implements StoreController {
         Store store = storeMapper.updateStoreDtoToStore(updateStoreDto);
         store.setId(storeId);
         //
-        return storeMapper.storeToStoreDto(storeService.updateStore(userId,storeId,store));
+        return storeMapper.storeToStoreDto(storeService
+                .updateStore(userId, storeId, updateStoreDto.getCategoryId(), store)
+        );
     }
 
     @Override
     public StoreDto removeStore(String userId, String storeId) {
-        return storeMapper.storeToStoreDto(storeService.removeStore(userId,storeId));
+        return storeMapper.storeToStoreDto(storeService.removeStore(userId, storeId));
     }
 
     @Override

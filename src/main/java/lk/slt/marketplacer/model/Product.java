@@ -46,7 +46,11 @@ public class Product implements Serializable {
     private Double discountAmount;
 
     @ElementCollection
-    @CollectionTable(name = "products_medias", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "media")
-    private List<String> medias;
+    @CollectionTable(name = "products_videos", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "videos")
+    private List<String> videos;
+    @ElementCollection
+    @CollectionTable(name = "products_images", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "images")
+    private List<String> images;
 }

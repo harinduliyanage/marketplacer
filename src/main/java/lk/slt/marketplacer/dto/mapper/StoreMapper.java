@@ -13,19 +13,24 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = SocialLinkMapper.class)
 public interface StoreMapper {
 
+    @Mapping(target = "categoryId", expression = "java(store.getCategory()==null? null : store.getCategory().getId())")
     StoreDto storeToStoreDto(Store store);
+
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
     Store storeDtoToStore(StoreDto storeDto);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
     @Mapping(target = "storeStatus", ignore = true)
     Store createStoreDtoToStore(CreateStoreDto createStoreDto);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
     @Mapping(target = "storeStatus", ignore = true)
     Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto);
+
     List<StoreDto> storeListToStoreDtoList(List<Store> storeList);
 }

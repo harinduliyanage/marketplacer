@@ -19,6 +19,7 @@ public class StoreDto {
     //
     private String name;
     private String description;
+    private String categoryId;
     //
     private String telephone;
     private String fax;

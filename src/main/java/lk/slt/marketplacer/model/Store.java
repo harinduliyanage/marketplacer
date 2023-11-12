@@ -2,10 +2,7 @@ package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.StoreStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
@@ -33,6 +30,10 @@ public class Store implements Serializable {
     //
     private String name;
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @ToString.Exclude
+    private Category category;
     //
     private String telephone;
     private String fax;

@@ -17,9 +17,11 @@ public class ProductDto {
     private String name;
     private String description;
     //private String price;
+    private CategoryDto category;
     private String units;
     private Boolean publish;
     private String brand;
     private Currency currency;
-    private List<String> medias;
+    private List<String> videos;
+    private List<String> images;
 }

@@ -22,13 +22,16 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ProductDto createProduct(String userId, String storeId, CreateProductDto createProductDto) {
-        Product createdProduct = productService.createProduct(userId, storeId, productMapper.createProductDtoToProduct(createProductDto));
+        Product createdProduct = productService
+                .createProduct(userId, storeId, createProductDto.getCategoryId(), productMapper
+                        .createProductDtoToProduct(createProductDto)
+                );
         return productMapper.productToProductDto(createdProduct);
     }
 
     @Override
     public ProductDto getStoreProduct(String userId, String storeId, String productId) {
-        return productMapper.productToProductDto(productService.getProduct(userId, storeId, productId));
+        return productMapper.productToProductDto(productService.getProductById(userId, storeId, productId));
     }
 
     @Override
@@ -60,7 +63,9 @@ public class ProductControllerImpl implements ProductController {
         Product product = productMapper.updateProductDtoToProduct(updateProductDto);
         product.setId(productId);
         //
-        return productMapper.productToProductDto(productService.updateProduct(userId, storeId, productId, product));
+        return productMapper.productToProductDto(productService
+                .updateProduct(userId, storeId, updateProductDto.getCategoryId(), productId, product)
+        );
     }
 
     @Override
