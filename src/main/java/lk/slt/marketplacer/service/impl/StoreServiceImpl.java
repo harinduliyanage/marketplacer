@@ -67,7 +67,7 @@ public class StoreServiceImpl implements StoreService {
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new StoreNotFoundException(String.format(Constants.STORE_NOT_FOUND_MSG, storeId, user));
+            throw new StoreNotFoundException(String.format(Constants.STORE_NOT_FOUND_MSG, storeId, userId));
         }
     }
 
