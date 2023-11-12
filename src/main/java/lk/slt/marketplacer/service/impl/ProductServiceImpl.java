@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new ProductNotFoundException(String.format(Constants.PRODUCT_NOT_FOUND_MSG, storeId, store));
+            throw new ProductNotFoundException(String.format(Constants.PRODUCT_NOT_FOUND_MSG, productId, storeId));
         }
     }
 
