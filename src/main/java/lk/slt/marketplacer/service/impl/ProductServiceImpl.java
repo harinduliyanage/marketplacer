@@ -13,6 +13,7 @@ import lk.slt.marketplacer.service.ProductService;
 import lk.slt.marketplacer.service.StoreService;
 import lk.slt.marketplacer.util.CategoryType;
 import lk.slt.marketplacer.util.Constants;
+import lk.slt.marketplacer.util.ProductStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,10 +38,11 @@ public class ProductServiceImpl implements ProductService {
     public Product createProduct(String userId, String storeId, String categoryId, Product product) {
         Store store = storeService.getStore(userId, storeId);
         Category category = categoryService.getCategoryById(categoryId);
-        product.setStore(store);
         if (category.getCategoryType() != CategoryType.PRODUCT) {
             throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
         }
+        product.setStore(store);
+        product.setProductStatus(ProductStatus.PENDING);
         product.setCategory(category);
         //
         Product savedProduct = productRepository.save(product);
@@ -79,14 +81,52 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
-        getProductById(userId, storeId, productId);
+        Product existingProduct = getProductById(userId, storeId, productId);
         storeService.getStore(userId, storeId);
-        Category category = categoryService.getCategoryById(categoryId);
-
-        if (category.getCategoryType() != CategoryType.PRODUCT) {
-            throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+        //
+        if (product.getName() == null) {
+            product.setName(existingProduct.getName());
         }
-        product.setCategory(category);
+        if (product.getBrand() == null) {
+            product.setBrand(existingProduct.getBrand());
+        }
+        if (product.getPrice() == null) {
+            product.setPrice(existingProduct.getPrice());
+        }
+        if (product.getUnits() == null) {
+            product.setUnits(existingProduct.getUnits());
+        }
+        if (product.getDescription() == null) {
+            product.setDescription(existingProduct.getDescription());
+        }
+        if (product.getReOrderLevel() == null) {
+            product.setReOrderLevel(existingProduct.getReOrderLevel());
+        }
+        if (product.getProductStatus() == null) {
+            product.setProductStatus(existingProduct.getProductStatus());
+        }
+        if (product.getDiscountAmount() == null) {
+            product.setDiscountAmount(existingProduct.getDiscountAmount());
+        }
+        if (product.getDiscountType() == null) {
+            product.setDiscountType(existingProduct.getDiscountType());
+        }
+        if (product.getVideos() == null) {
+            product.setVideos(existingProduct.getVideos());
+        }
+        if (product.getImages() == null) {
+            product.setImages(existingProduct.getImages());
+        }
+        if (categoryId == null) {
+            product.setCategory(existingProduct.getCategory());
+        } else {
+            Category category = categoryService.getCategoryById(categoryId);
+
+            if (category.getCategoryType() != CategoryType.PRODUCT) {
+                throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+            }
+            product.setCategory(category);
+        }
         //
         Product updatedProduct = productRepository.save(product);
         log.info("product has been successfully updated {}", updatedProduct);
