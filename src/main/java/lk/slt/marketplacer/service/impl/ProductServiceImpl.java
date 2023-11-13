@@ -81,45 +81,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
-        Product existingProduct = getProductById(userId, storeId, productId);
         storeService.getStore(userId, storeId);
         //
-        if (product.getName() == null) {
-            product.setName(existingProduct.getName());
-        }
-        if (product.getBrand() == null) {
-            product.setBrand(existingProduct.getBrand());
-        }
-        if (product.getPrice() == null) {
-            product.setPrice(existingProduct.getPrice());
-        }
-        if (product.getUnits() == null) {
-            product.setUnits(existingProduct.getUnits());
-        }
-        if (product.getDescription() == null) {
-            product.setDescription(existingProduct.getDescription());
-        }
-        if (product.getReOrderLevel() == null) {
-            product.setReOrderLevel(existingProduct.getReOrderLevel());
-        }
-        if (product.getProductStatus() == null) {
-            product.setProductStatus(existingProduct.getProductStatus());
-        }
-        if (product.getDiscountAmount() == null) {
-            product.setDiscountAmount(existingProduct.getDiscountAmount());
-        }
-        if (product.getDiscountType() == null) {
-            product.setDiscountType(existingProduct.getDiscountType());
-        }
-        if (product.getVideos() == null) {
-            product.setVideos(existingProduct.getVideos());
-        }
-        if (product.getImages() == null) {
-            product.setImages(existingProduct.getImages());
-        }
-        if (categoryId == null) {
-            product.setCategory(existingProduct.getCategory());
-        } else {
+        if (categoryId != null) {
             Category category = categoryService.getCategoryById(categoryId);
 
             if (category.getCategoryType() != CategoryType.PRODUCT) {
@@ -127,6 +91,7 @@ public class ProductServiceImpl implements ProductService {
             }
             product.setCategory(category);
         }
+        product.setId(productId);
         //
         Product updatedProduct = productRepository.save(product);
         log.info("product has been successfully updated {}", updatedProduct);

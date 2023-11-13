@@ -6,10 +6,7 @@ import lk.slt.marketplacer.dto.ProductDto;
 import lk.slt.marketplacer.dto.UpdateProductDto;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.Product;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -19,7 +16,6 @@ public abstract class ProductMapper {
     @Autowired
     CategoryMapper categoryMapper;
 
-    //@Mapping(target = "categoryId", expression = "java(product.getCategory()==null? null : product.getCategory().getId())")
     public ProductDto productToProductDto(Product product) {
         ProductDto target = new ProductDto();
         //
@@ -51,8 +47,34 @@ public abstract class ProductMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "store", ignore = true)
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract Product updateProductDtoToProduct(UpdateProductDto updateProductDto);
+    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "name", source = "name",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "description", source = "description",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "brand", source = "brand",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "specification", source = "specification",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "price", source = "price",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "units", source = "units",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "reOrderLevel", source = "reOrderLevel",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "productStatus", source = "productStatus",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "currency", source = "currency",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "discountType", source = "discountType",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "discountAmount", source = "discountAmount",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "videos", source = "videos",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "images", source = "images",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract Product updateProductDtoToProduct(UpdateProductDto updateProductDto, @MappingTarget Product entity);
 
     public abstract List<ProductDto> productListToProductDtoList(List<Product> productList);
 

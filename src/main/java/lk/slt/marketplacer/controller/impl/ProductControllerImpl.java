@@ -60,11 +60,12 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ProductDto updateProduct(String userId, String storeId, String productId, UpdateProductDto updateProductDto) {
-        Product product = productMapper.updateProductDtoToProduct(updateProductDto);
-        product.setId(productId);
-        //
         return productMapper.productToProductDto(productService
-                .updateProduct(userId, storeId, updateProductDto.getCategoryId(), productId, product)
+                .updateProduct(userId, storeId, updateProductDto.getCategoryId(), productId, productMapper
+                        .updateProductDtoToProduct(updateProductDto, productService
+                                .getProductById(userId, storeId, productId)
+                        )
+                )
         );
     }
 
