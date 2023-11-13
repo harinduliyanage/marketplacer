@@ -21,6 +21,7 @@ public class CreateStoreDto {
     @NotEmpty
     private String name;
     private String description;
+    @NotEmpty
     private String categoryId;
 
     //
