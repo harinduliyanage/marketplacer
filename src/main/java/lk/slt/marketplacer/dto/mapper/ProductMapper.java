@@ -26,6 +26,7 @@ public abstract class ProductMapper {
         target.setId(product.getId());
         target.setName(product.getName());
         target.setDescription(product.getDescription());
+        target.setSpecification(product.getSpecification());
         target.setProductStatus(product.getProductStatus());
         target.setBrand(product.getBrand());
         target.setPrice(product.getPrice());

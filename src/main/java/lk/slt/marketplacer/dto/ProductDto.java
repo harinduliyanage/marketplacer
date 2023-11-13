@@ -19,6 +19,7 @@ public class ProductDto {
     private String name;
     private String brand;
     private String description;
+    private String specification;
     private Double price;
     private Double units;
     //

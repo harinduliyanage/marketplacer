@@ -26,6 +26,7 @@ public class Product implements Serializable {
     private String brand;
     //@Lob
     private String description;
+    private String specification;
     private Double price;
     private Double units;
     @ManyToOne
