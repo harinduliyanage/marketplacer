@@ -3,7 +3,6 @@ package lk.slt.marketplacer.model;
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.StoreStatus;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 public class Store implements Serializable {
 
     @Id
-    @UuidGenerator
     private String id;
     //
     @ManyToOne

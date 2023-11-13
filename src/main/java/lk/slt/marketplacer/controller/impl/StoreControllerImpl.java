@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 @RestController
 public class StoreControllerImpl implements StoreController {
     @Autowired
@@ -23,8 +24,12 @@ public class StoreControllerImpl implements StoreController {
 
     @Override
     public StoreDto createStore(String userId, CreateStoreDto createStoreDto) {
-        Store store = storeService.createStore(userId, createStoreDto.getCategoryId(), storeMapper.createStoreDtoToStore(createStoreDto));
-        return storeMapper.storeToStoreDto(store);
+        Store store = storeMapper.createStoreDtoToStore(createStoreDto);
+
+        return storeMapper
+                .storeToStoreDto(storeService
+                        .createStore(userId, createStoreDto.getCategoryId(),store)
+                );
     }
 
     @Override

@@ -3,6 +3,7 @@ package lk.slt.marketplacer.service.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.CategoryTypeInvalidException;
 import lk.slt.marketplacer.exceptions.StoreAlreadyExistsException;
+import lk.slt.marketplacer.exceptions.StoreIdInvalidException;
 import lk.slt.marketplacer.exceptions.StoreNotFoundException;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QStore;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author harindu.sul@gmail.com
@@ -44,12 +46,26 @@ public class StoreServiceImpl implements StoreService {
             throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, name));
         } else {
             User user = userService.getUserById(userId);
-            store.setUser(user);
-            store.setStoreStatus(StoreStatus.PENDING);
             Category category = categoryService.getCategoryById(categoryId);
             if (category.getCategoryType() != CategoryType.STORE) {
-                throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+                throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
             }
+            //
+            String id = store.getId();
+            if (id != null) {
+                // Validate UUID
+                try {
+                    UUID.fromString(id);
+                    store.setId(id);
+                } catch (IllegalArgumentException exception) {
+                    throw new StoreIdInvalidException(String.format(Constants.INVALID_STORE_ID_MSG, id));
+                }
+            } else {
+                store.setId(UUID.randomUUID().toString());
+            }
+            //
+            store.setUser(user);
+            store.setStoreStatus(StoreStatus.PENDING);
             store.setCategory(category);
             //
             Store savedStore = storeRepository.save(store);
@@ -82,9 +98,8 @@ public class StoreServiceImpl implements StoreService {
         } else {
             if (categoryId != null) {
                 Category category = categoryService.getCategoryById(categoryId);
-                //
                 if (category.getCategoryType() != CategoryType.STORE) {
-                    throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+                    throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
                 }
                 store.setCategory(category);
             }

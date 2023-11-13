@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateStoreDto {
-
+    private String id;
     private List<SocialLinkDto> socialLinks;
     //
     @NotEmpty

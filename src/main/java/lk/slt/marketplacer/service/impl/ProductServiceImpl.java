@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
         Store store = storeService.getStore(userId, storeId);
         Category category = categoryService.getCategoryById(categoryId);
         if (category.getCategoryType() != CategoryType.PRODUCT) {
-            throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+            throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
         }
         product.setStore(store);
         product.setProductStatus(ProductStatus.PENDING);
@@ -83,9 +83,8 @@ public class ProductServiceImpl implements ProductService {
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
         if (categoryId != null) {
             Category category = categoryService.getCategoryById(categoryId);
-
             if (category.getCategoryType() != CategoryType.PRODUCT) {
-                throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+                throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
             }
             product.setCategory(category);
         }
