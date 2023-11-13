@@ -32,7 +32,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ListResponseDto<UserDto> getUsers(String sub, String email,Pageable pageable) {
+    public ListResponseDto<UserDto> getUsers(String sub, String email, Pageable pageable) {
         Page<User> page = userService.getUsers(sub, email, pageable);
         return ListResponseDto.<UserDto>builder()
                 .data(userMapper.userListToUserDtoList(page.getContent()))
@@ -50,10 +50,13 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserDto updateUser(String userId, UpdateUserDto updateUserDto) {
-        User user = userMapper.updateUserDtoToUser(updateUserDto);
-        user.setId(userId);
-        //
-        return userMapper.userToUserDto(userService.updateUser(userId, user));
+        return userMapper
+                .userToUserDto(userService
+                        .updateUser(userId, userMapper
+                                .updateUserDtoToUser(updateUserDto, userService.getUserById(userId)
+                                )
+                        )
+                );
     }
 
     @Override
