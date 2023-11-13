@@ -46,11 +46,14 @@ public class StoreControllerImpl implements StoreController {
 
     @Override
     public StoreDto updateStore(String userId, String storeId, UpdateStoreDto updateStoreDto) {
-        Store store = storeMapper.updateStoreDtoToStore(updateStoreDto);
-        store.setId(storeId);
-        //
         return storeMapper.storeToStoreDto(storeService
-                .updateStore(userId, storeId, updateStoreDto.getCategoryId(), store)
+                .updateStore(userId, storeId, updateStoreDto.getCategoryId(),
+                        storeMapper
+                                .updateStoreDtoToStore(updateStoreDto,
+                                        storeService
+                                                .getStore(userId, storeId)
+                                )
+                )
         );
     }
 

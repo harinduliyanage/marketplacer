@@ -38,8 +38,10 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store createStore(String userId, String categoryId, Store store) {
-        if (isNameAlreadyExists(store.getName())) {
-            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, store.getName()));
+        String name = store.getName();
+        //
+        if (isNameAlreadyExists(store.getId(), name)) {
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, name));
         } else {
             User user = userService.getUserById(userId);
             store.setUser(user);
@@ -73,17 +75,22 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store updateStore(String userId, String storeId, String categoryId, Store store) {
-        Store storeResponse = getStore(userId, storeId);
-        if (!storeResponse.getName().equals(store.getName()) && isNameAlreadyExists(store.getName())) {
-            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, store.getName()));
+        String name = store.getName();
+        //
+        if (isNameAlreadyExists(store.getId(), name)) {
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, name));
         } else {
-            //
-            Store updatedStore = storeRepository.save(store);
-            Category category = categoryService.getCategoryById(categoryId);
-            if (category.getCategoryType() != CategoryType.STORE) {
-                throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+            if (categoryId != null) {
+                Category category = categoryService.getCategoryById(categoryId);
+                //
+                if (category.getCategoryType() != CategoryType.STORE) {
+                    throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+                }
+                store.setCategory(category);
             }
-            store.setCategory(category);
+            store.setId(storeId);
+
+            Store updatedStore = storeRepository.save(store);
             log.info("Store has been successfully updated {}", updatedStore);
             return updatedStore;
         }
@@ -110,9 +117,10 @@ public class StoreServiceImpl implements StoreService {
         return storeRepository.findAll(pageable);
     }
 
-    private Boolean isNameAlreadyExists(String name) {
+    private Boolean isNameAlreadyExists(String storeId, String name) {
         QStore qStore = QStore.store;
-        BooleanExpression expression = qStore.name.eq(name);
+        BooleanExpression expression = storeId == null ? qStore.name.eq(name)
+                : qStore.name.eq(name).and(qStore.id.ne(storeId));
         return storeRepository.exists(expression);
     }
 }

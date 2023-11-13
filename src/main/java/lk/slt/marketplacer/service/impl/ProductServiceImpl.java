@@ -81,8 +81,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
-        storeService.getStore(userId, storeId);
-        //
         if (categoryId != null) {
             Category category = categoryService.getCategoryById(categoryId);
 
