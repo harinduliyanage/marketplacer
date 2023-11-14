@@ -33,7 +33,7 @@ public abstract class ProductMapper {
         target.setImages(product.getImages());
         target.setVideos(product.getVideos());
         target.setReOrderLevel(product.getReOrderLevel());
-        target.setCategory(mapCategory(product.getCategory()));
+        target.setCategory(categoryMapper.mapCategoryWithParents(product.getCategory()));
 
         return target;
     }
@@ -78,31 +78,4 @@ public abstract class ProductMapper {
 
     public abstract List<ProductDto> productListToProductDtoList(List<Product> productList);
 
-    private CategoryDto mapCategory(Category category) {
-        CategoryDto categoryDto = new CategoryDto();
-        //
-        categoryDto.setId(category.getId());
-        categoryDto.setName(category.getName());
-        categoryDto.setCategoryType(category.getCategoryType());
-        if (null != category.getParentCategory()) {
-            categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
-        }
-        return categoryDto;
-    }
-
-    private CategoryDto mapParentCategory(Category category) {
-        CategoryDto categoryDto = new CategoryDto();
-        //
-        if (category.getParentCategory() == null) {
-            categoryDto.setId(category.getId());
-            categoryDto.setName(category.getName());
-            categoryDto.setCategoryType(category.getCategoryType());
-        } else {
-            categoryDto.setId(category.getId());
-            categoryDto.setName(category.getName());
-            categoryDto.setCategoryType(category.getCategoryType());
-            categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
-        }
-        return categoryDto;
-    }
 }

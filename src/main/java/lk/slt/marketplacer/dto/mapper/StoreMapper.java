@@ -9,23 +9,43 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = SocialLinkMapper.class)
-public interface StoreMapper {
+public abstract class StoreMapper {
+    @Autowired
+    CategoryMapper categoryMapper;
+    @Autowired
+    SocialLinkMapper socialLinkMapper;
 
-    @Mapping(target = "categoryId", expression = "java(store.getCategory()==null? null : store.getCategory().getId())")
-    StoreDto storeToStoreDto(Store store);
-
+    public StoreDto storeToStoreDto(Store store){
+        StoreDto target = new StoreDto();
+        //
+        target.setId(store.getId());
+        target.setName(store.getName());
+        target.setAddress(store.getAddress());
+        target.setCategory(categoryMapper.mapCategoryWithParents(store.getCategory()));
+        target.setDescription(store.getDescription());
+        target.setWebsite(store.getWebsite());
+        target.setStoreStatus(store.getStoreStatus());
+        target.setSocialLinks(socialLinkMapper.socialLinkListToSocialLinkDtoList(store.getSocialLinks()));
+        target.setFax(store.getFax());
+        target.setEmail(store.getEmail());
+        target.setTelephone(store.getTelephone());
+        target.setBrFilePath(store.getBrFilePath());
+        target.setLogoFilePath(store.getLogoFilePath());
+        return  target;
+    }
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
-    Store storeDtoToStore(StoreDto storeDto);
+    public abstract  Store storeDtoToStore(StoreDto storeDto);
 
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
     @Mapping(target = "storeStatus", ignore = true)
-    Store createStoreDtoToStore(CreateStoreDto createStoreDto);
+    public abstract  Store createStoreDtoToStore(CreateStoreDto createStoreDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
@@ -51,7 +71,7 @@ public interface StoreMapper {
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "storeStatus", source = "storeStatus",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto, @MappingTarget Store store);
+    public abstract  Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto, @MappingTarget Store store);
 
-    List<StoreDto> storeListToStoreDtoList(List<Store> storeList);
+    public abstract  List<StoreDto> storeListToStoreDtoList(List<Store> storeList);
 }
