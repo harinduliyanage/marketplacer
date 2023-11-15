@@ -4,15 +4,17 @@ import lk.slt.marketplacer.dto.CreateCategoryDto;
 import lk.slt.marketplacer.dto.CategoryDto;
 import lk.slt.marketplacer.dto.UpdateCategoryDto;
 import lk.slt.marketplacer.model.Category;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class CategoryMapper {
-    //
+    @Named("categoryToCategoryDto")
     public CategoryDto categoryToCategoryDto(Category category) {
         CategoryDto target = new CategoryDto();
         target.setId(category.getId());
@@ -42,8 +44,21 @@ public abstract class CategoryMapper {
     @Mapping(target = "id", ignore = true)
     public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto);
 
+    @IterableMapping(qualifiedByName = "categoryToCategoryDto")
     public abstract List<CategoryDto> categoryListToCategoryDtoList(List<Category> categoryList);
 
+    public CategoryDto mapCategoryWithParents(Category category) {
+        CategoryDto categoryDto = new CategoryDto();
+        //
+        categoryDto.setId(category.getId());
+        categoryDto.setName(category.getName());
+        categoryDto.setCategoryType(category.getCategoryType());
+        if (null != category.getParentCategory()) {
+            categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
+        }
+        return  categoryDto;
+    }
+    //
     private List<CategoryDto> mapSubCategories(List<Category> subCategories) {
         return subCategories.stream()
                 .map(sub -> CategoryDto.builder()
@@ -52,5 +67,21 @@ public abstract class CategoryMapper {
                         .categoryType(sub.getCategoryType())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    private CategoryDto mapParentCategory(Category category) {
+        CategoryDto categoryDto = new CategoryDto();
+        //
+        if (category.getParentCategory() == null) {
+            categoryDto.setId(category.getId());
+            categoryDto.setName(category.getName());
+            categoryDto.setCategoryType(category.getCategoryType());
+        } else {
+            categoryDto.setId(category.getId());
+            categoryDto.setName(category.getName());
+            categoryDto.setCategoryType(category.getCategoryType());
+            categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
+        }
+        return categoryDto;
     }
 }

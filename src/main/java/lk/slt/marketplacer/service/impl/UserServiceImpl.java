@@ -30,12 +30,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        String id = user.getId();
         String username = user.getUsername();
+        String email = user.getEmail();
         //
-        if (isUserNameAlreadyExists(username)) {
+        if (isUserNameAlreadyExists(id, username)) {
             throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, username));
-        } else if (isEmailAlreadyExists(user.getEmail())) {
-            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, user.getEmail()));
+        } else if (isEmailAlreadyExists(id, email)) {
+            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
         } else {
             try {
                 String sub = keycloakService.searchByUsername(username).getId();
@@ -85,14 +87,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(String id, User user) {
-        User userResponse = getUserById(id);
         String username = user.getUsername();
         String email = user.getEmail();
-        if (!userResponse.getUsername().equals(username) && isUserNameAlreadyExists(username)) {
+        if (isUserNameAlreadyExists(id, username)) {
             throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, username));
-        } else if (!userResponse.getEmail().equals(email) && isEmailAlreadyExists(email)) {
+        } else if (isEmailAlreadyExists(id, email)) {
             throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
         } else {
+            user.setId(id);
             User updatedUser = userRepository.save(user);
             log.info("user has been successfully updated {}", updatedUser);
             return updatedUser;
@@ -107,15 +109,17 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private Boolean isUserNameAlreadyExists(String username) {
+    private Boolean isUserNameAlreadyExists(String id, String username) {
         QUser qUser = QUser.user;
-        BooleanExpression expression = qUser.username.eq(username);
+        BooleanExpression expression = id == null ? qUser.username.eq(username)
+                : qUser.username.eq(username).and(qUser.id.ne(id));
         return userRepository.exists(expression);
     }
 
-    private Boolean isEmailAlreadyExists(String email) {
+    private Boolean isEmailAlreadyExists(String id, String email) {
         QUser qUser = QUser.user;
-        BooleanExpression expression = qUser.email.eq(email);
+        BooleanExpression expression = id == null ? qUser.username.eq(email)
+                : qUser.email.eq(email).and(qUser.id.ne(id));
         return userRepository.exists(expression);
     }
 }

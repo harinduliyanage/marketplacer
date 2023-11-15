@@ -13,6 +13,7 @@ import lk.slt.marketplacer.service.ProductService;
 import lk.slt.marketplacer.service.StoreService;
 import lk.slt.marketplacer.util.CategoryType;
 import lk.slt.marketplacer.util.Constants;
+import lk.slt.marketplacer.util.ProductStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,10 +38,11 @@ public class ProductServiceImpl implements ProductService {
     public Product createProduct(String userId, String storeId, String categoryId, Product product) {
         Store store = storeService.getStore(userId, storeId);
         Category category = categoryService.getCategoryById(categoryId);
-        product.setStore(store);
         if (category.getCategoryType() != CategoryType.PRODUCT) {
-            throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+            throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
         }
+        product.setStore(store);
+        product.setProductStatus(ProductStatus.PENDING);
         product.setCategory(category);
         //
         Product savedProduct = productRepository.save(product);
@@ -60,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new ProductNotFoundException(String.format(Constants.PRODUCT_NOT_FOUND_MSG, storeId, store));
+            throw new ProductNotFoundException(String.format(Constants.PRODUCT_NOT_FOUND_MSG, productId, storeId));
         }
     }
 
@@ -79,14 +81,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
-        getProductById(userId, storeId, productId);
-        storeService.getStore(userId, storeId);
-        Category category = categoryService.getCategoryById(categoryId);
-
-        if (category.getCategoryType() != CategoryType.PRODUCT) {
-            throw new CategoryTypeInvalidException(Constants.INVALID_CATEGORY_TYPE_MSG);
+        if (categoryId != null) {
+            Category category = categoryService.getCategoryById(categoryId);
+            if (category.getCategoryType() != CategoryType.PRODUCT) {
+                throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
+            }
+            product.setCategory(category);
         }
-        product.setCategory(category);
+        product.setId(productId);
         //
         Product updatedProduct = productRepository.save(product);
         log.info("product has been successfully updated {}", updatedProduct);
