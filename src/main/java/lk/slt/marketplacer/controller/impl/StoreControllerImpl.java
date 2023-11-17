@@ -24,11 +24,11 @@ public class StoreControllerImpl implements StoreController {
 
     @Override
     public StoreDto createStore(String userId, CreateStoreDto createStoreDto) {
-        Store store = storeMapper.createStoreDtoToStore(createStoreDto);
-
         return storeMapper
                 .storeToStoreDto(storeService
-                        .createStore(userId, createStoreDto.getCategoryId(),store)
+                        .createStore(userId, createStoreDto.getCategoryId(),
+                                storeMapper.createStoreDtoToStore(createStoreDto)
+                        )
                 );
     }
 

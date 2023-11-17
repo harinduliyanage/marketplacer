@@ -42,28 +42,30 @@ public class StoreServiceImpl implements StoreService {
     public Store createStore(String userId, String categoryId, Store store) {
         String name = store.getName();
         //
-        if (isNameAlreadyExists(store.getId(), name)) {
-            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, name));
+        if (isNameAlreadyExists(name)) {
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, "name", name));
         } else {
-            User user = userService.getUserById(userId);
-            Category category = categoryService.getCategoryById(categoryId);
-            if (category.getCategoryType() != CategoryType.STORE) {
-                throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
-            }
-            //
             String id = store.getId();
             if (id != null) {
-                // Validate UUID
+                // Validate UUID format
                 try {
                     UUID.fromString(id);
-                    store.setId(id);
                 } catch (IllegalArgumentException exception) {
                     throw new StoreIdInvalidException(String.format(Constants.INVALID_STORE_ID_MSG, id));
+                }
+                // Check user given id already using
+                if (isIdAlreadyExists(id)) {
+                    throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, "id", id));
                 }
             } else {
                 store.setId(UUID.randomUUID().toString());
             }
             //
+            User user = userService.getUserById(userId);
+            Category category = categoryService.getCategoryById(categoryId);
+            if (category.getCategoryType() != CategoryType.STORE) {
+                throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
+            }
             store.setUser(user);
             store.setStoreStatus(StoreStatus.PENDING);
             store.setCategory(category);
@@ -94,7 +96,7 @@ public class StoreServiceImpl implements StoreService {
         String name = store.getName();
         //
         if (isNameAlreadyExists(store.getId(), name)) {
-            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, name));
+            throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, "name", name));
         } else {
             if (categoryId != null) {
                 Category category = categoryService.getCategoryById(categoryId);
@@ -132,10 +134,21 @@ public class StoreServiceImpl implements StoreService {
         return storeRepository.findAll(pageable);
     }
 
+    private Boolean isNameAlreadyExists(String name) {
+        QStore qStore = QStore.store;
+        BooleanExpression expression = qStore.name.eq(name);
+        return storeRepository.exists(expression);
+    }
+
     private Boolean isNameAlreadyExists(String storeId, String name) {
         QStore qStore = QStore.store;
-        BooleanExpression expression = storeId == null ? qStore.name.eq(name)
-                : qStore.name.eq(name).and(qStore.id.ne(storeId));
+        BooleanExpression expression = qStore.name.eq(name).and(qStore.id.ne(storeId));
+        return storeRepository.exists(expression);
+    }
+
+    private Boolean isIdAlreadyExists(String storeId) {
+        QStore qStore = QStore.store;
+        BooleanExpression expression = qStore.id.eq(storeId);
         return storeRepository.exists(expression);
     }
 }
