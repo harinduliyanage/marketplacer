@@ -13,5 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDto {
     private String id;
-    private List<OderDetailsDto> orderDetails;
+    private UserDto user;
+    private List<OrderDetailsDto> orderDetails;
 }

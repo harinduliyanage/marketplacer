@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrderDto {
-    private List<OderDetailsDto> orderDetails;
+    private List<CreateOrderDetailsDto> orderDetails;
 }

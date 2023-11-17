@@ -21,6 +21,10 @@ public class Order implements Serializable {
     @UuidGenerator
     private String id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", updatable = false)
+    private User user;
+
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<OrderDetails> orderDetails;
 }
