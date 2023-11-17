@@ -31,7 +31,7 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ProductDto getStoreProduct(String userId, String storeId, String productId) {
-        return productMapper.productToProductDto(productService.getProductById(userId, storeId, productId));
+        return productMapper.productToProductDto(productService.getProduct(userId, storeId, productId));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ProductControllerImpl implements ProductController {
         return productMapper.productToProductDto(productService
                 .updateProduct(userId, storeId, updateProductDto.getCategoryId(), productId, productMapper
                         .updateProductDtoToProduct(updateProductDto, productService
-                                .getProductById(userId, storeId, productId)
+                                .getProduct(userId, storeId, productId)
                         )
                 )
         );

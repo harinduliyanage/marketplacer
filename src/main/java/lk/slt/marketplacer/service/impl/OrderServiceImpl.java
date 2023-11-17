@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(String userId, Order order) {
-        User foundUser = userService.getUserById(userId);
+        User foundUser = userService.getUser(userId);
         //
         order.setUser(foundUser);
         Order savedOrder = orderRepository.save(order);
@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<Order> getOrders(String userId, Pageable pageable) {
-        User user = userService.getUserById(userId);
+        User user = userService.getUser(userId);
         QOrder qOrder = QOrder.order;
         BooleanExpression expression = qOrder.user.eq(user);
         return orderRepository.findAll(expression, pageable);
@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrder(String userId, String orderId) {
-        User user = userService.getUserById(userId);
+        User user = userService.getUser(userId);
         //
         QOrder qOrder = QOrder.order;
         BooleanExpression expression = qOrder.user.eq(user).and(qOrder.id.eq(orderId));

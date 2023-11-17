@@ -61,7 +61,7 @@ public class StoreServiceImpl implements StoreService {
                 store.setId(UUID.randomUUID().toString());
             }
             //
-            User user = userService.getUserById(userId);
+            User user = userService.getUser(userId);
             Category category = categoryService.getCategoryById(categoryId);
             if (category.getCategoryType() != CategoryType.STORE) {
                 throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
@@ -78,7 +78,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store getStore(String userId, String storeId) {
-        User user = userService.getUserById(userId);
+        User user = userService.getUser(userId);
         //
         QStore qStore = QStore.store;
         BooleanExpression expression = qStore.user.eq(user).and(qStore.id.eq(storeId));
@@ -123,7 +123,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Page<Store> getUserStores(String userId, Pageable pageable) {
-        User user = userService.getUserById(userId);
+        User user = userService.getUser(userId);
         QStore qStore = QStore.store;
         BooleanExpression expression = qStore.user.eq(user);
         return storeRepository.findAll(expression, pageable);

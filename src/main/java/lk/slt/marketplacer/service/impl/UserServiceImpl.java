@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(String id) {
+    public User getUser(String id) {
         QUser qUser = QUser.user;
         BooleanExpression expression = qUser.id.eq(id);
         Optional<User> found = userRepository.findOne(expression);
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User removeUser(String id) {
-        User user = getUserById(id);
+        User user = getUser(id);
         userRepository.deleteById(id);
         log.info("user has been successfully deleted {}", user);
         return user;

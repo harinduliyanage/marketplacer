@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 public interface ProductService {
     public Product createProduct(String userId, String storeId, String categoryId, Product product);
 
-    public Product getProductById(String userId, String storeId, String productId);
+    public Product getProduct(String userId, String storeId, String productId);
 
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable);
 
@@ -16,4 +16,6 @@ public interface ProductService {
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product);
 
     public Product removeProduct(String userId, String storeId, String productId);
+
+    public Product getProductById(String productId);
 }

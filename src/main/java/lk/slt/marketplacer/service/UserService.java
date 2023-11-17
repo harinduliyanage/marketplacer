@@ -11,7 +11,7 @@ public interface UserService {
 
     public User createUser(User user);
 
-    public User getUserById(String id);
+    public User getUser(String id);
 
     public Page<User> getUsers(String sub, String email, Pageable pageable);
 
