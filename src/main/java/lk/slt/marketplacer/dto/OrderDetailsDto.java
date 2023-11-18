@@ -1,5 +1,6 @@
 package lk.slt.marketplacer.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lk.slt.marketplacer.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderDetailsDto {
     private String id;
+    @JsonIgnore
     private Product product;
     private Double price;
     private Double units;

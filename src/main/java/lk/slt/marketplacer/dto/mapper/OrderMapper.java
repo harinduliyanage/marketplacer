@@ -11,7 +11,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { OrderDetailsMapper.class })
 public interface OrderMapper {
     OrderDto orderToOrderDto(Order order);
 
@@ -27,5 +27,5 @@ public interface OrderMapper {
     Order updateOrderDtoToOrder(
             UpdateOrderDto updateOrderDto, @MappingTarget Order order);
 
-    List<OrderDto> orderListToOrderDtoList(List<Order> storeList);
+    List<OrderDto> orderListToOrderDtoList(List<Order> orderList);
 }
