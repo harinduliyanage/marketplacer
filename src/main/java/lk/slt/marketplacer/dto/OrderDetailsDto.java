@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderDetailsDto {
     private String id;
-    @JsonIgnore
+    @JsonIgnore // @JsonIgnore annotation temporally added to product loading issue resolver
     private Product product;
     private Double price;
     private Double units;
