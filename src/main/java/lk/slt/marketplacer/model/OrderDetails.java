@@ -17,7 +17,7 @@ public class OrderDetails implements Serializable {
     @Id
     @UuidGenerator
     private String id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", updatable = false)
     @ToString.Exclude
     private Product product;
