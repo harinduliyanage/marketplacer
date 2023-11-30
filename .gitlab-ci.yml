@@ -28,6 +28,8 @@ package:
   before_script:
     # Fetch values from Parameter Store
     - echo "Logging in to ECR"
+    - echo pwd
+    - echo ls -a
     - amazon-linux-extras install docker
   script:
     - echo "Building Docker image"
