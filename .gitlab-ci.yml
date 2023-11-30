@@ -1,0 +1,46 @@
+stages:
+- build
+- package
+- deploy
+
+variables:
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+  ECR_REGISTRY: 694453004158.dkr.ecr.us-west-2.amazonaws.com
+  DOCKER_HOST: tcp://docker:2375
+
+build:
+  stage: build
+  image:
+    name: gradle:7.4-jdk17-alpine
+  before_script:
+    - GRADLE_USER_HOME="$(pwd)/.gradle"
+    - export GRADLE_USER_HOME
+  script:
+    - ./gradlew clean build
+
+package:
+  stage: package
+  image:
+    name: amazon/aws-cli
+    entrypoint: [ "" ]
+  services:
+    - docker:dind
+  before_script:
+    # Fetch values from Parameter Store
+    - echo "Logging in to ECR"
+    - amazon-linux-extras install docker
+  script:
+    - echo "Building Docker image"
+    - docker build -t $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG-d .
+    - echo "Pushing Docker image to ECR"
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REGISTRY
+    - docker push $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG-d
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to Kubernetes"
+    - kubectl config get-contexts
+    - kubectl config use-context slt6491334/marketplace-backend:dev-agent
+    - kubectl apply -f ./manifests/deployment.yaml -n dev
+    - kubectl apply -f ./manifests/service.yaml -n dev
