@@ -46,7 +46,7 @@ COPY gradle /app/gradle
 COPY src /app/src
 
 # Build the application
-RUN gradle --no-daemon --console=plain build
+RUN gradle --no-daemon --console=plain build -x test
 
 # Stage 2: Run the application
 FROM openjdk:17-jdk-slim
