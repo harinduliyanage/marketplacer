@@ -17,8 +17,61 @@ spec:
           image: 694453004158.dkr.ecr.us-west-2.amazonaws.com/marketplacer-backend:<VERSION>
           ports:
             - containerPort: 8089
-          envFrom:
-            - configMapRef:
-                name: marketplacer-backend-configmap
-#            - secretRef:
-#                name: marketplacer-backend-secret
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: db_host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: db_port
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: db_user
+            - name: DB_PWD
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: db_pwd
+            - name: KEYCLOAK_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: keycloak_base_url
+            - name: KEYCLOAK_REALM
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: keycloak_realm
+            - name: S3_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: s3_bucket_name
+            - name: KEYCLOAK_TRAGET_REALM
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: keycloak_target_realm
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: aws_access_key
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: aws_secret_key
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: aws_region
+
+
