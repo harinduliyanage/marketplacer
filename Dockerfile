@@ -1,5 +1,5 @@
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY build/libs/*.jar app.jar
+WORKDIR /app
+COPY build/libs/marketplacer-0.0.1-SNAPSHOT.jar /app/
 EXPOSE 8089
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java", "-jar", "marketplacer-0.0.1-SNAPSHOT.jar"]

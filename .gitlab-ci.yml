@@ -28,15 +28,17 @@ package:
   before_script:
     # Fetch values from Parameter Store
     - echo "Logging in to ECR"
-    - echo pwd
-    - echo ls -a
+    - pwd
+    - ls -a
+    - cd build/libs
+    - ls -a
     - amazon-linux-extras install docker
   script:
     - echo "Building Docker image"
-    - docker build -t $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG-d .
+    - docker build -t $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG .
     - echo "Pushing Docker image to ECR"
     - aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REGISTRY
-    - docker push $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG-d
+    - docker push $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG
 
 deploy:
   stage: deploy
@@ -44,5 +46,8 @@ deploy:
     - echo "Deploying to Kubernetes"
     - kubectl config get-contexts
     - kubectl config use-context slt6491334/marketplace-backend:dev-agent
+    - sed -i "s/<VERSION>/${IMAGE_TAG}/g" ./manifests/deployment.yaml
     - kubectl apply -f ./manifests/deployment.yaml -n dev
     - kubectl apply -f ./manifests/service.yaml -n dev
+  only:
+    - develop

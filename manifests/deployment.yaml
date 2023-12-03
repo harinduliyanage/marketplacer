@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: marketplacer-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: marketplacer-backend
+  template:
+    metadata:
+      labels:
+        app: marketplacer-backend
+    spec:
+      containers:
+        - name: marketplacer-backend
+          image: 694453004158.dkr.ecr.us-west-2.amazonaws.com/marketplacer-backend:<VERSION>
+          ports:
+            - containerPort: 8089
+          envFrom:
+            - configMapRef:
+                name: marketplacer-backend-configmap
+#            - secretRef:
+#                name: marketplacer-backend-secret
