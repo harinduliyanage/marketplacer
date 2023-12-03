@@ -20,6 +20,7 @@ build:
   artifacts:
     paths:
       - build/libs/marketplacer-0.0.1-SNAPSHOT.jar
+    expire_in: 2 hrs
 
 package:
   stage: package
@@ -53,7 +54,6 @@ deploy:
     - sed -i "s/<VERSION>/${IMAGE_TAG}/g" ./manifests/deployment.yaml
     - kubectl apply -f ./manifests/deployment.yaml -n dev
     - kubectl apply -f ./manifests/service.yaml -n dev
-    - rm -rf build/libs/marketplacer-0.0.1-SNAPSHOT.jar
   dependencies:
     - package
   only:
