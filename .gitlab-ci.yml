@@ -43,6 +43,9 @@ package:
 
 deploy:
   stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [ "" ]
   script:
     - echo "Deploying to Kubernetes"
     - kubectl config get-contexts
