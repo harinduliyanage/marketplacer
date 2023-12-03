@@ -1,7 +1,7 @@
 stages:
-- build
-- package
-- deploy
+  - build
+  - package
+  - deploy
 
 variables:
   IMAGE_TAG: $CI_COMMIT_SHORT_SHA
@@ -21,6 +21,8 @@ build:
     paths:
       - build/libs/marketplacer-0.0.1-SNAPSHOT.jar
     expire_in: 2 hrs
+  only:
+    - develop
 
 package:
   stage: package
@@ -41,6 +43,8 @@ package:
     - docker push $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG
   dependencies:
     - build
+  only:
+    - develop
 
 deploy:
   stage: deploy
