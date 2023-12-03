@@ -18,6 +18,11 @@ spec:
           ports:
             - containerPort: 8089
           env:
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: db_name
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
