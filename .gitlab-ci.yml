@@ -17,6 +17,9 @@ build:
     - export GRADLE_USER_HOME
   script:
     - ./gradlew clean build
+  artifacts:
+    paths:
+      - build/libs/marketplacer-0.0.1-SNAPSHOT.jar
 
 package:
   stage: package
@@ -28,10 +31,6 @@ package:
   before_script:
     # Fetch values from Parameter Store
     - echo "Logging in to ECR"
-    - pwd
-    - ls -a
-    - cd build/libs
-    - ls -a
     - amazon-linux-extras install docker
   script:
     - echo "Building Docker image"
@@ -39,6 +38,8 @@ package:
     - echo "Pushing Docker image to ECR"
     - aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REGISTRY
     - docker push $ECR_REGISTRY/marketplacer-backend:$IMAGE_TAG
+  dependencies:
+    - build
 
 deploy:
   stage: deploy
@@ -49,5 +50,8 @@ deploy:
     - sed -i "s/<VERSION>/${IMAGE_TAG}/g" ./manifests/deployment.yaml
     - kubectl apply -f ./manifests/deployment.yaml -n dev
     - kubectl apply -f ./manifests/service.yaml -n dev
+    - rm -rf build/libs/marketplacer-0.0.1-SNAPSHOT.jar
+  dependencies:
+    - package
   only:
     - develop
