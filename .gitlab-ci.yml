@@ -53,6 +53,7 @@ deploy:
     entrypoint: [ "" ]
   script:
     - echo "Deploying to Kubernetes"
+    - ls -a
     - kubectl config get-contexts
     - kubectl config use-context slt6491334/marketplace-backend:dev-agent
     - sed -i "s/<VERSION>/${IMAGE_TAG}/g" ./manifests/deployment.yaml
