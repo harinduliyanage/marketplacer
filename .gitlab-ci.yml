@@ -23,6 +23,8 @@ build:
     expire_in: 2 hrs
   only:
     - develop
+    - qa
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 package:
   stage: package
@@ -45,16 +47,16 @@ package:
     - build
   only:
     - develop
+    - qa
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
-deploy:
+deploy_dev:
   stage: deploy
   image:
     name: bitnami/kubectl:latest
     entrypoint: [ "" ]
   script:
     - echo "Deploying to Kubernetes"
-    - ls -a
-    - kubectl config get-contexts
     - kubectl config use-context slt6491334/marketplace-backend:dev-agent
     - sed -i "s/<VERSION>/${IMAGE_TAG}/g" ./manifests/deployment.yaml
     - kubectl apply -f ./manifests/deployment.yaml -n dev
@@ -63,3 +65,37 @@ deploy:
     - package
   only:
     - develop
+
+deploy_qa:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [ "" ]
+  script:
+    - echo "Deploying to Kubernetes"
+    - kubectl config use-context slt6491334/marketplace-backend:dev-agent
+    - sed -i "s/<VERSION>/${IMAGE_TAG}/g" ./manifests/deployment.yaml
+    - kubectl apply -f ./manifests/deployment.yaml -n qa
+    - kubectl apply -f ./manifests/service.yaml -n qa
+  dependencies:
+    - package
+  only:
+    - qa
+
+
+#deploy_prod:
+#  stage: deploy
+#  image:
+#    name: bitnami/kubectl:latest
+#    entrypoint: [ "" ]
+#  script:
+#    - echo "Deploying to Kubernetes"
+#    - kubectl config get-contexts
+#    - kubectl config use-context slt6491334/marketplace-backend:dev-agent
+#    - sed -i "s/<VERSION>/${IMAGE_TAG}/g" ./manifests/deployment.yaml
+#   - kubectl apply -f ./manifests/deployment.yaml -n qa
+#    - kubectl apply -f ./manifests/service.yaml -n qa
+#  dependencies:
+#    - package
+#  only:
+#    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
