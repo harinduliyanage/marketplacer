@@ -53,6 +53,16 @@ spec:
                 configMapKeyRef:
                   name: marketplacer-backend-configmap
                   key: keycloak_realm
+            - name: KEYCLOAK_ADMIN_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: keycloak_admin_client_id
+            - name: KEYCLOAK_ADMIN_CLIENT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: marketplacer-backend-configmap
+                  key: keycloak_admin_client_secret
             - name: S3_BUCKET_NAME
               valueFrom:
                 configMapKeyRef:
