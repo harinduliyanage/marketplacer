@@ -58,7 +58,7 @@ spec:
                 configMapKeyRef:
                   name: marketplacer-backend-configmap
                   key: s3_bucket_name
-            - name: KEYCLOAK_TRAGET_REALM
+            - name: KEYCLOAK_TARGET_REALM
               valueFrom:
                 configMapKeyRef:
                   name: marketplacer-backend-configmap
