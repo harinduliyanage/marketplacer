@@ -1,7 +1,7 @@
 {
   "realm": "marketplace",
-  "auth-server-url": "https://auth.fitoncollection.com",
-  "resource": "marketplace-client",
+  "auth-server-url": "https://dev-auth.fitoncollection.com",
+  "resource": "partner-marketplace-client",
   "credentials": {
     "secret": "secret"
   }
