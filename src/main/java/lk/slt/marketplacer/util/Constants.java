@@ -17,5 +17,6 @@ public class Constants {
     public static final String CATEGORY_NOT_FOUND_MSG = "Category '%s' not found";
     public static final String CATEGORY_ALREADY_EXISTS_MSG = "Category already exists given name '%s'";
     public static final String INVALID_CATEGORY_TYPE_MSG = "Invalid category type of given category id '%s'";
+    public static final String ADDRESS_NOT_FOUND_MSG = "can not found address for given user id '%s' , address id '%s'";
 
 }
