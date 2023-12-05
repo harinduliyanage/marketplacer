@@ -45,7 +45,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserDto getUser(String userId) {
-        return userMapper.userToUserDto(userService.getUserById(userId));
+        return userMapper.userToUserDto(userService.getUser(userId));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class UserControllerImpl implements UserController {
         return userMapper
                 .userToUserDto(userService
                         .updateUser(userId, userMapper
-                                .updateUserDtoToUser(updateUserDto, userService.getUserById(userId)
+                                .updateUserDtoToUser(updateUserDto, userService.getUser(userId)
                                 )
                         )
                 );
