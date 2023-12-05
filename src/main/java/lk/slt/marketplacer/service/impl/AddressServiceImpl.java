@@ -33,7 +33,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Address createUserAddress(String userId, Address address) {
-        User found = userService.getUserById(userId);
+        User found = userService.getUser(userId);
         Address save = addressRepository.save(address);
 
         if (null == found.getAddresses()){
@@ -51,7 +51,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address getAddressByUserIdAndId(String userId, String id) {
-        User found = userService.getUserById(userId);
+        User found = userService.getUser(userId);
         List<Address> addresses = found.getAddresses();
         if (null != addresses){
             Optional<Address> optional = addresses.stream()
@@ -76,7 +76,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Page<Address> getAddressByUserId(String userId, Pageable pageable) {
-        User found = userService.getUserById(userId);
+        User found = userService.getUser(userId);
         List<Address> addresses = found.getAddresses();
         return findAddressesPage(addresses, pageable);
     }
@@ -94,7 +94,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Address removeAddress(String userId, String id) {
         Address found = getAddressByUserIdAndId(userId, id);
-        User user = userService.getUserById(userId);
+        User user = userService.getUser(userId);
         user.getAddresses().remove(found);
         userService.updateUser(userId, user);
         log.info("address has been successfully removed {}", found);
