@@ -41,7 +41,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public List<OrderDetails> getOrderDetails(String userId, String orderId) {
-        return orderService.getOrder(userId, orderId).getOrderDetails();
+        Order order = orderService.getOrder(userId, orderId);
+        return order.getOrderDetails();
     }
 
     @Override
