@@ -1,0 +1,20 @@
+package lk.slt.marketplacer.dto.mapper;
+
+
+import lk.slt.marketplacer.dto.CartItemsDto;
+import lk.slt.marketplacer.dto.UpdateCartItemsDto;
+import lk.slt.marketplacer.model.CartItems;
+import lk.slt.marketplacer.service.ProductService;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+@Mapper(componentModel = "spring", uses = {ProductService.class})
+public interface CartItemsMapper {
+    CartItemsDto cartItemsToCartItemsDto(CartItems cartItems);
+
+    CartItems cartItemsDtoToCartItems(CartItemsDto cartItemsDto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "productId", target = "product")
+    CartItems updateCartItemsDtoToCartItems(UpdateCartItemsDto updateCartItemsDto);
+}
