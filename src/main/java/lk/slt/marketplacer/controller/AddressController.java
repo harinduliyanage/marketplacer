@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "address-services")
-@RequestMapping("/api/v1/user/{userId}/addresses")
+@RequestMapping("/api/v1/users/{userId}/addresses")
 public interface AddressController {
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     public AddressDto createAddress(@PathVariable("userId") String userId,
