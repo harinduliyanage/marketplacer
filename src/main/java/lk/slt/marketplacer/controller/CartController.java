@@ -6,7 +6,7 @@ import lk.slt.marketplacer.dto.CartDto;
 import lk.slt.marketplacer.dto.UpdateCartDto;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Cart-services")
+@Tag(name = "cart-services")
 @RequestMapping("/api/v1/users/{userId}/cart")
 public interface CartController {
     @GetMapping(value = "/{cartId}", produces = {"application/json"})
