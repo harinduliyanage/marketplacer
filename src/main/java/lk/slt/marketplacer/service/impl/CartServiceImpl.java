@@ -38,12 +38,12 @@ public class CartServiceImpl implements CartService {
     public Cart getCart(String userId, String cartId) {
         User foundUser = userService.getUser(userId);
         QCart qCart = QCart.cart;
-        BooleanExpression expression = qCart.id.eq(cartId);
+        BooleanExpression expression = qCart.user.eq(foundUser).and(qCart.id.eq(cartId));
         Optional<Cart> found = cartRepository.findOne(expression);
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new CartNotFoundException(String.format(Constants.CART_NOT_FOUND_MSG, foundUser));
+            throw new CartNotFoundException(String.format(Constants.CART_NOT_FOUND_MSG, cartId, userId));
         }
     }
 
@@ -56,7 +56,7 @@ public class CartServiceImpl implements CartService {
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new CartNotFoundException(String.format(Constants.CART_NOT_FOUND_MSG, foundUser));
+            throw new CartNotFoundException(String.format(Constants.USER_CART_NOT_FOUND_MSG, userId));
         }
     }
 
@@ -67,9 +67,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart updateCart(String userId, String cartId, Cart cart) {
-        userService.getUser(userId);
+        Cart foundCart = getCart(userId, cartId);
         //
         cart.setId(cartId);
+        cart.setUser(foundCart.getUser());
         Cart updatedCart = cartRepository.save(cart);
         log.info("cart has been successfully updated {}", updatedCart);
         return updatedCart;
