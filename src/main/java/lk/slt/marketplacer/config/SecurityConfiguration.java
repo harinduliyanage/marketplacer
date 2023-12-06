@@ -38,7 +38,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "api/v1/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/stores/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/v1/users/{userId}/stores/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/v1/users/{userId}/orders/**").permitAll()
                         //Authenticate access
                         .anyRequest().authenticated()
                 )
