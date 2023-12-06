@@ -25,5 +25,5 @@ public class Cart implements Serializable {
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    private List<OrderDetails> orderDetails;
+    private List<CartItems> cartItems;
 }
