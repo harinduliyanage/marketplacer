@@ -21,5 +21,6 @@ public class Constants {
     public static final String ORDER_NOT_FOUND_MSG = "Order '%s' not found of user '%s'";
     public static final String ORDER_DETAILS_NOT_FOUND_MSG = "Order Details '%s' not found of order '%s'";
     public static final String ADDRESS_NOT_FOUND_MSG = "can not found address for given user id '%s' , address id '%s'";
+    public static final String CART_NOT_FOUND_MSG = "Cart '%s' not found of user '%s'";
 
 }
