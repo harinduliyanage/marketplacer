@@ -21,6 +21,8 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${KEYCLOAK_BASE_URL:http://localhost:8080}/realms/${KEYCLOAK_TARGET_REALM:marketplacer}/protocol/openid-connect/certs
+  main:
+    allow-circular-references: true
 
 
 springdoc:
@@ -46,3 +48,4 @@ keycloak:
   targetRealm: ${KEYCLOAK_TARGET_REALM:marketplacer}
   adminClientId: ${KEYCLOAK_ADMIN_CLIENT_ID:marketplacer-backend}
   adminClientSecret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:xxxx}
+
