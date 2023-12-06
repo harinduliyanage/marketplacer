@@ -4,9 +4,11 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.UserAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.UserNotFoundException;
 import lk.slt.marketplacer.exceptions.UsernameInvalidException;
+import lk.slt.marketplacer.model.Cart;
 import lk.slt.marketplacer.model.QUser;
 import lk.slt.marketplacer.model.User;
 import lk.slt.marketplacer.repository.UserRepository;
+import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.UserService;
 import lk.slt.marketplacer.util.Constants;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private KeycloakServiceImpl keycloakService;
 
+    @Autowired
+    private CartService cartService;
+
     @Override
     public User createUser(User user) {
         String id = user.getId();
@@ -43,6 +48,8 @@ public class UserServiceImpl implements UserService {
                 String sub = keycloakService.searchByUsername(username).getId();
                 user.setSub(sub);
                 User savedUser = userRepository.save(user);
+                // Create new cart to user
+                cartService.createCart(savedUser.getId(),new Cart());
                 //
                 log.info("user has been successfully created {}", savedUser);
                 //
