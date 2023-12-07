@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,16 +49,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getUserCart(String userId) {
+    public List<Cart> getUserCarts(String userId) {
         User foundUser = userService.getUser(userId);
         QCart qCart = QCart.cart;
         BooleanExpression expression = qCart.user.eq(foundUser);
-        Optional<Cart> found = cartRepository.findOne(expression);
-        if (found.isPresent()) {
-            return found.get();
-        } else {
-            throw new CartNotFoundException(String.format(Constants.USER_CART_NOT_FOUND_MSG, userId));
-        }
+        return (List<Cart>) cartRepository.findAll(expression);
     }
 
     @Override

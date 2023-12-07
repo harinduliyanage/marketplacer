@@ -9,6 +9,8 @@ import lk.slt.marketplacer.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class CartControllerImpl implements CartController {
     @Autowired
@@ -23,9 +25,9 @@ public class CartControllerImpl implements CartController {
     }
 
     @Override
-    public CartDto getCarts(String userId) {
-        Cart cart = cartService.getUserCart(userId);
-        return cartMapper.cartToCartDto(cart);
+    public List<CartDto> getCarts(String userId) {
+        List<Cart> cart = cartService.getUserCarts(userId);
+        return cartMapper.cartListToCartDtoList(cart);
     }
 
     @Override
