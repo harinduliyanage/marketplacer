@@ -20,7 +20,9 @@ public class Constants {
     public static final String INVALID_CATEGORY_TYPE_MSG = "Invalid category type of given category id '%s'";
     public static final String ORDER_NOT_FOUND_MSG = "Order '%s' not found of user '%s'";
     public static final String ORDER_DETAILS_NOT_FOUND_MSG = "Order Details '%s' not found of order '%s'";
-    public static final String ADDRESS_NOT_FOUND_MSG = "can not found address for given user id '%s' , address id '%s'";
+    public static final String ADDRESS_NOT_FOUND_MSG = "Can't found address for given user id '%s' , address id '%s'";
     public static final String CART_NOT_FOUND_MSG = "Cart '%s' not found of user '%s'";
+    public static final String INVALID_DISCOUNT_MSG = "The discount amount must be less than the price";
+    public static final String ORDER_NULL_ATTRIBUTE_MSG = "userId & cartId must be not null or orderDetails must be not null";
 
 }
