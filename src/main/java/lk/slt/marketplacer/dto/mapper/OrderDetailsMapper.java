@@ -27,8 +27,6 @@ public interface OrderDetailsMapper {
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "units", source = "units",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "discount", source = "discount",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     OrderDetails updateOrderDetailsDtoToOrderDetails(
             UpdateOrderDetailsDto updateOrderDetailsDto, @MappingTarget OrderDetails orderDetails);
 
