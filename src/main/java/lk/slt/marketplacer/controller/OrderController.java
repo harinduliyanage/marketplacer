@@ -11,20 +11,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "order-services")
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 public interface OrderController {
-    @PostMapping(value = "/{userId}/orders", consumes = {"application/json"}, produces = {"application/json"})
-    public OrderDto createOrder(@PathVariable("userId") String userId, @Valid @RequestBody CreateOrderDto createOrderDto);
+    @PostMapping(value = "/orders", consumes = {"application/json"}, produces = {"application/json"})
+    public OrderDto createOrder(@Valid @RequestBody CreateOrderDto createOrderDto);
 
-    @GetMapping(value = "/{userId}/orders", produces = {"application/json"})
+    @GetMapping(value = "/users/{userId}/orders", produces = {"application/json"})
     public ListResponseDto<OrderDto> getOrders(@PathVariable("userId") String userId, @ParameterObject Pageable pageable);
 
-    @GetMapping(value = "/{userId}/orders/{orderId}", produces = {"application/json"})
+    @GetMapping(value = "/users/{userId}/orders/{orderId}", produces = {"application/json"})
     public OrderDto getOrder(@PathVariable("userId") String userId, @PathVariable("orderId") String orderId);
 
-    @PatchMapping(value = "/{userId}/orders/{orderId}", consumes = {"application/json"}, produces = {"application/json"})
+    @PatchMapping(value = "/users/{userId}/orders/{orderId}", consumes = {"application/json"}, produces = {"application/json"})
     public OrderDto updateOrder(@PathVariable("userId") String userId, @PathVariable("orderId") String orderId, @Valid @RequestBody UpdateOrderDto updateOrderDto);
 
-    @DeleteMapping(value = "/{userId}/orders/{orderId}", produces = {"application/json"})
+    @DeleteMapping(value = "/users/{userId}/orders/{orderId}", produces = {"application/json"})
     public OrderDto removeOrder(@PathVariable("userId") String userId, @PathVariable("orderId") String orderId);
 }
