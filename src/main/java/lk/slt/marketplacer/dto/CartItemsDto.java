@@ -16,5 +16,4 @@ public class CartItemsDto {
     @JsonIgnore // @JsonIgnore annotation temporally added to product loading issue resolver
     private Product product;
     private Double units;
-    private Double discount;
 }
