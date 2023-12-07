@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class UpdateCartItemsDto {
     private String productId;
     private Double units;
-    private Double discount;
 }

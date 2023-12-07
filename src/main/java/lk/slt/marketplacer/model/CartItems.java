@@ -21,7 +21,6 @@ public class CartItems implements Serializable {
     @JoinColumn(name = "product_id", updatable = false)
     @ToString.Exclude
     private Product product;
-
+    //
     private Double units;
-    private Double discount;
 }
