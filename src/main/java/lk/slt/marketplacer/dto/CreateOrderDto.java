@@ -12,5 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrderDto {
+    private String userId;
+    private String cartId;
     private List<CreateOrderDetailsDto> orderDetails;
 }

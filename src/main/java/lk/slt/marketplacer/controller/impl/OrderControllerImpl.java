@@ -18,12 +18,10 @@ public class OrderControllerImpl implements OrderController {
     OrderMapper orderMapper;
 
     @Override
-    public OrderDto createOrder(String userId, CreateOrderDto createOrderDto) {
-        return orderMapper.orderToOrderDto(
-                orderService.createOrder(userId, orderMapper
-                        .createOrderDtoToOrder(createOrderDto)
-                )
-        );
+    public OrderDto createOrder(CreateOrderDto createOrderDto) {
+        Order order = orderMapper.createOrderDtoToOrder(createOrderDto);
+        Order savedOrder = orderService.createOrder(createOrderDto.getUserId(), createOrderDto.getCartId(), order);
+        return orderMapper.orderToOrderDto(savedOrder);
     }
 
     @Override

@@ -11,7 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateOrderDetailsDto {
     private String productId;
-    private Double price;
     private Double units;
-    private Double discount;
 }
