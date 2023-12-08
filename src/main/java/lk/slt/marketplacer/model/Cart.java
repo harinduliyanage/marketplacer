@@ -21,9 +21,6 @@ public class Cart implements Serializable {
     @UuidGenerator
     private String id;
 
-    @OneToOne
-    private User user;
-
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<CartItems> cartItems;
 }
