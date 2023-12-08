@@ -24,5 +24,6 @@ public class Constants {
     public static final String CART_NOT_FOUND_MSG = "Cart '%s' not found of user '%s'";
     public static final String INVALID_DISCOUNT_MSG = "The discount amount must be less than the price";
     public static final String ORDER_NULL_ATTRIBUTE_MSG = "userId & cartId must be not null or orderDetails must be not null";
+    public static final String CART_EMPTY_MSG = "Cart is empty!";
 
 }

@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import lk.slt.marketplacer.exceptions.CartEmtyException;
 import lk.slt.marketplacer.exceptions.DiscountInvalidException;
 import lk.slt.marketplacer.exceptions.OrderNullAttributeException;
 import lk.slt.marketplacer.exceptions.OrderNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +37,14 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetails> orderDetailsList;
         //
         if (userId != null && cartId != null) {
-            Cart foundCart = cartService.getCart(userId, cartId);
+            User foundUser = userService.getUser(userId);
+            Cart cart = foundUser.getCart();
+            if(cart.getCartItems().isEmpty()){
+                throw new CartEmtyException(Constants.CART_EMPTY_MSG);
+            }
             //
-            order.setUser(foundCart.getUser());
-            orderDetailsList = foundCart.getCartItems().stream().map(cartItems -> {
+            order.setUser(foundUser);
+            orderDetailsList = cart.getCartItems().stream().map(cartItems -> {
                 Product product = cartItems.getProduct();
                 double discount = product.getDiscountAmount();
                 double price = calPrice(product.getPrice(), discount, product.getDiscountType());
@@ -51,6 +57,9 @@ public class OrderServiceImpl implements OrderService {
                 orderDetails.setUnits(cartItems.getUnits());
                 return orderDetails;
             }).toList();
+            // Clear cart items
+            cart.setCartItems(new ArrayList<>());
+            cartService.updateCart(userId, cartId, cart);
         } else if (order.getOrderDetails() != null && !order.getOrderDetails().isEmpty()) {
             orderDetailsList = order.getOrderDetails();
             //
@@ -113,12 +122,13 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
+
     private double calPrice(double price, double discount, DiscountType discountType) {
         if (discountType == DiscountType.FLAT) {
             price -= discount;
         }
         if (discountType == DiscountType.PERCENTAGE) {
-            price -= price * discount / 100;
+            price -= price * discount * 0.01;
         }
         if (price < 0) {
             throw new DiscountInvalidException(Constants.INVALID_DISCOUNT_MSG);
