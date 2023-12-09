@@ -1,10 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import lk.slt.marketplacer.exceptions.CartEmtyException;
-import lk.slt.marketplacer.exceptions.DiscountInvalidException;
-import lk.slt.marketplacer.exceptions.OrderNullAttributeException;
-import lk.slt.marketplacer.exceptions.OrderNotFoundException;
+import lk.slt.marketplacer.exceptions.*;
 import lk.slt.marketplacer.model.*;
 import lk.slt.marketplacer.repository.OrderRepository;
 import lk.slt.marketplacer.service.AddressService;
@@ -42,7 +39,11 @@ public class OrderServiceImpl implements OrderService {
         if (userId != null && cartId != null) {
             User foundUser = userService.getUser(userId);
             Cart cart = foundUser.getCart();
-            if(cart.getCartItems().isEmpty()){
+            //
+            if (!cart.getId().equals(cartId)) {
+                throw new CartForbiddenException(String.format(Constants.CART_FORBIDDEN_MSG, cartId));
+            }
+            if (cart.getCartItems().isEmpty()) {
                 throw new CartEmtyException(Constants.CART_EMPTY_MSG);
             }
             // Save shipping and billing addresses
