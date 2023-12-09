@@ -66,6 +66,9 @@ public class OrderServiceImpl implements OrderService {
             cart.setCartItems(new ArrayList<>());
             cartService.updateCart(userId, cartId, cart);
         } else if (order.getOrderDetails() != null && !order.getOrderDetails().isEmpty()) {
+            // Save shipping and billing addresses
+            addressService.createUserAddress(userId, order.getBillingAddress());
+            addressService.createUserAddress(userId, order.getShippingAddress());
             orderDetailsList = order.getOrderDetails();
             //
             for (OrderDetails orderDetails : orderDetailsList) {

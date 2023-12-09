@@ -31,29 +31,37 @@ public class AddressServiceImpl implements AddressService {
     private AddressRepository addressRepository;
 
     @Override
+    public Address createAddress(Address address) {
+        Address saveAddress = addressRepository.save(address);
+        log.info("address has been successfully saved {}", saveAddress);
+
+        return saveAddress;
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Address createUserAddress(String userId, Address address) {
         User found = userService.getUser(userId);
-        Address save = addressRepository.save(address);
+        Address saveAddress = addressRepository.save(address);
 
-        if (null == found.getAddresses()){
+        if (null == found.getAddresses()) {
             ArrayList<Address> addresses = new ArrayList<>();
-            addresses.add(save);
+            addresses.add(saveAddress);
             found.setAddresses(addresses);
         } else {
-            found.getAddresses().add(save);
+            found.getAddresses().add(saveAddress);
         }
         userService.updateUser(userId, found);
-        log.info("address has been successfully saved {}", save);
+        log.info("address has been successfully saved {}", saveAddress);
 
-        return save;
+        return saveAddress;
     }
 
     @Override
     public Address getAddressByUserIdAndId(String userId, String id) {
         User found = userService.getUser(userId);
         List<Address> addresses = found.getAddresses();
-        if (null != addresses){
+        if (null != addresses) {
             Optional<Address> optional = addresses.stream()
                     .filter(address -> address.getId().equals(id))
                     .findFirst();
