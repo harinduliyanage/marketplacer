@@ -20,11 +20,10 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     public CategoryDto createCategory(CreateCategoryDto createCategoryDto) {
-        return categoryMapper.categoryToCategoryDto(categoryService.
-                createCategory(createCategoryDto.getParentCategoryId(), categoryMapper.
-                        createCategoryDtoToCategory(createCategoryDto)
-                )
-        );
+        Category createdCategory = categoryService.createCategory(createCategoryDto.getParentCategoryId(),
+                categoryMapper.createCategoryDtoToCategory(createCategoryDto));
+        //
+        return categoryMapper.categoryToCategoryDto(createdCategory);
     }
 
     @Override
@@ -41,23 +40,21 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     public CategoryDto getCategory(String categoryId) {
-        return categoryMapper.categoryToCategoryDto(categoryService.getCategoryById(categoryId));
+        Category category = categoryService.getCategoryById(categoryId);
+        return categoryMapper.categoryToCategoryDto(category);
     }
 
     @Override
     public CategoryDto updateCategory(String categoryId, UpdateCategoryDto updateCategoryDto) {
         Category category = categoryMapper.updateCategoryDtoToCategory(updateCategoryDto);
         category.setId(categoryId);
-        return categoryMapper.categoryToCategoryDto(
-                categoryService.updateCategory(updateCategoryDto.getParentCategoryId(), categoryId,
-                        category)
-        );
+        Category updatedCategory = categoryService.updateCategory(updateCategoryDto.getParentCategoryId(), categoryId, category);
+        return categoryMapper.categoryToCategoryDto(updatedCategory);
     }
 
     @Override
     public CategoryDto removeCategory(String categoryId) {
-        return categoryMapper.categoryToCategoryDto(
-                categoryService.removeCategory(categoryId)
-        );
+        Category category = categoryService.removeCategory(categoryId);
+        return categoryMapper.categoryToCategoryDto(category);
     }
 }

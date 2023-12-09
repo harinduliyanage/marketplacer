@@ -20,8 +20,8 @@ public class CartControllerImpl implements CartController {
 
     @Override
     public CartDto getCart(String userId, String cartId) {
-        Cart cart = cartService.getCart(userId, cartId);
-        return cartMapper.cartToCartDto(cart);
+        Cart createdCart = cartService.getCart(userId, cartId);
+        return cartMapper.cartToCartDto(createdCart);
     }
 
     @Override

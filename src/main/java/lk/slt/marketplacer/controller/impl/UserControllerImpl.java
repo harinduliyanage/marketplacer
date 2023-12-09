@@ -45,23 +45,23 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserDto getUser(String userId) {
-        return userMapper.userToUserDto(userService.getUser(userId));
+        User user = userService.getUser(userId);
+        return userMapper.userToUserDto(user);
     }
 
     @Override
     public UserDto updateUser(String userId, UpdateUserDto updateUserDto) {
-        return userMapper
-                .userToUserDto(userService
-                        .updateUser(userId, userMapper
-                                .updateUserDtoToUser(updateUserDto, userService.getUser(userId)
-                                )
-                        )
-                );
+        User user = userService.getUser(userId);
+        User updatedUser = userService.updateUser(userId,
+                userMapper.updateUserDtoToUser(updateUserDto, user));
+        //
+        return userMapper.userToUserDto(updatedUser);
     }
 
     @Override
     public UserDto removeUser(String userId) {
-        return userMapper.userToUserDto(userService.removeUser(userId));
+        User user = userService.removeUser(userId);
+        return userMapper.userToUserDto(user);
     }
 }
 
