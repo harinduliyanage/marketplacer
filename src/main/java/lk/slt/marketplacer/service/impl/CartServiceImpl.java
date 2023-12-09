@@ -1,10 +1,8 @@
 package lk.slt.marketplacer.service.impl;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.CartNotFoundException;
 import lk.slt.marketplacer.model.Cart;
 import lk.slt.marketplacer.model.CartItems;
-import lk.slt.marketplacer.model.QCart;
 import lk.slt.marketplacer.model.User;
 import lk.slt.marketplacer.repository.CartRepository;
 import lk.slt.marketplacer.service.CartService;

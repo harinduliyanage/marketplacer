@@ -25,6 +25,14 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
+    @OneToOne
+    private Address shippingAddress;
+
+    @OneToOne
+    private Address billingAddress;
+
+    private String note;
+
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<OrderDetails> orderDetails;
 }

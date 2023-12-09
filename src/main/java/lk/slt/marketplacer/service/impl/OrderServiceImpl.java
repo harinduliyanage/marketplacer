@@ -7,6 +7,7 @@ import lk.slt.marketplacer.exceptions.OrderNullAttributeException;
 import lk.slt.marketplacer.exceptions.OrderNotFoundException;
 import lk.slt.marketplacer.model.*;
 import lk.slt.marketplacer.repository.OrderRepository;
+import lk.slt.marketplacer.service.AddressService;
 import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.OrderService;
 import lk.slt.marketplacer.service.UserService;
@@ -31,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
     CartService cartService;
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    AddressService addressService;
 
     @Override
     public Order createOrder(String userId, String cartId, Order order) {
@@ -42,7 +45,9 @@ public class OrderServiceImpl implements OrderService {
             if(cart.getCartItems().isEmpty()){
                 throw new CartEmtyException(Constants.CART_EMPTY_MSG);
             }
-            //
+            // Save shipping and billing addresses
+            addressService.createUserAddress(userId, order.getBillingAddress());
+            addressService.createUserAddress(userId, order.getShippingAddress());
             order.setUser(foundUser);
             orderDetailsList = cart.getCartItems().stream().map(cartItems -> {
                 Product product = cartItems.getProduct();
