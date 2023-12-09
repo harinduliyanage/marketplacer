@@ -51,7 +51,7 @@ public class AddressServiceImpl implements AddressService {
         } else {
             found.getAddresses().add(saveAddress);
         }
-        userService.updateUser(userId, found);
+        userService.updateUser(userId, found.getUsername(), found);
         log.info("address has been successfully saved {}", saveAddress);
 
         return saveAddress;
@@ -104,7 +104,7 @@ public class AddressServiceImpl implements AddressService {
         Address found = getAddressByUserIdAndId(userId, id);
         User user = userService.getUser(userId);
         user.getAddresses().remove(found);
-        userService.updateUser(userId, user);
+        userService.updateUser(userId, user.getUsername(), user);
         log.info("address has been successfully removed {}", found);
         return found;
     }
