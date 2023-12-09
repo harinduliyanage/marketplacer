@@ -93,21 +93,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(String id, User user) {
-        User foundUser = getUser(id);
-        String username = user.getUsername();
+    public User updateUser(String id, String username, User user) {
+        String newUsername = user.getUsername();
         String email = user.getEmail();
-        if (isUserNameAlreadyExists(id, username)) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, username));
+        if (isUserNameAlreadyExists(id, newUsername)) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, newUsername));
         } else if (isEmailAlreadyExists(id, email)) {
             throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
         } else {
-            if (!foundUser.getUsername().equals(username)) {
+            if (!username.equals(newUsername)) {
                 try {
-                    String sub = keycloakService.searchByUsername(username).getId();
+                    String sub = keycloakService.searchByUsername(newUsername).getId();
                     user.setSub(sub);
                 } catch (NullPointerException exception) {
-                    throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, username));
+                    throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, newUsername));
                 }
             }
             user.setId(id);

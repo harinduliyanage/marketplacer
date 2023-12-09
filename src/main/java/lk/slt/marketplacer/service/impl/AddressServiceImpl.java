@@ -36,14 +36,14 @@ public class AddressServiceImpl implements AddressService {
         User found = userService.getUser(userId);
         Address save = addressRepository.save(address);
 
-        if (null == found.getAddresses()){
+        if (null == found.getAddresses()) {
             ArrayList<Address> addresses = new ArrayList<>();
             addresses.add(save);
             found.setAddresses(addresses);
         } else {
             found.getAddresses().add(save);
         }
-        userService.updateUser(userId, found);
+        userService.updateUser(userId, found.getUsername(), found);
         log.info("address has been successfully saved {}", save);
 
         return save;
@@ -53,7 +53,7 @@ public class AddressServiceImpl implements AddressService {
     public Address getAddressByUserIdAndId(String userId, String id) {
         User found = userService.getUser(userId);
         List<Address> addresses = found.getAddresses();
-        if (null != addresses){
+        if (null != addresses) {
             Optional<Address> optional = addresses.stream()
                     .filter(address -> address.getId().equals(id))
                     .findFirst();
@@ -96,7 +96,7 @@ public class AddressServiceImpl implements AddressService {
         Address found = getAddressByUserIdAndId(userId, id);
         User user = userService.getUser(userId);
         user.getAddresses().remove(found);
-        userService.updateUser(userId, user);
+        userService.updateUser(userId, user.getUsername(), user);
         log.info("address has been successfully removed {}", found);
         return found;
     }
