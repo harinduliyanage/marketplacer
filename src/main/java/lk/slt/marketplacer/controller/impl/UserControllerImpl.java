@@ -50,13 +50,11 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserDto updateUser(String userId, UpdateUserDto updateUserDto) {
-        return userMapper
-                .userToUserDto(userService
-                        .updateUser(userId, userMapper
-                                .updateUserDtoToUser(updateUserDto, userService.getUser(userId)
-                                )
-                        )
-                );
+        User foundUser = userService.getUser(userId);
+        User user = userMapper.updateUserDtoToUser(updateUserDto, foundUser.copy());
+        User updatedUser = userService.updateUser(userId,user);
+        //
+        return userMapper.userToUserDto(updatedUser);
     }
 
     @Override

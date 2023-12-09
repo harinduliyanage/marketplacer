@@ -103,8 +103,12 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
         } else {
             if (!foundUser.getUsername().equals(username)) {
-                String sub = keycloakService.searchByUsername(username).getId();
-                user.setSub(sub);
+                try {
+                    String sub = keycloakService.searchByUsername(username).getId();
+                    user.setSub(sub);
+                } catch (NullPointerException exception) {
+                    throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, username));
+                }
             }
             user.setId(id);
             User updatedUser = userRepository.save(user);

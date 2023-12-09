@@ -36,4 +36,19 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
 
+    public User copy() {
+        User newUser = new User();
+        //
+        newUser.setId(this.id);
+        newUser.setSub(this.sub);
+        newUser.setFirstName(this.firstName);
+        newUser.setLastName(this.lastName);
+        newUser.setUsername(this.username);
+        newUser.setEmail(this.email);
+        newUser.setPhone(this.phone);
+        newUser.setBirthDay(this.birthDay);
+        newUser.setAddresses(this.addresses);
+        //
+        return newUser;
+    }
 }
