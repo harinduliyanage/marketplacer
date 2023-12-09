@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(String id, User user) {
+        User foundUser = getUser(id);
         String username = user.getUsername();
         String email = user.getEmail();
         if (isUserNameAlreadyExists(id, username)) {
@@ -102,6 +103,10 @@ public class UserServiceImpl implements UserService {
         } else if (isEmailAlreadyExists(id, email)) {
             throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
         } else {
+            if (!foundUser.getUsername().equals(username)) {
+                String sub = keycloakService.searchByUsername(username).getId();
+                user.setSub(sub);
+            }
             user.setId(id);
             User updatedUser = userRepository.save(user);
             log.info("user has been successfully updated {}", updatedUser);

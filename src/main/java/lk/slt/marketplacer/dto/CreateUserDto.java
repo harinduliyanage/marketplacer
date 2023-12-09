@@ -10,11 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserDto {
-    @NotEmpty
     private String username;
     @Email
     private String email;
     private String firstName;
     private String lastName;
     private String phone;
+    private String birthDay;
 }

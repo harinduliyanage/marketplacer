@@ -17,5 +17,6 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String phone;
+    private String birthDay;
     private CartDto cart;
 }
