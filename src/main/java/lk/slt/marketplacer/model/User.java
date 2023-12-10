@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author harindu.sul@gmail.com
@@ -30,5 +31,8 @@ public class User implements Serializable {
     private String lastName;
     private String email;
     private String phone;
+    private String birthDay;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses;
 }

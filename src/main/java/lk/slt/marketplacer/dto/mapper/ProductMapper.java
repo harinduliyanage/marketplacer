@@ -1,10 +1,8 @@
 package lk.slt.marketplacer.dto.mapper;
 
-import lk.slt.marketplacer.dto.CategoryDto;
 import lk.slt.marketplacer.dto.CreateProductDto;
 import lk.slt.marketplacer.dto.ProductDto;
 import lk.slt.marketplacer.dto.UpdateProductDto;
-import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.Product;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
