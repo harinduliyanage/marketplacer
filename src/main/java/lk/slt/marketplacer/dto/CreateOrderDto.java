@@ -16,10 +16,13 @@ public class CreateOrderDto {
     private String id;
     private String userId;
     private String cartId;
-    @NotNull
+    // For logged users
+    private String shippingAddressId;
+    private String billingAddressId;
+    // For guest users
     private CreateAddressDto shippingAddress;
-    @NotNull
     private CreateAddressDto billingAddress;
+    //
     private String note;
     private List<CreateOrderDetailsDto> orderDetails;
 }

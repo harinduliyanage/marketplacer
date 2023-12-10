@@ -1,7 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import lk.slt.marketplacer.exceptions.AddressFoundException;
+import lk.slt.marketplacer.exceptions.AddressNotFoundException;
 import lk.slt.marketplacer.model.Address;
 import lk.slt.marketplacer.model.QAddress;
 import lk.slt.marketplacer.model.User;
@@ -53,7 +53,7 @@ public class AddressServiceImpl implements AddressService {
         }
         userService.updateUser(userId, found.getUsername(), found);
         log.info("address has been successfully saved {}", saveAddress);
-
+        //
         return saveAddress;
     }
 
@@ -68,10 +68,10 @@ public class AddressServiceImpl implements AddressService {
             if (optional.isPresent()) {
                 return optional.get();
             } else {
-                throw new AddressFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
+                throw new AddressNotFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
             }
         } else {
-            throw new AddressFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
+            throw new AddressNotFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
         }
     }
 

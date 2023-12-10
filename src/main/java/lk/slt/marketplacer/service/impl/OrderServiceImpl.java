@@ -33,10 +33,13 @@ public class OrderServiceImpl implements OrderService {
     AddressService addressService;
 
     @Override
-    public Order createOrder(String userId, String cartId, Order order) {
+    public Order createOrder(String userId, String cartId, String shippingAddressId, String billingAddressId, Order order) {
         List<OrderDetails> orderDetailsList;
-        //
+        // Logged user
         if (userId != null && cartId != null) {
+            if (null == billingAddressId || null == shippingAddressId) {
+                throw new OrderNullAttributeException(Constants.ORDER_ADDRESS_REQUIRED_MSG);
+            }
             User foundUser = userService.getUser(userId);
             Cart cart = foundUser.getCart();
             //
@@ -46,10 +49,10 @@ public class OrderServiceImpl implements OrderService {
             if (cart.getCartItems().isEmpty()) {
                 throw new CartEmtyException(Constants.CART_EMPTY_MSG);
             }
-            // Save shipping and billing addresses
-            addressService.createUserAddress(userId, order.getBillingAddress());
-            addressService.createUserAddress(userId, order.getShippingAddress());
-            order.setUser(foundUser);
+            // Get shipping and billing addresses
+            Address shippingAddress = addressService.getAddressByUserIdAndId(userId, shippingAddressId);
+            Address billingAddress = addressService.getAddressByUserIdAndId(userId, billingAddressId);
+            //
             orderDetailsList = cart.getCartItems().stream().map(cartItems -> {
                 Product product = cartItems.getProduct();
                 double discount = product.getDiscountAmount();
@@ -63,9 +66,14 @@ public class OrderServiceImpl implements OrderService {
                 orderDetails.setUnits(cartItems.getUnits());
                 return orderDetails;
             }).toList();
+            //
+            order.setUser(foundUser);
+            order.setShippingAddress(shippingAddress);
+            order.setBillingAddress(billingAddress);
             // Clear cart items
             cart.setCartItems(new ArrayList<>());
             cartService.updateCart(userId, cartId, cart);
+            // Guest user
         } else if (order.getOrderDetails() != null && !order.getOrderDetails().isEmpty()) {
             // Save shipping and billing addresses
             addressService.createUserAddress(userId, order.getBillingAddress());

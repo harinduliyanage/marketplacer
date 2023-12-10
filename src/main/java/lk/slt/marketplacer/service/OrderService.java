@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
-    public Order createOrder(String userId, String cartId, Order order);
+    public Order createOrder(String userId, String cartId, String shippingAddressId, String billingAddressId, Order order);
 
     public Page<Order> getOrders(String userId, Pageable pageable);
 

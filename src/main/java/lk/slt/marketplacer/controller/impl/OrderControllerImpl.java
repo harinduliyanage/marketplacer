@@ -20,6 +20,7 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public OrderDto createOrder(CreateOrderDto createOrderDto) {
         Order createdOrder = orderService.createOrder(createOrderDto.getUserId(), createOrderDto.getCartId(),
+                createOrderDto.getShippingAddressId(), createOrderDto.getBillingAddressId(),
                 orderMapper.createOrderDtoToOrder(createOrderDto));
         //
         return orderMapper.orderToOrderDto(createdOrder);
