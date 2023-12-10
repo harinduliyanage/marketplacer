@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
         // Logged user
         if (userId != null && cartId != null) {
             if (null == billingAddressId || null == shippingAddressId) {
-                throw new OrderNullAttributeException(Constants.ORDER_ADDRESS_REQUIRED_MSG);
+                throw new OrderNullAttributeException(String.format(Constants.ORDER_ADDRESS_REQUIRED_MSG, "logged user", "shippingAddressId", "billingAddressId"));
             }
             User foundUser = userService.getUser(userId);
             Cart cart = foundUser.getCart();
@@ -75,9 +75,12 @@ public class OrderServiceImpl implements OrderService {
             cartService.updateCart(userId, cartId, cart);
             // Guest user
         } else if (order.getOrderDetails() != null && !order.getOrderDetails().isEmpty()) {
+            if (null == order.getBillingAddress() || null == order.getShippingAddress()) {
+                throw new OrderNullAttributeException(String.format(Constants.ORDER_ADDRESS_REQUIRED_MSG, "guest user", "shippingAddress", "billingAddress"));
+            }
             // Save shipping and billing addresses
-            addressService.createUserAddress(userId, order.getBillingAddress());
-            addressService.createUserAddress(userId, order.getShippingAddress());
+            addressService.createAddress(order.getBillingAddress());
+            addressService.createAddress(order.getShippingAddress());
             orderDetailsList = order.getOrderDetails();
             //
             for (OrderDetails orderDetails : orderDetailsList) {
