@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -47,6 +48,7 @@ public class UserServiceImpl implements UserService {
             try {
                 String sub = keycloakService.searchByUsername(username).getId();
                 user.setSub(sub);
+                user.setFlowedStores(new ArrayList<>());
                 User savedUser = userRepository.save(user);
                 // Create new cart to user
                 cartService.createCart(savedUser.getId(), new Cart());
@@ -96,6 +98,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(String id, String username, User user) {
         String newUsername = user.getUsername();
         String email = user.getEmail();
+        //
         if (isUserNameAlreadyExists(id, newUsername)) {
             throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, newUsername));
         } else if (isEmailAlreadyExists(id, email)) {
