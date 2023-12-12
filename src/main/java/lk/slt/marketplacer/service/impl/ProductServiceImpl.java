@@ -75,8 +75,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
+    public Page<Product> getProducts(String categoryId, Pageable pageable) {
+        if(null == categoryId) {
+            return productRepository.findAll(pageable);
+        }else{
+            Category category = categoryService.getCategoryById(categoryId);
+            QProduct qProduct = QProduct.product;
+            BooleanExpression expression = qProduct.category.eq(category);
+            return productRepository.findAll(expression, pageable);
+        }
     }
 
     @Override
