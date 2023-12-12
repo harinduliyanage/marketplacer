@@ -78,10 +78,10 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store getStore(String userId, String storeId) {
-        User user = userService.getUser(userId);
+        User foundUser = userService.getUser(userId);
         //
         QStore qStore = QStore.store;
-        BooleanExpression expression = qStore.user.eq(user).and(qStore.id.eq(storeId));
+        BooleanExpression expression = qStore.user.eq(foundUser).and(qStore.id.eq(storeId));
         Optional<Store> found = storeRepository.findOne(expression);
         //
         if (found.isPresent()) {
