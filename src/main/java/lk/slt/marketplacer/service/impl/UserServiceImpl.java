@@ -12,6 +12,7 @@ import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.UserService;
 import lk.slt.marketplacer.util.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,9 +46,9 @@ public class UserServiceImpl implements UserService {
         } else if (isEmailAlreadyExists(id, email)) {
             throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
         } else {
-            try {
-                String sub = keycloakService.searchByUsername(username).getId();
-                user.setSub(sub);
+            UserRepresentation userRepresentation = keycloakService.searchByUsername(username);
+            if (null != userRepresentation) {
+                user.setSub(userRepresentation.getId());
                 // Create new cart to user
                 Cart cart = cartService.createCart(new Cart());
                 user.setCart(cart);
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
                 log.info("user has been successfully created {}", savedUser);
                 //
                 return savedUser;
-            } catch (NullPointerException exception) {
+            } else {
                 throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, username));
             }
         }
