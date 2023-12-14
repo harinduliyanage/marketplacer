@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
             try {
                 String sub = keycloakService.searchByUsername(username).getId();
                 user.setSub(sub);
-                user.setFlowedStores(new ArrayList<>());
+                user.setFollowedStores(new ArrayList<>());
                 User savedUser = userRepository.save(user);
                 // Create new cart to user
                 cartService.createCart(savedUser.getId(), new Cart());

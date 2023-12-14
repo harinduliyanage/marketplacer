@@ -40,7 +40,7 @@ public interface UserMapper {
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "birthDay", source = "birthDay",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "flowedStores", source = "flowedStoreIds",
+    @Mapping(target = "followedStores", source = "followedStoreIds",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User updateUserDtoToUser(UpdateUserDto updateUserDto, @MappingTarget User user);
 

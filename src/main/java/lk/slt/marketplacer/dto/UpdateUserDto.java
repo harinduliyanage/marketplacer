@@ -20,5 +20,5 @@ public class UpdateUserDto {
     private String lastName;
     private String phone;
     private String birthDay;
-    private List<String> flowedStoreIds;
+    private List<String> followedStoreIds;
 }

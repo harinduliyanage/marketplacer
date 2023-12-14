@@ -37,5 +37,5 @@ public class User implements Serializable {
     private List<Address> addresses;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Store> flowedStores;
+    private List<Store> followedStores;
 }
