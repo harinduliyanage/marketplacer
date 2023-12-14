@@ -21,8 +21,13 @@ public class Constants {
     public static final String INVALID_CATEGORY_TYPE_MSG = "Invalid category type of given category id '%s'";
     public static final String ORDER_NOT_FOUND_MSG = "Order '%s' not found of user '%s'";
     public static final String ORDER_DETAILS_NOT_FOUND_MSG = "Order Details '%s' not found of order '%s'";
-    public static final String ADDRESS_NOT_FOUND_MSG = "can not found address for given user id '%s' , address id '%s'";
+    public static final String ADDRESS_NOT_FOUND_MSG = "Can't found address for given user id '%s', address id '%s'";
     public static final String CART_NOT_FOUND_MSG = "Cart '%s' not found of user '%s'";
+    public static final String INVALID_DISCOUNT_MSG = "The discount amount must be less than the price";
+    public static final String ORDER_NULL_ATTRIBUTE_MSG = "User id and cart id must be not empty or order details must be not empty";
+    public static final String CART_EMPTY_MSG = "Cart is empty!";
+    public static final String CART_FORBIDDEN_MSG = "You don't have permission to access cart id '%s'";
+    public static final String ORDER_ADDRESS_REQUIRED_MSG = "For %s, '%s' & '%s' are required to order";
     public static final String REVIEW_NOT_FOUND_MSG = "Review '%s' not found of user '%s'";
 
 }

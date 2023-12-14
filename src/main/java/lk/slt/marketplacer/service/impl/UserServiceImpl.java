@@ -48,10 +48,11 @@ public class UserServiceImpl implements UserService {
             try {
                 String sub = keycloakService.searchByUsername(username).getId();
                 user.setSub(sub);
-                user.setFollowedStores(new ArrayList<>());
-                User savedUser = userRepository.save(user);
                 // Create new cart to user
-                cartService.createCart(savedUser.getId(), new Cart());
+                user.setFollowedStores(new ArrayList<>());
+                Cart cart = cartService.createCart(new Cart());
+                user.setCart(cart);
+                User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);
                 //
@@ -98,7 +99,6 @@ public class UserServiceImpl implements UserService {
     public User updateUser(String id, String username, User user) {
         String newUsername = user.getUsername();
         String email = user.getEmail();
-        //
         if (isUserNameAlreadyExists(id, newUsername)) {
             throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, newUsername));
         } else if (isEmailAlreadyExists(id, email)) {

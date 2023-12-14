@@ -18,12 +18,12 @@ public class OrderControllerImpl implements OrderController {
     OrderMapper orderMapper;
 
     @Override
-    public OrderDto createOrder(String userId, CreateOrderDto createOrderDto) {
-        return orderMapper.orderToOrderDto(
-                orderService.createOrder(userId, orderMapper
-                        .createOrderDtoToOrder(createOrderDto)
-                )
-        );
+    public OrderDto createOrder(CreateOrderDto createOrderDto) {
+        Order createdOrder = orderService.createOrder(createOrderDto.getUserId(), createOrderDto.getCartId(),
+                createOrderDto.getShippingAddressId(), createOrderDto.getBillingAddressId(),
+                orderMapper.createOrderDtoToOrder(createOrderDto));
+        //
+        return orderMapper.orderToOrderDto(createdOrder);
     }
 
     @Override
@@ -40,22 +40,22 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public OrderDto getOrder(String userId, String orderId) {
-        return orderMapper.orderToOrderDto(orderService.getOrder(userId, orderId));
+        Order order = orderService.getOrder(userId, orderId);
+        return orderMapper.orderToOrderDto(order);
     }
 
     @Override
     public OrderDto updateOrder(String userId, String orderId, UpdateOrderDto updateOrderDto) {
-        return orderMapper.orderToOrderDto(orderService
-                .updateOrder(orderId,
-                        orderMapper.updateOrderDtoToOrder(updateOrderDto,
-                                orderService.getOrder(userId, orderId)
-                        )
-                )
-        );
+        Order order = orderService.getOrder(userId, orderId);
+        Order updatedOrder = orderService.updateOrder(orderId,
+                orderMapper.updateOrderDtoToOrder(updateOrderDto, order));
+        //
+        return orderMapper.orderToOrderDto(updatedOrder);
     }
 
     @Override
     public OrderDto removeOrder(String userId, String orderId) {
-        return orderMapper.orderToOrderDto(orderService.removeOrder(userId, orderId));
+        Order order = orderService.removeOrder(userId, orderId);
+        return orderMapper.orderToOrderDto(order);
     }
 }

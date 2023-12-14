@@ -1,7 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import lk.slt.marketplacer.exceptions.AddressFoundException;
+import lk.slt.marketplacer.exceptions.AddressNotFoundException;
 import lk.slt.marketplacer.model.Address;
 import lk.slt.marketplacer.model.QAddress;
 import lk.slt.marketplacer.model.User;
@@ -31,22 +31,30 @@ public class AddressServiceImpl implements AddressService {
     private AddressRepository addressRepository;
 
     @Override
+    public Address createAddress(Address address) {
+        Address saveAddress = addressRepository.save(address);
+        log.info("address has been successfully saved {}", saveAddress);
+
+        return saveAddress;
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Address createUserAddress(String userId, Address address) {
         User found = userService.getUser(userId);
-        Address save = addressRepository.save(address);
+        Address saveAddress = addressRepository.save(address);
 
         if (null == found.getAddresses()) {
             ArrayList<Address> addresses = new ArrayList<>();
-            addresses.add(save);
+            addresses.add(saveAddress);
             found.setAddresses(addresses);
         } else {
-            found.getAddresses().add(save);
+            found.getAddresses().add(saveAddress);
         }
         userService.updateUser(userId, found.getUsername(), found);
-        log.info("address has been successfully saved {}", save);
-
-        return save;
+        log.info("address has been successfully saved {}", saveAddress);
+        //
+        return saveAddress;
     }
 
     @Override
@@ -60,10 +68,10 @@ public class AddressServiceImpl implements AddressService {
             if (optional.isPresent()) {
                 return optional.get();
             } else {
-                throw new AddressFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
+                throw new AddressNotFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
             }
         } else {
-            throw new AddressFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
+            throw new AddressNotFoundException(String.format(Constants.ADDRESS_NOT_FOUND_MSG, userId, id));
         }
     }
 

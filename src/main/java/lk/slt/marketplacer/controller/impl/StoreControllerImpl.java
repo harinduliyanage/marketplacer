@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 @RestController
 public class StoreControllerImpl implements StoreController {
     @Autowired
@@ -24,12 +23,11 @@ public class StoreControllerImpl implements StoreController {
 
     @Override
     public StoreDto createStore(String userId, CreateStoreDto createStoreDto) {
-        return storeMapper
-                .storeToStoreDto(storeService
-                        .createStore(userId, createStoreDto.getCategoryId(),
-                                storeMapper.createStoreDtoToStore(createStoreDto)
-                        )
-                );
+        Store createdStore = storeService.createStore(userId,
+                createStoreDto.getCategoryId(),
+                storeMapper.createStoreDtoToStore(createStoreDto));
+        //
+        return storeMapper.storeToStoreDto(createdStore);
     }
 
     @Override
@@ -46,25 +44,24 @@ public class StoreControllerImpl implements StoreController {
 
     @Override
     public StoreDto getStore(String userId, String storeId) {
-        return storeMapper.storeToStoreDto(storeService.getStore(userId, storeId));
+        Store store = storeService.getStore(userId, storeId);
+        return storeMapper.storeToStoreDto(store);
     }
 
     @Override
     public StoreDto updateStore(String userId, String storeId, UpdateStoreDto updateStoreDto) {
-        return storeMapper.storeToStoreDto(storeService
-                .updateStore(userId, storeId, updateStoreDto.getCategoryId(),
-                        storeMapper
-                                .updateStoreDtoToStore(updateStoreDto,
-                                        storeService
-                                                .getStore(userId, storeId)
-                                )
-                )
+        Store store = storeService.getStore(userId, storeId);
+        Store updatedStore = storeService.updateStore(userId, storeId, updateStoreDto.getCategoryId(),
+                storeMapper.updateStoreDtoToStore(updateStoreDto, store));
+        //
+        return storeMapper.storeToStoreDto(updatedStore
         );
     }
 
     @Override
     public StoreDto removeStore(String userId, String storeId) {
-        return storeMapper.storeToStoreDto(storeService.removeStore(userId, storeId));
+        Store store = storeService.removeStore(userId, storeId);
+        return storeMapper.storeToStoreDto(store);
     }
 
     @Override

@@ -8,12 +8,12 @@ import org.hibernate.annotations.UuidGenerator;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "order_details")
+@Table(name = "cart-items")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDetails implements Serializable {
+public class CartItems implements Serializable {
     @Id
     @UuidGenerator
     private String id;
@@ -22,7 +22,5 @@ public class OrderDetails implements Serializable {
     @ToString.Exclude
     private Product product;
     //
-    private Double price;
     private Double units;
-    private Double discount;
 }

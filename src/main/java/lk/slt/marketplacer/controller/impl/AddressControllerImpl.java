@@ -27,15 +27,16 @@ public class AddressControllerImpl implements AddressController {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public AddressDto createAddress(String userId, CreateAddressDto createAddressDto) {
-        Address address = addressService.createUserAddress(userId,
+        Address createdAddress = addressService.createUserAddress(userId,
                 addressMapper.createAddressDtoToAddress(createAddressDto));
         //
-        return addressMapper.addressToAddressDto(address);
+        return addressMapper.addressToAddressDto(createdAddress);
     }
 
     @Override
     public AddressDto getAddress(String userId, String addressId) {
-        return addressMapper.addressToAddressDto(addressService.getAddressByUserIdAndId(userId, addressId));
+        Address address = addressService.getAddressByUserIdAndId(userId, addressId);
+        return addressMapper.addressToAddressDto(address);
     }
 
     @Override
@@ -53,19 +54,16 @@ public class AddressControllerImpl implements AddressController {
 
     @Override
     public AddressDto updateAddress(String userId, String addressId, UpdateAddressDto updateAddressDto) {
-        return addressMapper.addressToAddressDto(
-                addressService.updateAddress(
-                        userId, addressId, addressMapper.updateAddressDtoToAddress(
-                                updateAddressDto, addressService.getAddressByUserIdAndId(userId, addressId)
-                        )
-                )
-        );
+        Address address = addressService.getAddressByUserIdAndId(userId, addressId);
+        Address updatedAddress = addressService.updateAddress(userId, addressId,
+                addressMapper.updateAddressDtoToAddress(updateAddressDto, address));
+        //
+        return addressMapper.addressToAddressDto(updatedAddress);
     }
 
     @Override
     public AddressDto removeAddress(String userId, String addressId) {
-        return addressMapper.addressToAddressDto(
-                addressService.removeAddress(userId, addressId)
-        );
+        Address address = addressService.removeAddress(userId, addressId);
+        return addressMapper.addressToAddressDto(address);
     }
 }
