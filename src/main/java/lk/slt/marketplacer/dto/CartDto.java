@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class CartDto {
     private String id;
-    private List<OrderDetailsDto> orderDetails;
+    private List<CartItemsDto> cartItems;
 }

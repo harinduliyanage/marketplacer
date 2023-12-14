@@ -21,7 +21,7 @@ public class OrderDetails implements Serializable {
     @JoinColumn(name = "product_id", updatable = false)
     @ToString.Exclude
     private Product product;
-
+    //
     private Double price;
     private Double units;
     private Double discount;

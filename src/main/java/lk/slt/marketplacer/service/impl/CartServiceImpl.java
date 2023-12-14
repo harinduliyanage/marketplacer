@@ -1,9 +1,8 @@
 package lk.slt.marketplacer.service.impl;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.CartNotFoundException;
 import lk.slt.marketplacer.model.Cart;
-import lk.slt.marketplacer.model.QCart;
+import lk.slt.marketplacer.model.CartItems;
 import lk.slt.marketplacer.model.User;
 import lk.slt.marketplacer.repository.CartRepository;
 import lk.slt.marketplacer.service.CartService;
@@ -15,20 +14,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
 public class CartServiceImpl implements CartService {
     @Autowired
-    CartRepository cartRepository;
+    private CartRepository cartRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Override
-    public Cart createCart(String userId, Cart cart) {
-        User foundUser = userService.getUser(userId);
-        cart.setUser(foundUser);
+    public Cart createCart(Cart cart) {
+        cart.setCartItems(new ArrayList<CartItems>());
         Cart savedCart = cartRepository.save(cart);
         log.info("cart has been successfully created {}", savedCart);
         return savedCart;
@@ -37,27 +36,21 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart getCart(String userId, String cartId) {
         User foundUser = userService.getUser(userId);
-        QCart qCart = QCart.cart;
-        BooleanExpression expression = qCart.id.eq(cartId);
-        Optional<Cart> found = cartRepository.findOne(expression);
-        if (found.isPresent()) {
-            return found.get();
+        Cart cart = foundUser.getCart();
+        if (cart.getId().equals(cartId)) {
+            return cart;
         } else {
-            throw new CartNotFoundException(String.format(Constants.CART_NOT_FOUND_MSG, foundUser));
+            throw new CartNotFoundException(String.format(Constants.CART_NOT_FOUND_MSG, cartId, userId));
         }
     }
 
     @Override
-    public Cart getUserCart(String userId) {
+    public List<Cart> getUserCarts(String userId) {
         User foundUser = userService.getUser(userId);
-        QCart qCart = QCart.cart;
-        BooleanExpression expression = qCart.user.eq(foundUser);
-        Optional<Cart> found = cartRepository.findOne(expression);
-        if (found.isPresent()) {
-            return found.get();
-        } else {
-            throw new CartNotFoundException(String.format(Constants.CART_NOT_FOUND_MSG, foundUser));
-        }
+        Cart cart = foundUser.getCart();
+        List<Cart> cartList = new ArrayList<>();
+        cartList.add(cart);
+        return cartList;
     }
 
     @Override
@@ -67,7 +60,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart updateCart(String userId, String cartId, Cart cart) {
-        userService.getUser(userId);
+        getCart(userId, cartId);
         //
         cart.setId(cartId);
         Cart updatedCart = cartRepository.save(cart);
@@ -78,7 +71,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart removeCart(String userId, String cartId) {
         Cart cart = getCart(userId, cartId);
-        cartRepository.deleteById(userId);
+        cartRepository.deleteById(cartId);
         log.info("Cart has been successfully deleted {}", cart);
         return cart;
     }

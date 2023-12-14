@@ -22,16 +22,16 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ProductDto createProduct(String userId, String storeId, CreateProductDto createProductDto) {
-        Product createdProduct = productService
-                .createProduct(userId, storeId, createProductDto.getCategoryId(), productMapper
-                        .createProductDtoToProduct(createProductDto)
-                );
+        Product createdProduct = productService.createProduct(userId, storeId, createProductDto.getCategoryId(),
+                productMapper.createProductDtoToProduct(createProductDto));
+        //
         return productMapper.productToProductDto(createdProduct);
     }
 
     @Override
     public ProductDto getStoreProduct(String userId, String storeId, String productId) {
-        return productMapper.productToProductDto(productService.getProduct(userId, storeId, productId));
+        Product product = productService.getProduct(userId, storeId, productId);
+        return productMapper.productToProductDto(product);
     }
 
     @Override
@@ -60,17 +60,16 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ProductDto updateProduct(String userId, String storeId, String productId, UpdateProductDto updateProductDto) {
-        return productMapper.productToProductDto(productService
-                .updateProduct(userId, storeId, updateProductDto.getCategoryId(), productId, productMapper
-                        .updateProductDtoToProduct(updateProductDto, productService
-                                .getProduct(userId, storeId, productId)
-                        )
-                )
-        );
+        Product product = productService.getProduct(userId, storeId, productId);
+        Product updatedProduct = productService.updateProduct(userId, storeId, updateProductDto.getCategoryId(), productId,
+                productMapper.updateProductDtoToProduct(updateProductDto, product));
+        //
+        return productMapper.productToProductDto(updatedProduct);
     }
 
     @Override
     public ProductDto removeProduct(String userId, String storeId, String productId) {
-        return productMapper.productToProductDto(productService.removeProduct(userId, storeId, productId));
+        Product product = productService.removeProduct(userId, storeId, productId);
+        return productMapper.productToProductDto(product);
     }
 }
