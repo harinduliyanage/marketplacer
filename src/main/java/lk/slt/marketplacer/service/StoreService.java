@@ -17,4 +17,6 @@ public interface StoreService {
     public Page<Store> getUserStores(String userId, Pageable pageable);
 
     public Page<Store> getStores(Pageable pageable);
+
+    public Store getStoreById(String storeId);
 }

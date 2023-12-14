@@ -3,10 +3,10 @@ package lk.slt.marketplacer.exceptions;
 
 import lk.slt.marketplacer.exceptions.base.RecordNotFoundException;
 
-public class AddressFoundException extends RecordNotFoundException {
+public class AddressNotFoundException extends RecordNotFoundException {
     private static final String code = "Address-404";
 
-    public AddressFoundException(String message) {
+    public AddressNotFoundException(String message) {
         super(code, message);
     }
 }

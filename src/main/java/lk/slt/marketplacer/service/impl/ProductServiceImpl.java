@@ -28,11 +28,11 @@ import java.util.Optional;
 @Transactional
 public class ProductServiceImpl implements ProductService {
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
     @Autowired
-    StoreService storeService;
+    private StoreService storeService;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Override
     public Product createProduct(String userId, String storeId, String categoryId, Product product) {

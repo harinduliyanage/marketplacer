@@ -2,10 +2,7 @@ package lk.slt.marketplacer.exceptions.adviser;
 
 import jakarta.servlet.ServletException;
 import lk.slt.marketplacer.dto.ErrorResponse;
-import lk.slt.marketplacer.exceptions.base.DuplicateRecordException;
-import lk.slt.marketplacer.exceptions.base.InvalidException;
-import lk.slt.marketplacer.exceptions.base.RecordNotFoundException;
-import lk.slt.marketplacer.exceptions.base.SystemException;
+import lk.slt.marketplacer.exceptions.base.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -35,10 +32,21 @@ public class GlobalControllerAdviser {
     }
 
     @ExceptionHandler({
-            InvalidException.class
+            ForbiddenException.class
+    })
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ErrorResponse> forbiddenException(SystemException ex) {
+        return new ResponseEntity<>(ErrorResponse.builder()
+                .code(ex.getErrorCode())
+                .message(ex.getMessage())
+                .build(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({
+            InvalidDataException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> invalidException(SystemException ex) {
+    public ResponseEntity<ErrorResponse> invalidDataException(SystemException ex) {
         return new ResponseEntity<>(ErrorResponse.builder()
                 .code(ex.getErrorCode())
                 .message(ex.getMessage())
