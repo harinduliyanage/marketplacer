@@ -37,16 +37,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        String id = user.getId();
-        String username = user.getUsername();
-        String email = user.getEmail();
-        //
-        if (isUserNameAlreadyExists(id, username)) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, username));
-        } else if (isEmailAlreadyExists(id, email)) {
-            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
+        if (isUserNameAlreadyExists(user.getId(), user.getUsername())) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, user.getUsername()));
+        } else if (isEmailAlreadyExists(user.getId(), user.getEmail())) {
+            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, user.getEmail()));
         } else {
-            UserRepresentation userRepresentation = keycloakService.searchByUsername(username);
+            UserRepresentation userRepresentation = keycloakService.searchByUsername(user.getUsername());
             if (null != userRepresentation) {
                 user.setSub(userRepresentation.getId());
                 // Create new cart to user
@@ -60,7 +56,7 @@ public class UserServiceImpl implements UserService {
                 //
                 return savedUser;
             } else {
-                throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, username));
+                throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, user.getUsername()));
             }
         }
     }
@@ -99,19 +95,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(String id, String username, User user) {
-        String newUsername = user.getUsername();
-        String email = user.getEmail();
-        if (isUserNameAlreadyExists(id, newUsername)) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, newUsername));
-        } else if (isEmailAlreadyExists(id, email)) {
-            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, email));
+        if (isUserNameAlreadyExists(id, user.getUsername())) {
+            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, user.getUsername()));
+        } else if (isEmailAlreadyExists(id, user.getEmail())) {
+            throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, user.getEmail()));
         } else {
-            if (!username.equals(newUsername)) {
-                try {
-                    String sub = keycloakService.searchByUsername(newUsername).getId();
-                    user.setSub(sub);
-                } catch (NullPointerException exception) {
-                    throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, newUsername));
+            if (!username.equalsIgnoreCase(user.getUsername())) {
+                UserRepresentation userRepresentation = keycloakService.searchByUsername(user.getUsername());
+                if (null != userRepresentation) {
+                    user.setSub(userRepresentation.getId());
+                } else {
+                    throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, user.getUsername()));
                 }
             }
             user.setId(id);
