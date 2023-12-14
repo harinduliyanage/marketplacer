@@ -9,7 +9,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -56,4 +58,8 @@ public class Product implements Serializable {
     @CollectionTable(name = "products_images", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "images")
     private List<String> images;
+    @CollectionTable(name = "products_tags", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "tag")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> tags = new HashSet<>();
 }

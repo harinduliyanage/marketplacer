@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -44,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
         product.setStore(store);
         product.setProductStatus(ProductStatus.PENDING);
         product.setCategory(category);
+        product.setTags(product.getTags().stream().distinct().map(String::toLowerCase).collect(Collectors.toSet()));
         //
         Product savedProduct = productRepository.save(product);
         log.info("product has been successfully created {}", savedProduct);
@@ -75,8 +77,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getProducts(Pageable pageable) {
-        return productRepository.findAll(pageable);
+    public Page<Product> getProducts(String categoryId, Pageable pageable) {
+        if (null == categoryId) {
+            return productRepository.findAll(pageable);
+        } else {
+            Category category = categoryService.getCategoryById(categoryId);
+            QProduct qProduct = QProduct.product;
+            BooleanExpression expression = qProduct.category.eq(category);
+            return productRepository.findAll(expression, pageable);
+        }
     }
 
     @Override
@@ -86,6 +95,7 @@ public class ProductServiceImpl implements ProductService {
             if (category.getCategoryType() != CategoryType.PRODUCT) {
                 throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
             }
+            product.setTags(product.getTags().stream().distinct().map(String::toLowerCase).collect(Collectors.toSet()));
             product.setCategory(category);
         }
         product.setId(productId);
