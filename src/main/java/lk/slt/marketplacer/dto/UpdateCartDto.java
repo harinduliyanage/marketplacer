@@ -1,5 +1,6 @@
 package lk.slt.marketplacer.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartDto {
-    private String id;
-    private List<CartItemsDto> cartItems;
+public class UpdateCartDto {
+    @NotNull
+    private List<UpdateCartItemsDto> cartItems;
 }

@@ -33,6 +33,9 @@ public class User implements Serializable {
     private String phone;
     private String birthDay;
 
+    @OneToOne
+    private Cart cart;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
 }

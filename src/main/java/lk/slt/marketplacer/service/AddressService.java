@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface AddressService {
 
+    public Address createAddress(Address address);
+
     public Address createUserAddress(String userId, Address address);
 
     public Address getAddressByUserIdAndId(String userId, String id);

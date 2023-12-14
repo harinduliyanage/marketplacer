@@ -4,6 +4,7 @@ import lk.slt.marketplacer.dto.CreateOrderDto;
 import lk.slt.marketplacer.dto.OrderDto;
 import lk.slt.marketplacer.dto.UpdateOrderDto;
 import lk.slt.marketplacer.model.Order;
+import lk.slt.marketplacer.service.AddressService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -11,7 +12,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = { OrderDetailsMapper.class })
+@Mapper(componentModel = "spring", uses = { OrderDetailsMapper.class, AddressService.class})
 public interface OrderMapper {
     OrderDto orderToOrderDto(Order order);
 

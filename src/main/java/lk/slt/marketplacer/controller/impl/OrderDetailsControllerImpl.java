@@ -20,15 +20,6 @@ public class OrderDetailsControllerImpl implements OrderDetailsController {
     OrderDetailsMapper orderDetailsMapper;
 
     @Override
-    public OrderDetailsDto createOrder(String userId, String orderId, CreateOrderDetailsDto createOrderDetailsDto) {
-        return orderDetailsMapper.orderDetailsToOrderDetailsDto(
-                orderDetailsService.createOrderDetail(userId, orderId,
-                        orderDetailsMapper.createOrderDetailsDtoToOrderDetails(createOrderDetailsDto)
-                )
-        );
-    }
-
-    @Override
     public List<OrderDetailsDto> getOrderDetails(String userId, String orderId) {
         List<OrderDetails> orderDetails = orderDetailsService.getOrderDetails(userId, orderId);
         List<OrderDetailsDto> orderDetailsDtos = orderDetailsMapper.orderDetailsListToOrderDetailsDtoList(
@@ -44,23 +35,5 @@ public class OrderDetailsControllerImpl implements OrderDetailsController {
                 orderDetail
         );
         return orderDetailsDto;
-    }
-
-    @Override
-    public OrderDetailsDto updateOrder(String userId, String orderId, String orderDetailsId, UpdateOrderDetailsDto updateOrderDetailsDto) {
-        return orderDetailsMapper.orderDetailsToOrderDetailsDto(
-                orderDetailsService.updateOrderDetail(orderDetailsId,
-                        orderDetailsMapper.updateOrderDetailsDtoToOrderDetails(updateOrderDetailsDto,
-                                orderDetailsService.getOrderDetail(userId, orderId, orderDetailsId)
-                        )
-                )
-        );
-    }
-
-    @Override
-    public OrderDetailsDto removeOrderDetail(String userId, String orderId, String orderDetailsId) {
-        return orderDetailsMapper.orderDetailsToOrderDetailsDto(
-                orderDetailsService.removeOrderDetail(userId, orderId, orderDetailsId)
-        );
     }
 }

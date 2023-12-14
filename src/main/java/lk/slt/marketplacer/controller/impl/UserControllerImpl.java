@@ -45,7 +45,8 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserDto getUser(String userId) {
-        return userMapper.userToUserDto(userService.getUser(userId));
+        User user = userService.getUser(userId);
+        return userMapper.userToUserDto(user);
     }
 
     @Override
@@ -60,7 +61,8 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserDto removeUser(String userId) {
-        return userMapper.userToUserDto(userService.removeUser(userId));
+        User user = userService.removeUser(userId);
+        return userMapper.userToUserDto(user);
     }
 }
 
