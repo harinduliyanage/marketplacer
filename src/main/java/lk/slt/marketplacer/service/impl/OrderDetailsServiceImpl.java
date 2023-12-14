@@ -18,9 +18,9 @@ import java.util.Optional;
 @Slf4j
 public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Autowired
-    OrderDetailsRepository orderDetailsRepository;
+    private OrderDetailsRepository orderDetailsRepository;
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @Override
     public OrderDetails createOrderDetail(String userId, String orderId, OrderDetails orderDetails) {

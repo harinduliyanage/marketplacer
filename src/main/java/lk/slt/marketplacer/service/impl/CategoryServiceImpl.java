@@ -21,7 +21,7 @@ import java.util.Optional;
 @Slf4j
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Override
     public Category createCategory(String parentId, Category category) {
