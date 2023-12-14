@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
         product.setStore(store);
         product.setProductStatus(ProductStatus.PENDING);
         product.setCategory(category);
-        product.setTags(product.getTags().stream().distinct().map(String::toLowerCase).collect(Collectors.toSet()));
+        product.setTags(product.getTags());
         //
         Product savedProduct = productRepository.save(product);
         log.info("product has been successfully created {}", savedProduct);
@@ -95,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
             if (category.getCategoryType() != CategoryType.PRODUCT) {
                 throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
             }
-            product.setTags(product.getTags().stream().distinct().map(String::toLowerCase).collect(Collectors.toSet()));
+            product.setTags(product.getTags());
             product.setCategory(category);
         }
         product.setId(productId);
