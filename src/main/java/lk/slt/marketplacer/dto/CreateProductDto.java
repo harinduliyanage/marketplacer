@@ -9,6 +9,7 @@ import lk.slt.marketplacer.util.ProductStatus;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -29,4 +30,5 @@ public class CreateProductDto {
     private Double discountAmount;
     private List<String> videos;
     private List<String> images;
+    private Set<String> tags;
 }
