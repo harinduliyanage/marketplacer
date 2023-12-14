@@ -78,16 +78,16 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store getStore(String userId, String storeId) {
-        User user = userService.getUser(userId);
+        User foundUser = userService.getUser(userId);
         //
         QStore qStore = QStore.store;
-        BooleanExpression expression = qStore.user.eq(user).and(qStore.id.eq(storeId));
+        BooleanExpression expression = qStore.user.eq(foundUser).and(qStore.id.eq(storeId));
         Optional<Store> found = storeRepository.findOne(expression);
         //
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new StoreNotFoundException(String.format(Constants.STORE_NOT_FOUND_MSG, storeId, userId));
+            throw new StoreNotFoundException(String.format(Constants.STORE_NOT_FOUND_OF_USER_MSG, storeId, userId));
         }
     }
 
@@ -132,6 +132,19 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Page<Store> getStores(Pageable pageable) {
         return storeRepository.findAll(pageable);
+    }
+
+    @Override
+    public Store getStoreById(String storeId) {
+        QStore qStore = QStore.store;
+        BooleanExpression expression = qStore.id.eq(storeId);
+        Optional<Store> found = storeRepository.findOne(expression);
+        //
+        if (found.isPresent()) {
+            return found.get();
+        } else {
+            throw new StoreNotFoundException(String.format(Constants.STORE_NOT_FOUND_MSG, storeId));
+        }
     }
 
     private Boolean isNameAlreadyExists(String name) {

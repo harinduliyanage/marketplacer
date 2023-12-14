@@ -21,9 +21,9 @@ import java.util.List;
 @Slf4j
 public class CartServiceImpl implements CartService {
     @Autowired
-    CartRepository cartRepository;
+    private CartRepository cartRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Override
     public Cart createCart(Cart cart) {

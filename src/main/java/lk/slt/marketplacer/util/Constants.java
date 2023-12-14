@@ -10,7 +10,8 @@ public class Constants {
     public static final String USERNAME_ALREADY_EXISTS_MSG = "User already exists given username '%s'";
     public static final String EMAIL_ALREADY_EXISTS_MSG = "User already exists given email '%s'";
     public static final String USERNAME_INVALID_MSG = "Invalid username '%s'";
-    public static final String STORE_NOT_FOUND_MSG = "Store '%s' not found of user '%s'";
+    public static final String STORE_NOT_FOUND_OF_USER_MSG = "Store '%s' not found of user '%s'";
+    public static final String STORE_NOT_FOUND_MSG = "Store '%s' not found of store '%s'";
     public static final String STORE_ALREADY_EXISTS_MSG = "Store already exists given %s '%s'";
     public static final String INVALID_STORE_ID_MSG = "Invalid given store id '%s'";
     public static final String PRODUCT_NOT_FOUND_OF_STORE_MSG = "Product '%s' not found of store '%s'";
@@ -23,9 +24,10 @@ public class Constants {
     public static final String ADDRESS_NOT_FOUND_MSG = "Can't found address for given user id '%s', address id '%s'";
     public static final String CART_NOT_FOUND_MSG = "Cart '%s' not found of user '%s'";
     public static final String INVALID_DISCOUNT_MSG = "The discount amount must be less than the price";
-    public static final String ORDER_NULL_ATTRIBUTE_MSG = "userId & cartId must be not null or orderDetails must be not null";
+    public static final String ORDER_NULL_ATTRIBUTE_MSG = "User id and cart id must be not empty or order details must be not empty";
     public static final String CART_EMPTY_MSG = "Cart is empty!";
     public static final String CART_FORBIDDEN_MSG = "You don't have permission to access cart id '%s'";
     public static final String ORDER_ADDRESS_REQUIRED_MSG = "For %s, '%s' & '%s' are required to order";
+    public static final String REVIEW_NOT_FOUND_MSG = "Review '%s' not found of user '%s'";
 
 }

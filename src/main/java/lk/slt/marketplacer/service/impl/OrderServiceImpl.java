@@ -24,13 +24,13 @@ import java.util.Optional;
 @Slf4j
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    CartService cartService;
+    private CartService cartService;
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
 
     @Override
     public Order createOrder(String userId, String cartId, String shippingAddressId, String billingAddressId, Order order) {
