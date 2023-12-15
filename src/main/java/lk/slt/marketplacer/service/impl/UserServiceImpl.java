@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private KeycloakServiceImpl keycloakService;
+
     @Autowired
     private CartService cartService;
     @Autowired
@@ -50,8 +51,10 @@ public class UserServiceImpl implements UserService {
             if (null != userRepresentation) {
                 user.setSub(userRepresentation.getId());
                 // create new cart to user
-                Cart cart = cartService.createCart(new Cart());
-                user.setCart(cart);
+                Cart cart = new Cart();
+                cart.setCartItems(new ArrayList<>());
+                Cart createdCart = cartService.createCart(cart);
+                user.setCart(createdCart);
                 // create new wishlist to user
                 Wishlist wishlist = new Wishlist();
                 wishlist.setProducts(new HashSet<>());
