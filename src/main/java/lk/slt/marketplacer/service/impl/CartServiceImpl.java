@@ -27,7 +27,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart createCart(Cart cart) {
-        cart.setCartItems(new ArrayList<CartItems>());
         Cart savedCart = cartRepository.save(cart);
         log.info("cart has been successfully created {}", savedCart);
         return savedCart;
