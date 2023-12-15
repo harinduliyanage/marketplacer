@@ -7,9 +7,11 @@ import lk.slt.marketplacer.exceptions.UsernameInvalidException;
 import lk.slt.marketplacer.model.Cart;
 import lk.slt.marketplacer.model.QUser;
 import lk.slt.marketplacer.model.User;
+import lk.slt.marketplacer.model.Wishlist;
 import lk.slt.marketplacer.repository.UserRepository;
 import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.UserService;
+import lk.slt.marketplacer.service.WishlistService;
 import lk.slt.marketplacer.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 
 /**
@@ -31,9 +34,10 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private KeycloakServiceImpl keycloakService;
-
     @Autowired
     private CartService cartService;
+    @Autowired
+    private WishlistService wishlistService;
 
     @Override
     public User createUser(User user) {
@@ -45,9 +49,14 @@ public class UserServiceImpl implements UserService {
             UserRepresentation userRepresentation = keycloakService.searchByUsername(user.getUsername());
             if (null != userRepresentation) {
                 user.setSub(userRepresentation.getId());
-                // Create new cart to user
+                // create new cart to user
                 Cart cart = cartService.createCart(new Cart());
                 user.setCart(cart);
+                // create new wishlist to user
+                Wishlist wishlist = new Wishlist();
+                wishlist.setProducts(new HashSet<>());
+                Wishlist createdWishlist = wishlistService.createWishlist(wishlist);
+                user.setWishlist(createdWishlist);
                 // set default followed store
                 user.setFollowedStores(new ArrayList<>());
                 User savedUser = userRepository.save(user);
