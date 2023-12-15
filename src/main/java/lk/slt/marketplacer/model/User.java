@@ -36,6 +36,9 @@ public class User implements Serializable {
     @OneToOne
     private Cart cart;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Wishlist wishlist;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
 
