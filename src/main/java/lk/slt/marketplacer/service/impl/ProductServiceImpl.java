@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         Store store = storeService.getStore(userId, storeId);
         //
         QProduct qProduct = QProduct.product;
-        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.id.eq(productId));
+        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.id.eq(productId)).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
 
         Optional<Product> found = productRepository.findOne(expression);
         //
@@ -72,20 +72,21 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable) {
         Store store = storeService.getStore(userId, storeId);
         QProduct qProduct = QProduct.product;
-        BooleanExpression expression = qProduct.store.eq(store);
+        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
         return productRepository.findAll(expression, pageable);
     }
 
     @Override
     public Page<Product> getProducts(String categoryId, Pageable pageable) {
+        QProduct qProduct = QProduct.product;
+        BooleanExpression expression;
         if (null == categoryId) {
-            return productRepository.findAll(pageable);
+            expression = qProduct.productStatus.eq(ProductStatus.PUBLISH);
         } else {
             Category category = categoryService.getCategoryById(categoryId);
-            QProduct qProduct = QProduct.product;
-            BooleanExpression expression = qProduct.category.eq(category);
-            return productRepository.findAll(expression, pageable);
+            expression = qProduct.category.eq(category).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
         }
+        return productRepository.findAll(expression, pageable);
     }
 
     @Override
