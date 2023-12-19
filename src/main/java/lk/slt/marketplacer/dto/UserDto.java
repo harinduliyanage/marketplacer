@@ -21,5 +21,5 @@ public class UserDto {
     private String phone;
     private String birthDay;
     private CartDto cart;
-    private List<StoreDto> flowedStores;
+    private List<StoreDto> followedStores;
 }
