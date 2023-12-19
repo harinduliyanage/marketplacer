@@ -1,5 +1,7 @@
 package lk.slt.marketplacer.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import lk.slt.marketplacer.util.StoreStatus;
 import lombok.AllArgsConstructor;
@@ -30,5 +32,6 @@ public class UpdateStoreDto{
     private String email;
     @URL
     private String website;
+    @Enumerated(EnumType.STRING)
     private StoreStatus storeStatus;
 }
