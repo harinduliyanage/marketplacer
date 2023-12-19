@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,5 +21,5 @@ public class UpdateUserDto {
     private String lastName;
     private String phone;
     private String birthDay;
-    private List<String> followedStoreIds;
+    private Set<String> followedStoreIds;
 }

@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 
 /**
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
                 Cart createdCart = cartService.createCart(cart);
                 user.setCart(createdCart);
                 // set default followed store
-                user.setFollowedStores(new ArrayList<>());
+                user.setFollowedStores(new HashSet<>());
                 User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);
