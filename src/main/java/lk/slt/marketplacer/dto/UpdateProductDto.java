@@ -1,13 +1,37 @@
 package lk.slt.marketplacer.dto;
 
-import jakarta.validation.constraints.Null;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lk.slt.marketplacer.util.Currency;
+import lk.slt.marketplacer.util.DiscountType;
 import lk.slt.marketplacer.util.ProductStatus;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
-@EqualsAndHashCode(callSuper = true)
+import java.util.List;
+import java.util.Set;
+
 @Data
-public class UpdateProductDto extends CreateProductDto {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateProductDto {
+    private String name;
+    private String brand;
+    private String description;
+    private String specification;
+    private Double price;
+    private Double units;
+    private Double reOrderLevel;
     private String categoryId;
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
+    //
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
+    private Double discountAmount;
+    private List<String> videos;
+    private List<String> images;
+    private Set<String> tags;
+    //
     private ProductStatus productStatus;
 }
