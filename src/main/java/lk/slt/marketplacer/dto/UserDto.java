@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -21,5 +21,5 @@ public class UserDto {
     private String phone;
     private String birthDay;
     private CartDto cart;
-    private List<StoreDto> flowedStores;
+    private Set<StoreDto> followedStores;
 }

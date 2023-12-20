@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
                 Wishlist createdWishlist = wishlistService.createWishlist(wishlist);
                 user.setWishlist(createdWishlist);
                 // set default followed store
-                user.setFollowedStores(new ArrayList<>());
+                user.setFollowedStores(new HashSet<>());
                 User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);
@@ -121,6 +121,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
             user.setId(id);
+            System.out.println(user);
             User updatedUser = userRepository.save(user);
             log.info("user has been successfully updated {}", updatedUser);
             return updatedUser;

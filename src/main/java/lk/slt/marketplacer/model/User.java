@@ -9,6 +9,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author harindu.sul@gmail.com
@@ -43,5 +44,5 @@ public class User implements Serializable {
     private List<Address> addresses;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Store> followedStores;
+    private Set<Store> followedStores;
 }

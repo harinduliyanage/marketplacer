@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lk.slt.marketplacer.dto.CreateFileDto;
 import lk.slt.marketplacer.dto.FileDto;
 import org.springdoc.core.annotations.ParameterObject;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface FileController {
 
     @GetMapping(value = "/upload", produces = {"application/json"})
-    public FileDto getUploadUrl(@ParameterObject CreateFileDto createFileDto);
+    public FileDto getUploadUrl(@Valid @ParameterObject CreateFileDto createFileDto);
     @GetMapping(value = "/download", produces = {"application/json"})
     public FileDto getDownloadUrl();
 }

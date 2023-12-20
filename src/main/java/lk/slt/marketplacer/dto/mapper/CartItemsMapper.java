@@ -12,8 +12,6 @@ import org.mapstruct.Mapping;
 public interface CartItemsMapper {
     CartItemsDto cartItemsToCartItemsDto(CartItems cartItems);
 
-    CartItems cartItemsDtoToCartItems(CartItemsDto cartItemsDto);
-
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "productId", target = "product")
     CartItems updateCartItemsDtoToCartItems(UpdateCartItemsDto updateCartItemsDto);
