@@ -64,10 +64,11 @@ public class Product implements Serializable {
     @CollectionTable(name = "products_tags", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "tag")
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> tags = new HashSet<>();
+    private Set<String> tags;
     //
     @CreationTimestamp
     private Instant createdAt;
     @UpdateTimestamp
     private Instant lastUpdatedAt;
+
 }

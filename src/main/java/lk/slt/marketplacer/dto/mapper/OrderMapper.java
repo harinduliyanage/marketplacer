@@ -12,18 +12,21 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = { OrderDetailsMapper.class, AddressService.class})
+@Mapper(componentModel = "spring", uses = { OrderDetailsMapper.class, AddressMapper.class})
 public interface OrderMapper {
     OrderDto orderToOrderDto(Order order);
 
-    Order orderDtoToOrder(OrderDto orderDto);
-
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
     Order createOrderDtoToOrder(CreateOrderDto createOrderDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "orderDetails", source = "orderDetails",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "billingAddress", source = "billingAddress",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "shippingAddress", source = "shippingAddress",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Order updateOrderDtoToOrder(
             UpdateOrderDto updateOrderDto, @MappingTarget Order order);

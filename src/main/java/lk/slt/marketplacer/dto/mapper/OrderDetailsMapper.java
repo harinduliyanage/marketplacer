@@ -16,16 +16,16 @@ import java.util.List;
 public interface OrderDetailsMapper {
     OrderDetailsDto orderDetailsToOrderDetailsDto(OrderDetails orderDetails);
 
-    OrderDetails orderDetailsDtoToOrderDetails(OrderDetailsDto orderDetailsDto);
-
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "productId", target = "product")
+    @Mapping(target = "price", ignore = true)
+    @Mapping(target = "discount", ignore = true)
     OrderDetails createOrderDetailsDtoToOrderDetails(CreateOrderDetailsDto createOrderDetailsDto);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "price", ignore = true)
+    @Mapping(target = "discount", ignore = true)
     @Mapping(source = "productId", target = "product",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "units", source = "units",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     OrderDetails updateOrderDetailsDtoToOrderDetails(
             UpdateOrderDetailsDto updateOrderDetailsDto, @MappingTarget OrderDetails orderDetails);

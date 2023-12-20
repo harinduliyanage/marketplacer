@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public interface ReviewController {
     @PostMapping(value = "/users/{userId}/reviews", consumes = {"application/json"}, produces = {"application/json"})
-    public ReviewDto createReview(@PathVariable("userId") String userId, @RequestBody @Valid CreateReviewDto createReviewDto);
+    public ReviewDto createReview(@PathVariable("userId") String userId, @Valid @RequestBody CreateReviewDto createReviewDto);
 
     @GetMapping(value = "/reviews", produces = {"application/json"})
     public ListResponseDto<ReviewDto> getReviews(@RequestParam(value = "productId", required = false) String productId, @ParameterObject Pageable pageable);

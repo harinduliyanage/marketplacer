@@ -86,6 +86,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (!name.equals(found.getName()) && isNameAlreadyExists(category.getParentCategory(), name, category.getCategoryType())) {
             throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_ALREADY_EXISTS_MSG, name));
         } else {
+            category.setId(id);
             Category updatedCategory = categoryRepository.save(category);
             log.info("category has been successfully updated {}", updatedCategory);
             //

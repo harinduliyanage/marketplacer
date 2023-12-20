@@ -42,6 +42,8 @@ public abstract class ProductMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "store", ignore = true)
+    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "productStatus", ignore = true)
     public abstract Product createProductDtoToProduct(CreateProductDto createProductDto);
 
     @Mapping(target = "id", ignore = true)
