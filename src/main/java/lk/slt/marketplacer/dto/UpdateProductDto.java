@@ -33,5 +33,6 @@ public class UpdateProductDto {
     private List<String> images;
     private Set<String> tags;
     //
+    @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
 }
