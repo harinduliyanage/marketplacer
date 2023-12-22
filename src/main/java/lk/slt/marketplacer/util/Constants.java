@@ -29,5 +29,6 @@ public class Constants {
     public static final String CART_FORBIDDEN_MSG = "You don't have permission to access cart id '%s'";
     public static final String ORDER_ADDRESS_REQUIRED_MSG = "For %s, '%s' & '%s' are required to order";
     public static final String REVIEW_NOT_FOUND_MSG = "Review '%s' not found of user '%s'";
+    public static final String WISHLIST_NOT_FOUND_MSG = "Wishlist '%s' not found of user '%s'";
 
 }
