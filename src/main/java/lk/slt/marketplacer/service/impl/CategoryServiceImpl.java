@@ -60,8 +60,8 @@ public class CategoryServiceImpl implements CategoryService {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
         if (parentCategoryId != null && categoryType != null) {
-            expression = qCategory.parentCategory.eq(getCategoryById(parentCategoryId))
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.categoryType.eq(categoryType));
+            expression = qCategory.categoryType.eq(categoryType)
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (parentCategoryId != null) {
             expression = parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
         } else if (categoryType != null) {
