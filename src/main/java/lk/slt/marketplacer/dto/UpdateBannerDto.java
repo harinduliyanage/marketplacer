@@ -2,9 +2,8 @@ package lk.slt.marketplacer.dto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lk.slt.marketplacer.util.CategoryType;
+import lk.slt.marketplacer.util.BannerType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCategoryDto {
-    @NotEmpty
-    private String name;
+public class UpdateBannerDto {
+    private String imageUrl;
+    private String link;
     @NotNull
     @Enumerated(EnumType.STRING)
-    private CategoryType categoryType;
-    private String parentCategoryId;
+    private BannerType bannerType;
+    private int index;
     private Boolean isFeatured;
 }

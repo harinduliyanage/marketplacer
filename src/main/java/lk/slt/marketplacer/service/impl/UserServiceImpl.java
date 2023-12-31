@@ -121,7 +121,6 @@ public class UserServiceImpl implements UserService {
                 }
             }
             user.setId(id);
-            System.out.println(user);
             User updatedUser = userRepository.save(user);
             log.info("user has been successfully updated {}", updatedUser);
             return updatedUser;
