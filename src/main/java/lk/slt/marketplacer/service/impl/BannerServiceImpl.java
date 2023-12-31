@@ -6,6 +6,7 @@ import lk.slt.marketplacer.model.Banner;
 import lk.slt.marketplacer.model.QBanner;
 import lk.slt.marketplacer.repository.BannerRepository;
 import lk.slt.marketplacer.service.BannerService;
+import lk.slt.marketplacer.util.BannerType;
 import lk.slt.marketplacer.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public Banner getBannerById(String id) {
         QBanner qBanner = QBanner.banner;
-        BooleanExpression eq = qBanner.id.eq(id);
-        Optional<Banner> isFound = bannerRepository.findOne(eq);
+        BooleanExpression expression = qBanner.id.eq(id);
+        Optional<Banner> isFound = bannerRepository.findOne(expression);
         if (isFound.isPresent()) {
             return isFound.get();
         } else {
@@ -41,7 +42,12 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public Page<Banner> getBanners(Pageable pageable) {
+    public Page<Banner> getBanners(BannerType bannerType, Pageable pageable) {
+        if (bannerType != null) {
+            QBanner qBanner = QBanner.banner;
+            BooleanExpression expression = qBanner.bannerType.eq(bannerType);
+            return bannerRepository.findAll(expression, pageable);
+        }
         return bannerRepository.findAll(pageable);
     }
 

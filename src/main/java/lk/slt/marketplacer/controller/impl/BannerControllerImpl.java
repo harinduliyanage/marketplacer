@@ -5,6 +5,7 @@ import lk.slt.marketplacer.dto.*;
 import lk.slt.marketplacer.dto.mapper.BannerMapper;
 import lk.slt.marketplacer.model.Banner;
 import lk.slt.marketplacer.service.BannerService;
+import lk.slt.marketplacer.util.BannerType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +32,8 @@ public class BannerControllerImpl implements BannerController {
     }
 
     @Override
-    public ListResponseDto<BannerDto> getBanners(Pageable pageable) {
-        Page<Banner> page = bannerService.getBanners(pageable);
+    public ListResponseDto<BannerDto> getBanners(BannerType bannerType, Pageable pageable) {
+        Page<Banner> page = bannerService.getBanners(bannerType, pageable);
         return ListResponseDto.<BannerDto>builder()
                 .data(bannerMapper.bannerListToBannerDtoList(page.getContent()))
                 .page(pageable.getPageNumber())

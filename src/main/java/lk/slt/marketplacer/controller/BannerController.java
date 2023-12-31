@@ -3,6 +3,7 @@ package lk.slt.marketplacer.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lk.slt.marketplacer.dto.*;
+import lk.slt.marketplacer.util.BannerType;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +18,11 @@ public interface BannerController {
     public BannerDto getBanner(@PathVariable("bannerId") String bannerId);
 
     @GetMapping()
-    public ListResponseDto<BannerDto> getBanners(@ParameterObject Pageable pageable);
+    public ListResponseDto<BannerDto> getBanners(@RequestParam(value = "bannerType", required = false) BannerType bannerType, @ParameterObject Pageable pageable);
 
     @PatchMapping(value = "/{bannerId}", consumes = {"application/json"}, produces = {"application/json"})
     public BannerDto updateBanner(@PathVariable("bannerId") String bannerId,
-                                    @Valid @RequestBody UpdateBannerDto updateBannerDto);
+                                  @Valid @RequestBody UpdateBannerDto updateBannerDto);
 
     @DeleteMapping(value = "/{bannerId}", produces = {"application/json"})
     public BannerDto removeBanner(@PathVariable("bannerId") String bannerId);
