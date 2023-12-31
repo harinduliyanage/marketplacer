@@ -61,14 +61,13 @@ public class CategoryServiceImpl implements CategoryService {
         BooleanExpression expression;
         if (parentCategoryId != null && categoryType != null) {
             expression = qCategory.parentCategory.eq(getCategoryById(parentCategoryId))
-                    .and(qCategory.categoryType.eq(categoryType));
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.categoryType.eq(categoryType));
         } else if (parentCategoryId != null) {
-            expression = qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
+            expression = parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
         } else if (categoryType != null) {
-            expression = qCategory.categoryType.eq(categoryType)
-                    .and(qCategory.parentCategory.isNull());
+            expression = qCategory.categoryType.eq(categoryType);
         } else {
-            expression = qCategory.parentCategory.isNull();
+            return categoryRepository.findAll(pageable);
         }
         return categoryRepository.findAll(expression, pageable);
     }
