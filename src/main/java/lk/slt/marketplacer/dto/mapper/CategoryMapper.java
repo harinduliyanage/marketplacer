@@ -17,12 +17,14 @@ public abstract class CategoryMapper {
         target.setId(category.getId());
         target.setName(category.getName());
         target.setCategoryType(category.getCategoryType());
+        target.setIsFeatured(category.getIsFeatured());
         //
         if (null != category.getParentCategory()) {
             CategoryDto parentCategory = CategoryDto.builder()
                     .id(category.getParentCategory().getId())
                     .name(category.getParentCategory().getName())
-                    .categoryType(category.getCategoryType())
+                    .categoryType(category.getParentCategory().getCategoryType())
+                    .isFeatured(category.getParentCategory().getIsFeatured())
                     .build();
 
             target.setParentCategory(parentCategory);
@@ -57,6 +59,7 @@ public abstract class CategoryMapper {
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         categoryDto.setCategoryType(category.getCategoryType());
+        categoryDto.setIsFeatured(category.getIsFeatured());
         if (null != category.getParentCategory()) {
             categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
         }
@@ -69,6 +72,7 @@ public abstract class CategoryMapper {
                         .id(sub.getId())
                         .name(sub.getName())
                         .categoryType(sub.getCategoryType())
+                        .isFeatured(sub.getIsFeatured())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -79,10 +83,12 @@ public abstract class CategoryMapper {
         if (category.getParentCategory() == null) {
             categoryDto.setId(category.getId());
             categoryDto.setName(category.getName());
+            categoryDto.setIsFeatured(category.getIsFeatured());
             categoryDto.setCategoryType(category.getCategoryType());
         } else {
             categoryDto.setId(category.getId());
             categoryDto.setName(category.getName());
+            categoryDto.setIsFeatured(category.getIsFeatured());
             categoryDto.setCategoryType(category.getCategoryType());
             categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
         }

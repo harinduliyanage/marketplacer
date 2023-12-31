@@ -22,6 +22,7 @@ public class Constants {
     public static final String ORDER_NOT_FOUND_MSG = "Order '%s' not found of user '%s'";
     public static final String ORDER_DETAILS_NOT_FOUND_MSG = "Order Details '%s' not found of order '%s'";
     public static final String ADDRESS_NOT_FOUND_MSG = "Can't found address for given user id '%s', address id '%s'";
+    public static final String BANNER_NOT_FOUND_MSG = "Can't found banner for id '%s'";
     public static final String CART_NOT_FOUND_MSG = "Cart '%s' not found of user '%s'";
     public static final String INVALID_DISCOUNT_MSG = "The discount amount must be less than the price";
     public static final String ORDER_NULL_ATTRIBUTE_MSG = "User id and cart id must be not empty or order details must be not empty";

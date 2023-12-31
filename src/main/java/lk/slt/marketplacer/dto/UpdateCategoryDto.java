@@ -19,4 +19,5 @@ public class UpdateCategoryDto {
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
     private String parentCategoryId;
+    private Boolean isFeatured;
 }

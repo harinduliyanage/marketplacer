@@ -22,18 +22,16 @@ public class OrderDetailsControllerImpl implements OrderDetailsController {
     @Override
     public List<OrderDetailsDto> getOrderDetails(String userId, String orderId) {
         List<OrderDetails> orderDetails = orderDetailsService.getOrderDetails(userId, orderId);
-        List<OrderDetailsDto> orderDetailsDtos = orderDetailsMapper.orderDetailsListToOrderDetailsDtoList(
+        return orderDetailsMapper.orderDetailsListToOrderDetailsDtoList(
                 orderDetails
         );
-        return orderDetailsDtos;
     }
 
     @Override
     public OrderDetailsDto getOrderDetail(String userId, String orderId, String orderDetailsId) {
         OrderDetails orderDetail = orderDetailsService.getOrderDetail(userId, orderId, orderDetailsId);
-        OrderDetailsDto orderDetailsDto = orderDetailsMapper.orderDetailsToOrderDetailsDto(
+        return orderDetailsMapper.orderDetailsToOrderDetailsDto(
                 orderDetail
         );
-        return orderDetailsDto;
     }
 }
