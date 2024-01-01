@@ -2,10 +2,7 @@ package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.CategoryType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
@@ -33,5 +30,6 @@ public class Category implements Serializable {
     private Boolean isFeatured;
 
     @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Category> subCategories;
 }
