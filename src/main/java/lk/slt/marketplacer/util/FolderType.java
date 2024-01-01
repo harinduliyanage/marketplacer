@@ -5,5 +5,7 @@ public enum FolderType {
     BUSINESS_REGISTRATION,
     STORE_LOGO,
     PRODUCT_IMAGE,
+    CATEGORY_IMAGE,
+    BANNER_IMAGE,
     PRODUCT_VIDEO
 }

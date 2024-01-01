@@ -15,6 +15,8 @@ public class CreateFileDto {
     private String userId;
     private String storeId;
     private String productId;
+    private String categoryId;
+    private String bannerId;
     @NotNull
     @Enumerated(EnumType.STRING)
     private Extension extension;
