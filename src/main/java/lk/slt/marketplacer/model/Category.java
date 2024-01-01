@@ -24,6 +24,7 @@ public class Category implements Serializable {
     private String id;
 
     private String name;
+    private String imageUrl;
     private CategoryType categoryType;
 
     @ManyToOne

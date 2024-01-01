@@ -17,6 +17,7 @@ public class CategoryDto {
     private String name;
     private CategoryType categoryType;
     private CategoryDto parentCategory;
+    private String imageUrl;
     private Boolean isFeatured;
     private List<CategoryDto> subCategories;
 }

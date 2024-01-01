@@ -16,6 +16,7 @@ public abstract class CategoryMapper {
         CategoryDto target = new CategoryDto();
         target.setId(category.getId());
         target.setName(category.getName());
+        target.setImageUrl(category.getImageUrl());
         target.setCategoryType(category.getCategoryType());
         target.setIsFeatured(category.getIsFeatured());
         //
@@ -59,6 +60,7 @@ public abstract class CategoryMapper {
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         categoryDto.setCategoryType(category.getCategoryType());
+        categoryDto.setImageUrl(category.getImageUrl());
         categoryDto.setIsFeatured(category.getIsFeatured());
         if (null != category.getParentCategory()) {
             categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
