@@ -26,17 +26,17 @@ public class FileControllerImpl implements FileController {
         UUID uuid = UUID.randomUUID();
         StringBuilder filePathBuilder = new StringBuilder();
         //
-        switch (fileType){
-            case PROFILE_PICTURE :
+        switch (fileType) {
+            case PROFILE_PICTURE:
                 filePathBuilder.append("users/").append(createFileDto.getUserId()).append("/profile-picture/");
                 break;
-            case STORE_LOGO :
+            case STORE_LOGO:
                 filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/asset/");
                 break;
-            case PRODUCT_IMAGE :
+            case PRODUCT_IMAGE:
                 filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/products/").append(createFileDto.getProductId()).append("/images/");
                 break;
-            case PRODUCT_VIDEO :
+            case PRODUCT_VIDEO:
                 filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/products/").append(createFileDto.getProductId()).append("/videos/");
                 break;
             case BUSINESS_REGISTRATION:
@@ -49,17 +49,6 @@ public class FileControllerImpl implements FileController {
                 filePathBuilder.append("banner/").append(createFileDto.getBannerId()).append("/images/");
                 break;
         }
-//        if (fileType == FolderType.PROFILE_PICTURE) {
-//            filePathBuilder.append("users/").append(createFileDto.getUserId()).append("/profile-picture/");
-//        } else if (fileType == FolderType.STORE_LOGO) {
-//            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/asset/");
-//        } else if (fileType == FolderType.PRODUCT_IMAGE) {
-//            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/products/").append(createFileDto.getProductId()).append("/images/");
-//        } else if (fileType == FolderType.PRODUCT_VIDEO) {
-//            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/products/").append(createFileDto.getProductId()).append("/videos/");
-//        } else {
-//            filePathBuilder.append("store/").append(createFileDto.getStoreId()).append("/documents/business-registrations/");
-//        }
         //
         String fileName = String.format("%s.%s", uuid, createFileDto.getExtension().toString().toLowerCase());
         filePathBuilder.append(fileName);
