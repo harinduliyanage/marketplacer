@@ -54,6 +54,11 @@ public abstract class CategoryMapper {
     @IterableMapping(qualifiedByName = "categoryToCategoryDto")
     public abstract List<CategoryDto> categoryListToCategoryDtoList(List<Category> categoryList);
 
+    /**
+     * Get parents tree
+     * @param category
+     * @return
+     */
     public CategoryDto mapCategoryWithParents(Category category) {
         CategoryDto categoryDto = new CategoryDto();
         //
@@ -73,6 +78,7 @@ public abstract class CategoryMapper {
                 .map(sub -> CategoryDto.builder()
                         .id(sub.getId())
                         .name(sub.getName())
+                        .subCategories(mapSubCategories(sub.getSubCategories()))
                         .categoryType(sub.getCategoryType())
                         .isFeatured(sub.getIsFeatured())
                         .build())
