@@ -77,14 +77,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getProducts(String categoryId, Pageable pageable) {
+    public Page<Product> getProducts(String categoryIds, Pageable pageable) {
         QProduct qProduct = QProduct.product;
         BooleanExpression expression;
-        if (null == categoryId) {
+        if (null == categoryIds) {
             expression = qProduct.productStatus.eq(ProductStatus.PUBLISH);
         } else {
-            Category category = categoryService.getCategoryById(categoryId);
-            expression = qProduct.category.eq(category).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
+            //Split category ids into array from categoryIds string
+            String[] categoryIdsArray = categoryIds.split(",");
+            //
+            expression = qProduct.category.id.eq(categoryIdsArray[0]);
+            for (int i = 1; i < categoryIdsArray.length; i++)
+                expression = expression.or(qProduct.category.id.eq(categoryIdsArray[i].trim()));
+
+            expression = expression.and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
         }
         return productRepository.findAll(expression, pageable);
     }

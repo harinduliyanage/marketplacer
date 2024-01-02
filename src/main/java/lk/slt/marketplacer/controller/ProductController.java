@@ -23,7 +23,7 @@ public interface ProductController {
     public ListResponseDto<ProductDto> getStoreProducts(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @ParameterObject Pageable pageable);
 
     @GetMapping(value = "/products", produces = {"application/json"})
-    public ListResponseDto<ProductDto> getProducts(@RequestParam(value = "categoryId", required = false) String categoryId, @ParameterObject Pageable pageable);
+    public ListResponseDto<ProductDto> getProducts(@RequestParam(value = "categoryIds", required = false) String categoryIds, @ParameterObject Pageable pageable);
 
     @PatchMapping(value = "/users/{userId}/stores/{storeId}/products/{productId}", consumes = {"application/json"}, produces = {"application/json"})
     public ProductDto updateProduct(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId, @PathVariable("productId") String productId, @Valid @RequestBody UpdateProductDto updateProductDto);
