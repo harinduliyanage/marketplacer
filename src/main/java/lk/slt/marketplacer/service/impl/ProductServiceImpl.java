@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable) {
         Store store = storeService.getStore(userId, storeId);
         QProduct qProduct = QProduct.product;
-        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
+        BooleanExpression expression = qProduct.store.eq(store);
         return productRepository.findAll(expression, pageable);
     }
 
