@@ -15,7 +15,6 @@ import org.hibernate.validator.constraints.URL;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateBannerDto {
-    @URL
     private String imageUrl;
     private String link;
     @NotNull

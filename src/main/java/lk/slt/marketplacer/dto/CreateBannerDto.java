@@ -15,7 +15,6 @@ import org.hibernate.validator.constraints.URL;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateBannerDto {
-    @URL
     private String imageUrl;
     private String link;
     @NotNull

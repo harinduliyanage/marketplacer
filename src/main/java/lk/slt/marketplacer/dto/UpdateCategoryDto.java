@@ -20,7 +20,6 @@ public class UpdateCategoryDto {
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
     private String parentCategoryId;
-    @URL
     private String imageUrl;
     private Boolean isFeatured;
 }

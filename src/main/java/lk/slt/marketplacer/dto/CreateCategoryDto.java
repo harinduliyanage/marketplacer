@@ -22,7 +22,6 @@ public class CreateCategoryDto {
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
     private String parentCategoryId;
-    @URL
     private String imageUrl;
     private Boolean isFeatured;
 }
