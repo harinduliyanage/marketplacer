@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         Store store = storeService.getStore(userId, storeId);
         //
         QProduct qProduct = QProduct.product;
-        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.id.eq(productId)).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
+        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.id.eq(productId));
 
         Optional<Product> found = productRepository.findOne(expression);
         //
