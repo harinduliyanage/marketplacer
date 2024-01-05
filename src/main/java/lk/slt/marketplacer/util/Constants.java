@@ -16,8 +16,10 @@ public class Constants {
     public static final String INVALID_STORE_ID_MSG = "Invalid given store id '%s'";
     public static final String PRODUCT_NOT_FOUND_OF_STORE_MSG = "Product '%s' not found of store '%s'";
     public static final String PRODUCT_NOT_FOUND_MSG = "Product not found given id '%s'";
+    public static final String INVALID_CATEGORY_ID_MSG = "Invalid given category id '%s'";
+    public static final String CATEGORY_ID_ALREADY_EXISTS_MSG = "Category already exists given %s '%s'";
     public static final String CATEGORY_NOT_FOUND_MSG = "Category '%s' not found";
-    public static final String CATEGORY_ALREADY_EXISTS_MSG = "Category already exists given name '%s'";
+    public static final String CATEGORY_NAME_ALREADY_EXISTS_MSG = "Category already exists given name '%s'";
     public static final String INVALID_CATEGORY_TYPE_MSG = "Invalid category type of given category id '%s'";
     public static final String ORDER_NOT_FOUND_MSG = "Order '%s' not found of user '%s'";
     public static final String ORDER_DETAILS_NOT_FOUND_MSG = "Order Details '%s' not found of order '%s'";

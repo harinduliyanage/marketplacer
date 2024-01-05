@@ -3,6 +3,8 @@ package lk.slt.marketplacer.service.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.CategoryAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.CategoryNotFoundException;
+import lk.slt.marketplacer.exceptions.StoreAlreadyExistsException;
+import lk.slt.marketplacer.exceptions.StoreIdInvalidException;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QCategory;
 import lk.slt.marketplacer.repository.CategoryRepository;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -32,9 +35,24 @@ public class CategoryServiceImpl implements CategoryService {
         //
         if (isNameAlreadyExists(category.getParentCategory(), category.getName(), category.getCategoryType())) {
             throw new CategoryAlreadyExistsException(String
-                    .format(Constants.CATEGORY_ALREADY_EXISTS_MSG, category.getName())
+                    .format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, category.getName())
             );
         } else {
+            String id = category.getId();
+            if (null != id) {
+                // Validate UUID format
+                try {
+                    UUID.fromString(id);
+                } catch (IllegalArgumentException exception) {
+                    throw new StoreIdInvalidException(String.format(Constants.INVALID_CATEGORY_ID_MSG, id));
+                }
+                // Check user given id already using
+                if (isIdAlreadyExists(id)) {
+                    throw new StoreAlreadyExistsException(String.format(Constants.CATEGORY_ID_ALREADY_EXISTS_MSG, "id", id));
+                }
+            } else {
+                category.setId(UUID.randomUUID().toString());
+            }
             Category savedCategory = categoryRepository.save(category);
             log.info("category has been successfully created {}", savedCategory);
             //
@@ -83,7 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         //
         if (!name.equals(found.getName()) && isNameAlreadyExists(category.getParentCategory(), name, category.getCategoryType())) {
-            throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_ALREADY_EXISTS_MSG, name));
+            throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, name));
         } else {
             category.setId(id);
             Category updatedCategory = categoryRepository.save(category);
@@ -115,6 +133,12 @@ public class CategoryServiceImpl implements CategoryService {
                     .and(qCategory.categoryType.eq(categoryType))
                     .and(qCategory.parentCategory.eq(parentCategory));
         }
+        return categoryRepository.exists(expression);
+    }
+
+    private Boolean isIdAlreadyExists(String storeId) {
+        QCategory qCategory = QCategory.category;
+        BooleanExpression expression = qCategory.id.eq(storeId);
         return categoryRepository.exists(expression);
     }
 }

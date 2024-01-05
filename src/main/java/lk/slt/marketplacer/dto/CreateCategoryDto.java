@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.URL;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCategoryDto {
+    private String id;
     @NotEmpty
     private String name;
     @NotNull

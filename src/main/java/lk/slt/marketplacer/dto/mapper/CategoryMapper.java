@@ -36,7 +36,6 @@ public abstract class CategoryMapper {
         return target;
     }
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "parentCategory", ignore = true)
     @Mapping(target = "subCategories", ignore = true)
     public abstract Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);
@@ -56,6 +55,7 @@ public abstract class CategoryMapper {
 
     /**
      * Get parents tree
+     *
      * @param category
      * @return
      */
@@ -70,8 +70,9 @@ public abstract class CategoryMapper {
         if (null != category.getParentCategory()) {
             categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
         }
-        return  categoryDto;
+        return categoryDto;
     }
+
     //
     private List<CategoryDto> mapSubCategories(List<Category> subCategories) {
         return subCategories.stream()

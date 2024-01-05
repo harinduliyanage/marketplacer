@@ -3,7 +3,6 @@ package lk.slt.marketplacer.model;
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.CategoryType;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,9 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category implements Serializable {
-
     @Id
-    @UuidGenerator
     private String id;
 
     private String name;
