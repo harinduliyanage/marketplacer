@@ -30,6 +30,7 @@ public abstract class ProductMapper {
         target.setDiscountType(product.getDiscountType());
         target.setImages(product.getImages());
         target.setVideos(product.getVideos());
+        target.setTags(product.getTags());
         target.setReOrderLevel(product.getReOrderLevel());
         target.setCategory(categoryMapper.mapCategoryWithParents(product.getCategory()));
 
@@ -41,6 +42,8 @@ public abstract class ProductMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "store", ignore = true)
+    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "productStatus", ignore = true)
     public abstract Product createProductDtoToProduct(CreateProductDto createProductDto);
 
     @Mapping(target = "id", ignore = true)
@@ -71,6 +74,8 @@ public abstract class ProductMapper {
     @Mapping(target = "videos", source = "videos",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "images", source = "images",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "tags", source = "tags",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract Product updateProductDtoToProduct(UpdateProductDto updateProductDto, @MappingTarget Product entity);
 

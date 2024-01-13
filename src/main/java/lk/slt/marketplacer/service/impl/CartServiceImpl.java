@@ -27,7 +27,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart createCart(Cart cart) {
-        cart.setCartItems(new ArrayList<CartItems>());
         Cart savedCart = cartRepository.save(cart);
         log.info("cart has been successfully created {}", savedCart);
         return savedCart;
@@ -72,7 +71,7 @@ public class CartServiceImpl implements CartService {
     public Cart removeCart(String userId, String cartId) {
         Cart cart = getCart(userId, cartId);
         cartRepository.deleteById(cartId);
-        log.info("Cart has been successfully deleted {}", cart);
+        log.info("cart has been successfully deleted {}", cart);
         return cart;
     }
 }

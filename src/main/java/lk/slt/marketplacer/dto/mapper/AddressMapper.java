@@ -15,9 +15,7 @@ public interface AddressMapper {
 
     AddressDto addressToAddressDto(Address address);
 
-    Address addressDtoToAddress(AddressDto addressDto);
-
-    //@Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Address createAddressDtoToAddress(CreateAddressDto createAddressDto);
 
     @Mapping(target = "id", ignore = true)

@@ -13,8 +13,6 @@ public interface CartMapper {
 
     List<CartDto> cartListToCartDtoList(List<Cart> carts);
 
-    Cart cartDtoToCart(CartDto cartDto);
-
     @Mapping(target = "id", ignore = true)
     Cart updateCartDtoToCart(UpdateCartDto updateCartDto);
 }

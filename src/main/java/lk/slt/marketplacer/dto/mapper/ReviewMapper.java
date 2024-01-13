@@ -30,8 +30,6 @@ public abstract class ReviewMapper {
         //
         return  target;
     }
-  
-    public abstract  Review reviewDtoToReview(ReviewDto reviewDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = SocialLinkMapper.class)
+@Mapper(componentModel = "spring", uses = {SocialLinkMapper.class})
 public abstract class StoreMapper {
     @Autowired
     CategoryMapper categoryMapper;
@@ -37,13 +37,11 @@ public abstract class StoreMapper {
         target.setLogoFilePath(store.getLogoFilePath());
         return  target;
     }
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "products", ignore = true)
-    public abstract  Store storeDtoToStore(StoreDto storeDto);
 
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
     @Mapping(target = "storeStatus", ignore = true)
+    @Mapping(target = "category", ignore = true)
     public abstract  Store createStoreDtoToStore(CreateStoreDto createStoreDto);
 
     @Mapping(target = "id", ignore = true)
@@ -69,6 +67,8 @@ public abstract class StoreMapper {
     @Mapping(target = "logoFilePath", source = "logoFilePath",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "storeStatus", source = "storeStatus",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "socialLinks", source = "socialLinks",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract  Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto, @MappingTarget Store store);
 

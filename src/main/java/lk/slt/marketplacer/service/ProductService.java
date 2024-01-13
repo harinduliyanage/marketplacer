@@ -11,7 +11,7 @@ public interface ProductService {
 
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable);
 
-    public Page<Product> getProducts(Pageable pageable);
+    public Page<Product> getProducts(String categoryIds, Pageable pageable);
 
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product);
 

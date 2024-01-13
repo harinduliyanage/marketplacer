@@ -18,10 +18,10 @@ public class CreateStoreDto {
     private String id;
     private List<SocialLinkDto> socialLinks;
     //
-    //@NotEmpty
+    @NotEmpty
     private String name;
     private String description;
-    //@NotEmpty
+    @NotEmpty
     private String categoryId;
     //
     private String telephone;

@@ -1,6 +1,5 @@
 package lk.slt.marketplacer.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrderDto {
-    private String id;
-    private String userId;
     private String cartId;
     // For logged users
+    private String userId;
     private String shippingAddressId;
     private String billingAddressId;
     // For guest users

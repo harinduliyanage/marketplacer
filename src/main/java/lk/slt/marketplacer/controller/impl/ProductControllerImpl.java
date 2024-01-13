@@ -47,8 +47,8 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ListResponseDto<ProductDto> getProducts(Pageable pageable) {
-        Page<Product> page = productService.getProducts(pageable);
+    public ListResponseDto<ProductDto> getProducts(String categoryIds, Pageable pageable) {
+        Page<Product> page = productService.getProducts(categoryIds, pageable);
         return ListResponseDto.<ProductDto>builder()
                 .data(productMapper.productListToProductDtoList(page.getContent()))
                 .page(pageable.getPageNumber())
