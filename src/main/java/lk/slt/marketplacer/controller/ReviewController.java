@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author harindu.sul@gmail.com
  */
-@Tag(name = "user-services")
+@Tag(name = "review-services")
 @RequestMapping("/api/v1")
 public interface ReviewController {
     @PostMapping(value = "/users/{userId}/reviews", consumes = {"application/json"}, produces = {"application/json"})
