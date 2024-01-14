@@ -3,6 +3,7 @@ package lk.slt.marketplacer.dto.mapper;
 import lk.slt.marketplacer.dto.CreateStoreDto;
 import lk.slt.marketplacer.dto.StoreDto;
 import lk.slt.marketplacer.dto.UpdateStoreDto;
+import lk.slt.marketplacer.model.SocialLink;
 import lk.slt.marketplacer.model.Store;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -44,33 +45,75 @@ public abstract class StoreMapper {
     @Mapping(target = "category", ignore = true)
     public abstract  Store createStoreDtoToStore(CreateStoreDto createStoreDto);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "products", ignore = true)
-    @Mapping(target = "category", ignore = true)
-    @Mapping(target = "name", source = "name",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "description", source = "description",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "telephone", source = "telephone",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "fax", source = "fax",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "address", source = "address",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "email", source = "email",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "website", source = "website",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "brFilePath", source = "brFilePath",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "logoFilePath", source = "logoFilePath",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "storeStatus", source = "storeStatus",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "socialLinks", source = "socialLinks",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract  Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto, @MappingTarget Store store);
+
+    public  Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto, @MappingTarget Store store){
+        if ( updateStoreDto == null ) {
+            return store;
+        }
+        // copy store object
+        Store mappedStore = new Store();
+        mappedStore.setId(store.getId());
+        mappedStore.setUser(store.getUser());
+        mappedStore.setProducts(store.getProducts());
+        mappedStore.setSocialLinks(store.getSocialLinks());
+        mappedStore.setName(store.getName());
+        mappedStore.setDescription(store.getDescription());
+        mappedStore.setCategory(store.getCategory());
+        mappedStore.setTelephone(store.getTelephone());
+        mappedStore.setFax(store.getFax());
+        mappedStore.setAddress(store.getAddress());
+        mappedStore.setEmail(store.getEmail());
+        mappedStore.setWebsite(store.getWebsite());
+        mappedStore.setBrFilePath(store.getBrFilePath());
+        mappedStore.setLogoFilePath(store.getLogoFilePath());
+        mappedStore.setStoreStatus(store.getStoreStatus());
+
+        if ( updateStoreDto.getName() != null ) {
+            mappedStore.setName( updateStoreDto.getName() );
+        }
+        if ( updateStoreDto.getDescription() != null ) {
+            mappedStore.setDescription( updateStoreDto.getDescription() );
+        }
+        if ( updateStoreDto.getTelephone() != null ) {
+            mappedStore.setTelephone( updateStoreDto.getTelephone() );
+        }
+        if ( updateStoreDto.getFax() != null ) {
+            mappedStore.setFax( updateStoreDto.getFax() );
+        }
+        if ( updateStoreDto.getAddress() != null ) {
+            mappedStore.setAddress( updateStoreDto.getAddress() );
+        }
+        if ( updateStoreDto.getEmail() != null ) {
+            mappedStore.setEmail( updateStoreDto.getEmail() );
+        }
+        if ( updateStoreDto.getWebsite() != null ) {
+            mappedStore.setWebsite( updateStoreDto.getWebsite() );
+        }
+        if ( updateStoreDto.getBrFilePath() != null ) {
+            mappedStore.setBrFilePath( updateStoreDto.getBrFilePath() );
+        }
+        if ( updateStoreDto.getLogoFilePath() != null ) {
+            mappedStore.setLogoFilePath( updateStoreDto.getLogoFilePath() );
+        }
+        if ( updateStoreDto.getStoreStatus() != null ) {
+            mappedStore.setStoreStatus( updateStoreDto.getStoreStatus() );
+        }
+        if ( mappedStore.getSocialLinks() != null ) {
+            List<SocialLink> list = socialLinkMapper.socialLinkDtoListToSocialLinkList( updateStoreDto.getSocialLinks() );
+            if ( list != null ) {
+                mappedStore.getSocialLinks().clear();
+                mappedStore.getSocialLinks().addAll( list );
+            }
+        }
+        else {
+            List<SocialLink> list = socialLinkMapper.socialLinkDtoListToSocialLinkList( updateStoreDto.getSocialLinks() );
+            if ( list != null ) {
+                mappedStore.setSocialLinks( list );
+            }
+        }
+
+        return mappedStore;
+    }
 
     public abstract  List<StoreDto> storeListToStoreDtoList(List<Store> storeList);
 }
