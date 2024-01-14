@@ -1,10 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import lk.slt.marketplacer.exceptions.CategoryAlreadyExistsException;
-import lk.slt.marketplacer.exceptions.CategoryNotFoundException;
-import lk.slt.marketplacer.exceptions.StoreAlreadyExistsException;
-import lk.slt.marketplacer.exceptions.StoreIdInvalidException;
+import lk.slt.marketplacer.exceptions.*;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QCategory;
 import lk.slt.marketplacer.repository.CategoryRepository;
@@ -44,11 +41,11 @@ public class CategoryServiceImpl implements CategoryService {
                 try {
                     UUID.fromString(id);
                 } catch (IllegalArgumentException exception) {
-                    throw new StoreIdInvalidException(String.format(Constants.INVALID_CATEGORY_ID_MSG, id));
+                    throw new CategoryIdInvalidException(String.format(Constants.INVALID_CATEGORY_ID_MSG, id));
                 }
                 // Check user given id already using
                 if (isIdAlreadyExists(id)) {
-                    throw new StoreAlreadyExistsException(String.format(Constants.CATEGORY_ID_ALREADY_EXISTS_MSG, "id", id));
+                    throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_ID_ALREADY_EXISTS_MSG, "id", id));
                 }
             } else {
                 category.setId(UUID.randomUUID().toString());
