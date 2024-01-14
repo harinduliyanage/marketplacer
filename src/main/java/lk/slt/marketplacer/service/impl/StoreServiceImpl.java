@@ -1,10 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import lk.slt.marketplacer.exceptions.CategoryTypeInvalidException;
-import lk.slt.marketplacer.exceptions.StoreAlreadyExistsException;
-import lk.slt.marketplacer.exceptions.StoreIdInvalidException;
-import lk.slt.marketplacer.exceptions.StoreNotFoundException;
+import lk.slt.marketplacer.exceptions.*;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QStore;
 import lk.slt.marketplacer.model.Store;
@@ -67,7 +64,7 @@ public class StoreServiceImpl implements StoreService {
                 throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
             }
             store.setUser(user);
-            store.setStoreStatus(StoreStatus.PENDING);
+            store.setStoreStatus(StoreStatus.IN_REVIEW);
             store.setCategory(category);
             //
             Store savedStore = storeRepository.save(store);
@@ -94,9 +91,12 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store updateStore(String userId, String storeId, String categoryId, Store store) {
         String name = store.getName();
+        Store foundStore = getStore(userId, storeId);
         //
         if (isNameAlreadyExists(store.getId(), name)) {
             throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, "name", name));
+        }else if(foundStore.getStoreStatus() == StoreStatus.IN_REVIEW && (store.getStoreStatus() == StoreStatus.PUBLISHED || store.getStoreStatus() == StoreStatus.UNPUBLISHED)) {
+            throw new StoreStatusInvalidException(String.format(Constants.STORE_STATUS_INVALID_MSG, store.getStoreStatus()));
         } else {
             if (categoryId != null) {
                 Category category = categoryService.getCategoryById(categoryId);
