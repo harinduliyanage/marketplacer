@@ -95,7 +95,7 @@ public class StoreServiceImpl implements StoreService {
         //
         if (isNameAlreadyExists(store.getId(), name)) {
             throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, "name", name));
-        }else if(foundStore.getStoreStatus() == StoreStatus.IN_REVIEW && (store.getStoreStatus() == StoreStatus.PUBLISHED || store.getStoreStatus() == StoreStatus.UNPUBLISHED)) {
+        }else if(foundStore.getStoreStatus().equals(StoreStatus.IN_REVIEW)  && (store.getStoreStatus().equals(StoreStatus.PUBLISHED) || store.getStoreStatus().equals(StoreStatus.UNPUBLISHED))) {
             throw new StoreStatusInvalidException(String.format(Constants.STORE_STATUS_INVALID_MSG, store.getStoreStatus()));
         } else {
             if (categoryId != null) {

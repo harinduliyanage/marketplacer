@@ -54,8 +54,7 @@ public class StoreControllerImpl implements StoreController {
         Store updatedStore = storeService.updateStore(userId, storeId, updateStoreDto.getCategoryId(),
                 storeMapper.updateStoreDtoToStore(updateStoreDto, store));
         //
-        return storeMapper.storeToStoreDto(updatedStore
-        );
+        return storeMapper.storeToStoreDto(updatedStore);
     }
 
     @Override
