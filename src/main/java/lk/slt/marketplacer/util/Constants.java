@@ -12,6 +12,7 @@ public class Constants {
     public static final String USERNAME_INVALID_MSG = "Invalid username '%s'";
     public static final String STORE_NOT_FOUND_OF_USER_MSG = "Store '%s' not found of user '%s'";
     public static final String STORE_NOT_FOUND_MSG = "Store not found given id '%s'";
+    public static final String STORE_STATUS_INVALID_MSG = "'%s' can not be assign to unapproved store";
     public static final String STORE_ALREADY_EXISTS_MSG = "Store already exists given %s '%s'";
     public static final String INVALID_STORE_ID_MSG = "Invalid given store id '%s'";
     public static final String PRODUCT_NOT_FOUND_OF_STORE_MSG = "Product '%s' not found of store '%s'";
