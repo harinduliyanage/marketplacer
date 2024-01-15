@@ -55,6 +55,7 @@ public class StoreServiceImpl implements StoreService {
                     throw new StoreAlreadyExistsException(String.format(Constants.STORE_ALREADY_EXISTS_MSG, "id", id));
                 }
             } else {
+                //set uuid
                 store.setId(UUID.randomUUID().toString());
             }
             //
