@@ -6,6 +6,7 @@ import lk.slt.marketplacer.dto.CreateStoreDto;
 import lk.slt.marketplacer.dto.ListResponseDto;
 import lk.slt.marketplacer.dto.StoreDto;
 import lk.slt.marketplacer.dto.UpdateStoreDto;
+import lk.slt.marketplacer.util.StoreStatus;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,5 @@ public interface StoreController {
     public StoreDto removeStore(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId);
 
     @GetMapping(value = "/stores", produces = {"application/json"})
-    public ListResponseDto<StoreDto> getStores(@ParameterObject Pageable pageable);
+    public ListResponseDto<StoreDto> getStores(@RequestParam(value = "categoryType", required = false) StoreStatus storeStatus, @ParameterObject Pageable pageable);
 }

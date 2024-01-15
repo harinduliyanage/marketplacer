@@ -8,6 +8,7 @@ import lk.slt.marketplacer.dto.UpdateStoreDto;
 import lk.slt.marketplacer.dto.mapper.StoreMapper;
 import lk.slt.marketplacer.model.Store;
 import lk.slt.marketplacer.service.StoreService;
+import lk.slt.marketplacer.util.StoreStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,8 +65,8 @@ public class StoreControllerImpl implements StoreController {
     }
 
     @Override
-    public ListResponseDto<StoreDto> getStores(Pageable pageable) {
-        Page<Store> page = storeService.getStores(pageable);
+    public ListResponseDto<StoreDto> getStores(StoreStatus storeStatus, Pageable pageable) {
+        Page<Store> page = storeService.getStores(storeStatus, pageable);
         return ListResponseDto.<StoreDto>builder()
                 .data(storeMapper.storeListToStoreDtoList(page.getContent()))
                 .page(pageable.getPageNumber())

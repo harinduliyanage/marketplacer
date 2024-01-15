@@ -131,8 +131,14 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Page<Store> getStores(Pageable pageable) {
-        return storeRepository.findAll(pageable);
+    public Page<Store> getStores(StoreStatus storeStatus, Pageable pageable) {
+        if(storeStatus==null) {
+            return storeRepository.findAll(pageable);
+        }else{
+            QStore qStore = QStore.store;
+            BooleanExpression expression = qStore.storeStatus.eq(storeStatus);
+            return storeRepository.findAll(expression, pageable);
+        }
     }
 
     @Override
