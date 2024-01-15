@@ -11,7 +11,7 @@ public interface CategoryService {
 
     public Category getCategoryById(String id);
 
-    public Page<Category> getCategories(String parentCategoryId, CategoryType categoryType, Pageable pageable);
+    public Page<Category> getCategories(String parentCategoryId, String categoryName, CategoryType categoryType, Pageable pageable);
 
     public Category updateCategory(String parentId, String id, Category category);
 

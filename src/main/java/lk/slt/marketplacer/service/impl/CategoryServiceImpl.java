@@ -71,17 +71,30 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Page<Category> getCategories(String parentCategoryId, CategoryType categoryType, Pageable pageable) {
+    public Page<Category> getCategories(String parentCategoryId, String categoryName, CategoryType categoryType, Pageable pageable) {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
-        if (parentCategoryId != null && categoryType != null) {
+        //
+        if (parentCategoryId != null && categoryType != null && categoryName!=null) {
+            expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        }else if (parentCategoryId != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        } else if (parentCategoryId != null) {
+        }else if (parentCategoryId != null && categoryName != null) {
+            expression = qCategory.name.eq(categoryName)
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        }else if (categoryName != null && categoryType != null) {
+            expression = qCategory.categoryType.eq(categoryType)
+                    .and(qCategory.name.eq(categoryName));
+        }
+        else if (parentCategoryId != null) {
             expression = parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
         } else if (categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType);
-        } else {
+        } else if (categoryName != null) {
+            expression = qCategory.name.eq(categoryName);
+        }else {
             return categoryRepository.findAll(pageable);
         }
         return categoryRepository.findAll(expression, pageable);
