@@ -1,10 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import lk.slt.marketplacer.exceptions.CategoryAlreadyExistsException;
-import lk.slt.marketplacer.exceptions.CategoryNotFoundException;
-import lk.slt.marketplacer.exceptions.StoreAlreadyExistsException;
-import lk.slt.marketplacer.exceptions.StoreIdInvalidException;
+import lk.slt.marketplacer.exceptions.*;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QCategory;
 import lk.slt.marketplacer.repository.CategoryRepository;
@@ -44,11 +41,11 @@ public class CategoryServiceImpl implements CategoryService {
                 try {
                     UUID.fromString(id);
                 } catch (IllegalArgumentException exception) {
-                    throw new StoreIdInvalidException(String.format(Constants.INVALID_CATEGORY_ID_MSG, id));
+                    throw new CategoryIdInvalidException(String.format(Constants.INVALID_CATEGORY_ID_MSG, id));
                 }
                 // Check user given id already using
                 if (isIdAlreadyExists(id)) {
-                    throw new StoreAlreadyExistsException(String.format(Constants.CATEGORY_ID_ALREADY_EXISTS_MSG, "id", id));
+                    throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_ID_ALREADY_EXISTS_MSG, "id", id));
                 }
             } else {
                 category.setId(UUID.randomUUID().toString());
@@ -74,17 +71,30 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Page<Category> getCategories(String parentCategoryId, CategoryType categoryType, Pageable pageable) {
+    public Page<Category> getCategories(String parentCategoryId, String categoryName, CategoryType categoryType, Pageable pageable) {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
-        if (parentCategoryId != null && categoryType != null) {
+        //
+        if (parentCategoryId != null && categoryType != null && categoryName!=null) {
+            expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        }else if (parentCategoryId != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        } else if (parentCategoryId != null) {
+        }else if (parentCategoryId != null && categoryName != null) {
+            expression = qCategory.name.eq(categoryName)
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        }else if (categoryName != null && categoryType != null) {
+            expression = qCategory.categoryType.eq(categoryType)
+                    .and(qCategory.name.eq(categoryName));
+        }
+        else if (parentCategoryId != null) {
             expression = parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
         } else if (categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType);
-        } else {
+        } else if (categoryName != null) {
+            expression = qCategory.name.eq(categoryName);
+        }else {
             return categoryRepository.findAll(pageable);
         }
         return categoryRepository.findAll(expression, pageable);
