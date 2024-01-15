@@ -30,5 +30,5 @@ public interface StoreController {
     public StoreDto removeStore(@PathVariable("userId") String userId, @PathVariable("storeId") String storeId);
 
     @GetMapping(value = "/stores", produces = {"application/json"})
-    public ListResponseDto<StoreDto> getStores(@RequestParam(value = "categoryType", required = false) StoreStatus storeStatus, @ParameterObject Pageable pageable);
+    public ListResponseDto<StoreDto> getStores(@RequestParam(value = "storeStatus", required = false) StoreStatus storeStatus, @ParameterObject Pageable pageable);
 }
