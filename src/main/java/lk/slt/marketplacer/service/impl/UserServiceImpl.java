@@ -7,9 +7,11 @@ import lk.slt.marketplacer.exceptions.UsernameInvalidException;
 import lk.slt.marketplacer.model.Cart;
 import lk.slt.marketplacer.model.QUser;
 import lk.slt.marketplacer.model.User;
+import lk.slt.marketplacer.model.Wishlist;
 import lk.slt.marketplacer.repository.UserRepository;
 import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.UserService;
+import lk.slt.marketplacer.service.WishlistService;
 import lk.slt.marketplacer.util.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 
 /**
@@ -34,6 +37,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CartService cartService;
+    @Autowired
+    private WishlistService wishlistService;
 
     @Override
     public User createUser(User user) {
@@ -45,11 +50,18 @@ public class UserServiceImpl implements UserService {
             UserRepresentation userRepresentation = keycloakService.searchByUsername(user.getUsername());
             if (null != userRepresentation) {
                 user.setSub(userRepresentation.getId());
-                // Create new cart to user
-                Cart cart = cartService.createCart(new Cart());
-                user.setCart(cart);
+                // create new cart to user
+                Cart cart = new Cart();
+                cart.setCartItems(new ArrayList<>());
+                Cart createdCart = cartService.createCart(cart);
+                user.setCart(createdCart);
+                // create new wishlist to user
+                Wishlist wishlist = new Wishlist();
+                wishlist.setProducts(new HashSet<>());
+                Wishlist createdWishlist = wishlistService.createWishlist(wishlist);
+                user.setWishlist(createdWishlist);
                 // set default followed store
-                user.setFollowedStores(new ArrayList<>());
+                user.setFollowedStores(new HashSet<>());
                 User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);

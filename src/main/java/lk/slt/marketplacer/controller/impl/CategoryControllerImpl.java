@@ -4,6 +4,7 @@ import lk.slt.marketplacer.controller.CategoryController;
 import lk.slt.marketplacer.dto.*;
 import lk.slt.marketplacer.dto.mapper.CategoryMapper;
 import lk.slt.marketplacer.model.Category;
+import lk.slt.marketplacer.model.Order;
 import lk.slt.marketplacer.service.CategoryService;
 import lk.slt.marketplacer.util.CategoryType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class CategoryControllerImpl implements CategoryController {
     }
 
     @Override
-    public ListResponseDto<CategoryDto> getCategories(String parentCategoryId, CategoryType categoryType, Pageable pageable) {
-        Page<Category> page = categoryService.getCategories(parentCategoryId, categoryType, pageable);
+    public ListResponseDto<CategoryDto> getCategories(String parentCategoryId,String categoryName, CategoryType categoryType, Pageable pageable) {
+        Page<Category> page = categoryService.getCategories(parentCategoryId, categoryName, categoryType, pageable);
         return ListResponseDto.<CategoryDto>builder()
                 .data(categoryMapper.categoryListToCategoryDtoList(page.getContent()))
                 .page(pageable.getPageNumber())
@@ -46,9 +47,10 @@ public class CategoryControllerImpl implements CategoryController {
 
     @Override
     public CategoryDto updateCategory(String categoryId, UpdateCategoryDto updateCategoryDto) {
-        Category category = categoryMapper.updateCategoryDtoToCategory(updateCategoryDto);
-        category.setId(categoryId);
+        Category foundCategory = categoryService.getCategoryById(categoryId);
+        Category category = categoryMapper.updateCategoryDtoToCategory(updateCategoryDto, foundCategory);
         Category updatedCategory = categoryService.updateCategory(updateCategoryDto.getParentCategoryId(), categoryId, category);
+        //
         return categoryMapper.categoryToCategoryDto(updatedCategory);
     }
 

@@ -1,4 +1,15 @@
 package lk.slt.marketplacer.dto;
 
-public class UpdateOrderDetailsDto extends CreateOrderDetailsDto {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateOrderDetailsDto{
+    private String productId;
+    private Double units;
 }

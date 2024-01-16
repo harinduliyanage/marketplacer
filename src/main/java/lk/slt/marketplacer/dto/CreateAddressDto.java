@@ -1,5 +1,8 @@
 package lk.slt.marketplacer.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotNull;
 import lk.slt.marketplacer.util.AddressType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateAddressDto {
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private AddressType addressType;
     private String name;
     private String addressLine1;

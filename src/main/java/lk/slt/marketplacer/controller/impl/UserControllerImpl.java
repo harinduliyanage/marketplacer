@@ -54,6 +54,7 @@ public class UserControllerImpl implements UserController {
         User foundUser = userService.getUser(userId);
         String username = foundUser.getUsername();
         User user = userMapper.updateUserDtoToUser(updateUserDto, foundUser);
+        System.out.println(user);
         User updatedUser = userService.updateUser(userId, username, user);
         //
         return userMapper.userToUserDto(updatedUser);

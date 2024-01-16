@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserDto {
+    @NotEmpty
     private String username;
     @Email
     private String email;

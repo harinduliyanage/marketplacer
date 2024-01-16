@@ -11,8 +11,6 @@ import lk.slt.marketplacer.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,7 +23,6 @@ public class AddressControllerImpl implements AddressController {
 
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public AddressDto createAddress(String userId, CreateAddressDto createAddressDto) {
         Address createdAddress = addressService.createUserAddress(userId,
                 addressMapper.createAddressDtoToAddress(createAddressDto));

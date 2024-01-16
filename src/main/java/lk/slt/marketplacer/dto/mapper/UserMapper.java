@@ -18,16 +18,17 @@ public interface UserMapper {
 
     UserDto userToUserDto(User user);
 
-    User userDtoToUser(UserDto userDto);
-
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sub", ignore = true)
     @Mapping(target = "addresses", ignore = true)
+    @Mapping(target = "cart", ignore = true)
+    @Mapping(target = "followedStores", ignore = true)
     User createUserDtoToUser(CreateUserDto createUserDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sub", ignore = true)
     @Mapping(target = "addresses", ignore = true)
+    @Mapping(target = "cart", ignore = true)
     @Mapping(target = "username", source = "username",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "firstName", source = "firstName",
