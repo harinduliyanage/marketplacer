@@ -33,5 +33,6 @@ public interface BannerMapper {
 
     List<BannerDto> bannerListToBannerDtoList(List<Banner> banners);
 
+    @Mapping(target = "id", ignore = true)
     Banner updateBannerDtoToBanner(UpdateBannerDto updateBannerDto);
 }
