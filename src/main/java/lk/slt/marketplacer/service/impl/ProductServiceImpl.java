@@ -3,6 +3,7 @@ package lk.slt.marketplacer.service.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.CategoryTypeInvalidException;
 import lk.slt.marketplacer.exceptions.ProductNotFoundException;
+import lk.slt.marketplacer.exceptions.UnapprovedStoreException;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.Product;
 import lk.slt.marketplacer.model.QProduct;
@@ -14,6 +15,7 @@ import lk.slt.marketplacer.service.StoreService;
 import lk.slt.marketplacer.util.CategoryType;
 import lk.slt.marketplacer.util.Constants;
 import lk.slt.marketplacer.util.ProductStatus;
+import lk.slt.marketplacer.util.StoreStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +43,9 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryService.getCategoryById(categoryId);
         if (category.getCategoryType() != CategoryType.PRODUCT) {
             throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
+        }
+        if(store.getStoreStatus() == StoreStatus.IN_REVIEW){
+            throw new UnapprovedStoreException(String.format(Constants.PRODUCT_STORE_NOT_APPROVED_MSG, storeId));
         }
         product.setStore(store);
         product.setProductStatus(ProductStatus.PENDING);
