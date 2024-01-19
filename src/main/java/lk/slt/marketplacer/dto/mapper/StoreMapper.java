@@ -42,6 +42,8 @@ public abstract class StoreMapper {
     @Mapping(target = "products", ignore = true)
     @Mapping(target = "storeStatus", ignore = true)
     @Mapping(target = "category", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     public abstract  Store createStoreDtoToStore(CreateStoreDto createStoreDto);
 
 

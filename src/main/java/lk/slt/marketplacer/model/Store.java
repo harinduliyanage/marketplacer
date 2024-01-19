@@ -3,8 +3,11 @@ package lk.slt.marketplacer.model;
 import jakarta.persistence.*;
 import lk.slt.marketplacer.util.StoreStatus;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -43,5 +46,10 @@ public class Store implements Serializable {
     //
     @Enumerated(EnumType.STRING)
     private StoreStatus storeStatus;
+    //
+    @CreationTimestamp
+    private Instant createdAt;
+    @UpdateTimestamp
+    private Instant lastUpdatedAt;
 
 }

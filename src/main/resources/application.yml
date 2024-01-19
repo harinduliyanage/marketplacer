@@ -41,6 +41,7 @@ aws:
   region: ${AWS_REGION:region}
   s3:
     bucket: ${S3_BUCKET_NAME:bucket}
+    preSignUrlValidTime: ${PRE_SIGN_URL_VALID_TIME:300}
 
 keycloak:
   baseUrl: ${KEYCLOAK_BASE_URL:http://localhost:8080}

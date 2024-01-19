@@ -3,9 +3,12 @@ package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
 @Table(name = "cart-items")
@@ -23,4 +26,9 @@ public class CartItems implements Serializable {
     private Product product;
     //
     private Double units;
+    //
+    @CreationTimestamp
+    private Instant createdAt;
+    @UpdateTimestamp
+    private Instant lastUpdatedAt;
 }
