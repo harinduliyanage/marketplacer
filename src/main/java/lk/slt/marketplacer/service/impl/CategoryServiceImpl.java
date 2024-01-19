@@ -6,6 +6,7 @@ import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QCategory;
 import lk.slt.marketplacer.repository.CategoryRepository;
 import lk.slt.marketplacer.service.CategoryService;
+import lk.slt.marketplacer.util.CategoryStatus;
 import lk.slt.marketplacer.util.CategoryType;
 import lk.slt.marketplacer.util.Constants;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
             } else {
                 category.setId(UUID.randomUUID().toString());
             }
+            category.setCategoryStatus(CategoryStatus.IN_REVIEW);
             Category savedCategory = categoryRepository.save(category);
             log.info("category has been successfully created {}", savedCategory);
             //
@@ -60,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryById(String id) {
         QCategory qCategory = QCategory.category;
-        BooleanExpression expression = qCategory.id.eq(id);
+        BooleanExpression expression = qCategory.id.eq(id).and(qCategory.categoryStatus.eq(CategoryStatus.APPROVED));
         Optional<Category> found = categoryRepository.findOne(expression);
         //
         if (found.isPresent()) {
@@ -71,14 +73,30 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Page<Category> getCategories(String parentCategoryId, String categoryName, CategoryType categoryType, Pageable pageable) {
+    public Page<Category> getCategories(String parentCategoryId, String categoryName, CategoryType categoryType, CategoryStatus categoryStatus, Pageable pageable) {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
         //
-        if (parentCategoryId != null && categoryType != null && categoryName!=null) {
+        if (parentCategoryId != null && categoryType != null && categoryName!=null && categoryStatus!=null) {
+            expression = qCategory.categoryType.eq(categoryType).and(qCategory.categoryStatus.eq(categoryStatus)).and(qCategory.name.eq(categoryName))
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        }
+        else if (parentCategoryId != null && categoryType != null && categoryName!=null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        }else if (parentCategoryId != null && categoryType != null) {
+        }else if (parentCategoryId != null && categoryType != null && categoryStatus!=null) {
+            expression = qCategory.categoryType.eq(categoryType).and(qCategory.categoryStatus.eq(categoryStatus))
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        }
+        else if (categoryStatus != null && categoryType != null && categoryName!=null) {
+            expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
+                    .and(qCategory.categoryStatus.eq(categoryStatus));
+        }
+        else if (parentCategoryId != null && categoryName != null && categoryStatus!=null) {
+            expression = qCategory.categoryStatus.eq(categoryStatus).and(qCategory.name.eq(categoryName))
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        }
+        else if (parentCategoryId != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         }else if (parentCategoryId != null && categoryName != null) {
@@ -94,6 +112,8 @@ public class CategoryServiceImpl implements CategoryService {
             expression = qCategory.categoryType.eq(categoryType);
         } else if (categoryName != null) {
             expression = qCategory.name.eq(categoryName);
+        }else if (categoryStatus != null) {
+            expression = qCategory.categoryStatus.eq(categoryStatus);
         }else {
             return categoryRepository.findAll(pageable);
         }
@@ -123,11 +143,23 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category removeCategory(String id) {
-        Category found = getCategoryById(id);
+        Category found = getCategory(id);
         categoryRepository.deleteById(id);
         log.info("category has been successfully deleted {}", found);
         //
         return found;
+    }
+
+    private Category getCategory(String id) {
+        QCategory qCategory = QCategory.category;
+        BooleanExpression expression = qCategory.id.eq(id);
+        Optional<Category> found = categoryRepository.findOne(expression);
+        //
+        if (found.isPresent()) {
+            return found.get();
+        } else {
+            throw new CategoryNotFoundException(String.format(Constants.CATEGORY_NOT_FOUND_MSG, id));
+        }
     }
 
     private Boolean isNameAlreadyExists(Category parentCategory, String name, CategoryType categoryType) {

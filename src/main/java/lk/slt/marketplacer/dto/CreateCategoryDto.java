@@ -17,12 +17,13 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 public class CreateCategoryDto {
     private String id;
+    private String parentCategoryId;
+    private String imageUrl;
+    private String icon;
     @NotEmpty
     private String name;
     @NotNull
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
-    private String parentCategoryId;
-    private String imageUrl;
     private Boolean isFeatured;
 }

@@ -17,6 +17,8 @@ public abstract class CategoryMapper {
         target.setId(category.getId());
         target.setName(category.getName());
         target.setImageUrl(category.getImageUrl());
+        target.setCategoryStatus(category.getCategoryStatus());
+        target.setIcon(category.getIcon());
         target.setCategoryType(category.getCategoryType());
         target.setIsFeatured(category.getIsFeatured());
         //
@@ -38,6 +40,7 @@ public abstract class CategoryMapper {
 
     @Mapping(target = "parentCategory", ignore = true)
     @Mapping(target = "subCategories", ignore = true)
+    @Mapping(target = "categoryStatus", ignore = true)
     public abstract Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);
 
     @Mapping(target = "id", ignore = true)
@@ -45,9 +48,16 @@ public abstract class CategoryMapper {
     @Mapping(target = "parentCategory", ignore = true)
     @Mapping(target = "categoryType", source = "categoryType",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "imageUrl", source = "imageUrl",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "icon", source = "icon",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "categoryStatus", source = "categoryStatus",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "name", source = "name",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-
+    @Mapping(target = "isFeatured", source = "isFeatured",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto, @MappingTarget Category category);
 
     @IterableMapping(qualifiedByName = "categoryToCategoryDto")
@@ -66,6 +76,8 @@ public abstract class CategoryMapper {
         categoryDto.setName(category.getName());
         categoryDto.setCategoryType(category.getCategoryType());
         categoryDto.setImageUrl(category.getImageUrl());
+        categoryDto.setCategoryStatus(category.getCategoryStatus());
+        categoryDto.setIcon(category.getIcon());
         categoryDto.setIsFeatured(category.getIsFeatured());
         if (null != category.getParentCategory()) {
             categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));

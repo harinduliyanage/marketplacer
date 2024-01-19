@@ -1,5 +1,6 @@
 package lk.slt.marketplacer.dto;
 
+import lk.slt.marketplacer.util.CategoryStatus;
 import lk.slt.marketplacer.util.CategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +16,11 @@ import java.util.List;
 public class CategoryDto {
     private String id;
     private String name;
+    private String imageUrl;
+    private String icon;
+    private CategoryStatus categoryStatus;
     private CategoryType categoryType;
     private CategoryDto parentCategory;
-    private String imageUrl;
     private Boolean isFeatured;
     private List<CategoryDto> subCategories;
 }
