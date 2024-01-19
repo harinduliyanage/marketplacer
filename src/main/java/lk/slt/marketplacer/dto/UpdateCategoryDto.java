@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 @Data
 @Builder
@@ -19,4 +20,6 @@ public class UpdateCategoryDto {
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
     private String parentCategoryId;
+    private String imageUrl;
+    private Boolean isFeatured;
 }

@@ -3,6 +3,7 @@ package lk.slt.marketplacer.service.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.CategoryTypeInvalidException;
 import lk.slt.marketplacer.exceptions.ProductNotFoundException;
+import lk.slt.marketplacer.exceptions.UnapprovedStoreException;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.Product;
 import lk.slt.marketplacer.model.QProduct;
@@ -14,6 +15,7 @@ import lk.slt.marketplacer.service.StoreService;
 import lk.slt.marketplacer.util.CategoryType;
 import lk.slt.marketplacer.util.Constants;
 import lk.slt.marketplacer.util.ProductStatus;
+import lk.slt.marketplacer.util.StoreStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +44,9 @@ public class ProductServiceImpl implements ProductService {
         if (category.getCategoryType() != CategoryType.PRODUCT) {
             throw new CategoryTypeInvalidException(String.format(Constants.INVALID_CATEGORY_TYPE_MSG, categoryId));
         }
+        if(store.getStoreStatus() == StoreStatus.IN_REVIEW){
+            throw new UnapprovedStoreException(String.format(Constants.PRODUCT_STORE_NOT_APPROVED_MSG, storeId));
+        }
         product.setStore(store);
         product.setProductStatus(ProductStatus.PENDING);
         product.setCategory(category);
@@ -57,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
         Store store = storeService.getStore(userId, storeId);
         //
         QProduct qProduct = QProduct.product;
-        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.id.eq(productId)).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
+        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.id.eq(productId));
 
         Optional<Product> found = productRepository.findOne(expression);
         //
@@ -72,19 +77,25 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable) {
         Store store = storeService.getStore(userId, storeId);
         QProduct qProduct = QProduct.product;
-        BooleanExpression expression = qProduct.store.eq(store).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
+        BooleanExpression expression = qProduct.store.eq(store);
         return productRepository.findAll(expression, pageable);
     }
 
     @Override
-    public Page<Product> getProducts(String categoryId, Pageable pageable) {
+    public Page<Product> getProducts(String categoryIds, Pageable pageable) {
         QProduct qProduct = QProduct.product;
         BooleanExpression expression;
-        if (null == categoryId) {
+        if (null == categoryIds) {
             expression = qProduct.productStatus.eq(ProductStatus.PUBLISH);
         } else {
-            Category category = categoryService.getCategoryById(categoryId);
-            expression = qProduct.category.eq(category).and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
+            //Split category ids into array from categoryIds string
+            String[] categoryIdsArray = categoryIds.split(",");
+            //
+            expression = qProduct.category.id.eq(categoryIdsArray[0]);
+            for (int i = 1; i < categoryIdsArray.length; i++)
+                expression = expression.or(qProduct.category.id.eq(categoryIdsArray[i].trim()));
+
+            expression = expression.and(qProduct.productStatus.eq(ProductStatus.PUBLISH));
         }
         return productRepository.findAll(expression, pageable);
     }

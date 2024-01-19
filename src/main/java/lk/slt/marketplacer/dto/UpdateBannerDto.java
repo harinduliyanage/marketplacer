@@ -2,9 +2,8 @@ package lk.slt.marketplacer.dto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lk.slt.marketplacer.util.CategoryType;
+import lk.slt.marketplacer.util.BannerType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,14 +14,12 @@ import org.hibernate.validator.constraints.URL;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCategoryDto {
-    private String id;
-    @NotEmpty
-    private String name;
+public class UpdateBannerDto {
+    private String imageUrl;
+    private String link;
     @NotNull
     @Enumerated(EnumType.STRING)
-    private CategoryType categoryType;
-    private String parentCategoryId;
-    private String imageUrl;
+    private BannerType bannerType;
+    private int index;
     private Boolean isFeatured;
 }

@@ -1,7 +1,9 @@
 package lk.slt.marketplacer.util;
 
 public enum StoreStatus {
-    PENDING,
+    //PENDING,
     IN_REVIEW,
-    APPROVED
+    APPROVED,
+    PUBLISHED,
+    UNPUBLISHED
 }

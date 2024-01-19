@@ -21,5 +21,6 @@ public class UserDto {
     private String phone;
     private String birthDay;
     private CartDto cart;
+    private  WishlistDto wishlist;
     private Set<StoreDto> followedStores;
 }

@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author harindu.sul@gmail.com
@@ -36,15 +36,18 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String birthDay;
-
+    @ToString.Exclude
     @OneToOne
     private Cart cart;
+    @ToString.Exclude
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Wishlist wishlist;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
-
+    @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Store> followedStores;
+    private List<Store> followedStores;
     //
     @CreationTimestamp
     private Instant createdAt;

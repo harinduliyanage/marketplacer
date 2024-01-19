@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.service;
 
 import lk.slt.marketplacer.model.Store;
+import lk.slt.marketplacer.util.StoreStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,7 +17,7 @@ public interface StoreService {
 
     public Page<Store> getUserStores(String userId, Pageable pageable);
 
-    public Page<Store> getStores(Pageable pageable);
+    public Page<Store> getStores(StoreStatus storeStatus, Pageable pageable);
 
     public Store getStoreById(String storeId);
 }

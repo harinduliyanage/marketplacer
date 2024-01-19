@@ -1,38 +1,29 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "wishlists")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Review implements Serializable {
+public class Wishlist implements Serializable {
     @Id
     @UuidGenerator
     private String id;
 
-    private String text;
-    private Integer rating;
-    @ManyToOne
-    @JoinColumn(name = "user_id", updatable = false)
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @ToString.Exclude
-    private User user;
-    @ManyToOne
-    @ToString.Exclude
-    private Product product;
+    private List<Product> products;
     //
     @CreationTimestamp
     private Instant createdAt;

@@ -28,8 +28,8 @@ public class CategoryControllerImpl implements CategoryController {
     }
 
     @Override
-    public ListResponseDto<CategoryDto> getCategories(String parentCategoryId, CategoryType categoryType, Pageable pageable) {
-        Page<Category> page = categoryService.getCategories(parentCategoryId, categoryType, pageable);
+    public ListResponseDto<CategoryDto> getCategories(String parentCategoryId,String categoryName, CategoryType categoryType, Pageable pageable) {
+        Page<Category> page = categoryService.getCategories(parentCategoryId, categoryName, categoryType, pageable);
         return ListResponseDto.<CategoryDto>builder()
                 .data(categoryMapper.categoryListToCategoryDtoList(page.getContent()))
                 .page(pageable.getPageNumber())

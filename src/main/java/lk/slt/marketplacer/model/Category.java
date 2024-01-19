@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.UuidGenerator;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -21,18 +21,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category implements Serializable {
-
     @Id
-    @UuidGenerator
     private String id;
 
     private String name;
+    private String imageUrl;
     private CategoryType categoryType;
 
     @ManyToOne
     private Category parentCategory;
 
+    private Boolean isFeatured;
+
     @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Category> subCategories;
     //
     @CreationTimestamp

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
@@ -26,6 +27,7 @@ public class Order implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false)
+    @ToString.Exclude
     private User user;
 
     @ManyToOne
@@ -37,6 +39,7 @@ public class Order implements Serializable {
     private String note;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ToString.Exclude
     private List<OrderDetails> orderDetails;
     //
     @CreationTimestamp
