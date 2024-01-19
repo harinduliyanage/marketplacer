@@ -4,10 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.UserAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.UserNotFoundException;
 import lk.slt.marketplacer.exceptions.UsernameInvalidException;
-import lk.slt.marketplacer.model.Cart;
-import lk.slt.marketplacer.model.QUser;
-import lk.slt.marketplacer.model.User;
-import lk.slt.marketplacer.model.Wishlist;
+import lk.slt.marketplacer.model.*;
 import lk.slt.marketplacer.repository.UserRepository;
 import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.UserService;
@@ -22,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author harindu.sul@gmail.com
@@ -57,11 +56,11 @@ public class UserServiceImpl implements UserService {
                 user.setCart(createdCart);
                 // create new wishlist to user
                 Wishlist wishlist = new Wishlist();
-                wishlist.setProducts(new HashSet<>());
+                wishlist.setProducts(new ArrayList<>());
                 Wishlist createdWishlist = wishlistService.createWishlist(wishlist);
                 user.setWishlist(createdWishlist);
                 // set default followed store
-                user.setFollowedStores(new HashSet<>());
+                user.setFollowedStores(new ArrayList<>());
                 User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);
@@ -121,6 +120,8 @@ public class UserServiceImpl implements UserService {
                 }
             }
             user.setId(id);
+            List<Store> uniqueFollowedStores = user.getFollowedStores().stream().distinct().collect(Collectors.toList());
+            user.setFollowedStores(uniqueFollowedStores);
             User updatedUser = userRepository.save(user);
             log.info("user has been successfully updated {}", updatedUser);
             return updatedUser;

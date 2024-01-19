@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -29,6 +30,8 @@ public class WishlistServiceImpl implements WishlistService {
      */
     @Override
     public Wishlist createWishlist(Wishlist wishlist) {
+        List<Product> uniqueProducts = wishlist.getProducts().stream().distinct().collect(Collectors.toList());
+        wishlist.setProducts(uniqueProducts);
         Wishlist savedWishlist = wishlistRepository.save(wishlist);
         log.info("wishlist has been successfully created {}", savedWishlist);
         return savedWishlist;
@@ -83,6 +86,7 @@ public class WishlistServiceImpl implements WishlistService {
         getWishlist(userId, wishlistId);
         //
         wishlist.setId(wishlistId);
+        wishlist.getProducts().stream().distinct().collect(Collectors.toList());
         Wishlist updatedWishlist = wishlistRepository.save(wishlist);
         log.info("wishlist has been successfully updated {}", updatedWishlist);
         return updatedWishlist;
