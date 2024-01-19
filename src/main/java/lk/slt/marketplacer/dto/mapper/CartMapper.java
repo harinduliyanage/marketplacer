@@ -14,5 +14,7 @@ public interface CartMapper {
     List<CartDto> cartListToCartDtoList(List<Cart> carts);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     Cart updateCartDtoToCart(UpdateCartDto updateCartDto);
 }

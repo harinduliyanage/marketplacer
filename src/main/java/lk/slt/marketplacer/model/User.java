@@ -1,10 +1,17 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -41,4 +48,9 @@ public class User implements Serializable {
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Store> followedStores;
+    //
+    @CreationTimestamp
+    private Instant createdAt;
+    @UpdateTimestamp
+    private Instant lastUpdatedAt;
 }

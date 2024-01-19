@@ -37,18 +37,19 @@ public abstract class ProductMapper {
         return target;
     }
 
-    @Mapping(target = "store", ignore = true)
-    public abstract Product productDtoToProduct(ProductDto productDto);
-
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "store", ignore = true)
     @Mapping(target = "category", ignore = true)
     @Mapping(target = "productStatus", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     public abstract Product createProductDtoToProduct(CreateProductDto createProductDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "store", ignore = true)
     @Mapping(target = "category", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "name", source = "name",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "description", source = "description",

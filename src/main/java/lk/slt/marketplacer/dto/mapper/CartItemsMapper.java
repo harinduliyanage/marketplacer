@@ -14,5 +14,7 @@ public interface CartItemsMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "productId", target = "product")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     CartItems updateCartItemsDtoToCartItems(UpdateCartItemsDto updateCartItemsDto);
 }

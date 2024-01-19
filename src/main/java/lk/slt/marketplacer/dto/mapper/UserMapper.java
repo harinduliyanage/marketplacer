@@ -24,6 +24,8 @@ public interface UserMapper {
     @Mapping(target = "cart", ignore = true)
     @Mapping(target = "followedStores", ignore = true)
     @Mapping(target = "wishlist", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     User createUserDtoToUser(CreateUserDto createUserDto);
 
     @Mapping(target = "id", ignore = true)
@@ -31,6 +33,8 @@ public interface UserMapper {
     @Mapping(target = "addresses", ignore = true)
     @Mapping(target = "cart", ignore = true)
     @Mapping(target = "wishlist", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "username", source = "username",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "firstName", source = "firstName",

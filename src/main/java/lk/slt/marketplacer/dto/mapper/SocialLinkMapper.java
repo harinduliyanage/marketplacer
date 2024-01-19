@@ -12,6 +12,8 @@ public interface SocialLinkMapper {
 
     SocialLinkDto socialLinkToSocialLinkDto(SocialLink socialLink);
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     SocialLink socialLinkDtoToSocialLink(SocialLinkDto socialLinkDto);
     List<SocialLinkDto> socialLinkListToSocialLinkDtoList(List<SocialLink> socialLink);
     List<SocialLink> socialLinkDtoListToSocialLinkList(List<SocialLinkDto> socialLink);

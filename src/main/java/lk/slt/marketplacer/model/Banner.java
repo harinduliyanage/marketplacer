@@ -8,7 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "banners")
@@ -26,4 +30,9 @@ public class Banner {
     private BannerType bannerType;
     private int index;
     private Boolean isFeatured;
+    //
+    @CreationTimestamp
+    private Instant createdAt;
+    @UpdateTimestamp
+    private Instant lastUpdatedAt;
 }
