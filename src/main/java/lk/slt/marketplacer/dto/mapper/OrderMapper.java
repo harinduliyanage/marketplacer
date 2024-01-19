@@ -18,10 +18,14 @@ public interface OrderMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     Order createOrderDtoToOrder(CreateOrderDto createOrderDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "orderDetails", source = "orderDetails",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "billingAddress", source = "billingAddress",

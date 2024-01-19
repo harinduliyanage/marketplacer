@@ -16,9 +16,13 @@ public interface BannerMapper {
     BannerDto bannerToBannerDto(Banner banner);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     Banner createBannerDtoToBanner(CreateBannerDto createBannerDto);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "imageUrl", source = "imageUrl",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "link", source = "link",
@@ -34,5 +38,7 @@ public interface BannerMapper {
     List<BannerDto> bannerListToBannerDtoList(List<Banner> banners);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     Banner updateBannerDtoToBanner(UpdateBannerDto updateBannerDto);
 }

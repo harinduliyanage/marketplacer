@@ -38,11 +38,15 @@ public abstract class CategoryMapper {
 
     @Mapping(target = "parentCategory", ignore = true)
     @Mapping(target = "subCategories", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     public abstract Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "subCategories", ignore = true)
     @Mapping(target = "parentCategory", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "categoryType", source = "categoryType",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "name", source = "name",
