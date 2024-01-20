@@ -13,7 +13,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {StoreService.class, StoreMapper.class})
+@Mapper(componentModel = "spring", uses = {StoreService.class, StoreMapper.class, WishlistMapper.class, CartMapper.class})
 public interface UserMapper {
 
     UserDto userToUserDto(User user);
