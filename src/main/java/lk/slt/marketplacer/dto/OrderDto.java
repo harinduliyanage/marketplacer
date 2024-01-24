@@ -1,5 +1,6 @@
 package lk.slt.marketplacer.dto;
 
+import lk.slt.marketplacer.util.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDto {
     private String id;
+    private OrderStatus orderStatus;
     private UserDto user;
     private AddressDto shippingAddress;
     private AddressDto billingAddress;

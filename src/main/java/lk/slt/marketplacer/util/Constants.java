@@ -25,6 +25,7 @@ public class Constants {
     public static final String INVALID_CATEGORY_TYPE_MSG = "Invalid category type of given category id '%s'";
     public static final String ORDER_NOT_FOUND_MSG = "Order '%s' not found of user '%s'";
     public static final String ORDER_DETAILS_NOT_FOUND_MSG = "Order Details '%s' not found of order '%s'";
+    public static final String ORDER_UNITS_OUT_OF_RANGE_MSG = "Product '%s' available units less than '%s'";
     public static final String ADDRESS_NOT_FOUND_MSG = "Can't found address for given user id '%s', address id '%s'";
     public static final String BANNER_NOT_FOUND_MSG = "Can't found banner for id '%s'";
     public static final String CART_NOT_FOUND_MSG = "Cart '%s' not found of user '%s'";

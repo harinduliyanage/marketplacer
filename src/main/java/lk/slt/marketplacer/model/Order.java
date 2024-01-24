@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
+import lk.slt.marketplacer.util.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,8 @@ public class Order implements Serializable {
     @Id
     @UuidGenerator
     private String id;
+
+    private OrderStatus orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false)
