@@ -17,7 +17,7 @@ public class CategoryDto {
     private String id;
     private String name;
     private String imageUrl;
-    private String icon;
+    private String iconUrl;
     private CategoryStatus categoryStatus;
     private CategoryType categoryType;
     private CategoryDto parentCategory;

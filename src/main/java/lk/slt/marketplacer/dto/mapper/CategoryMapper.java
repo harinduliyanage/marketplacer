@@ -18,7 +18,7 @@ public abstract class CategoryMapper {
         target.setName(category.getName());
         target.setImageUrl(category.getImageUrl());
         target.setCategoryStatus(category.getCategoryStatus());
-        target.setIcon(category.getIcon());
+        target.setIconUrl(category.getIconUrl());
         target.setCategoryType(category.getCategoryType());
         target.setIsFeatured(category.getIsFeatured());
         //
@@ -54,7 +54,7 @@ public abstract class CategoryMapper {
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "imageUrl", source = "imageUrl",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "icon", source = "icon",
+    @Mapping(target = "iconUrl", source = "iconUrl",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "categoryStatus", source = "categoryStatus",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -81,7 +81,7 @@ public abstract class CategoryMapper {
         categoryDto.setCategoryType(category.getCategoryType());
         categoryDto.setImageUrl(category.getImageUrl());
         categoryDto.setCategoryStatus(category.getCategoryStatus());
-        categoryDto.setIcon(category.getIcon());
+        categoryDto.setIconUrl(category.getIconUrl());
         categoryDto.setIsFeatured(category.getIsFeatured());
         if (null != category.getParentCategory()) {
             categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));

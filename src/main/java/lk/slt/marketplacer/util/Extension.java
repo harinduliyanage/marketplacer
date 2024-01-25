@@ -8,5 +8,6 @@ public enum Extension {
     MP4,
     MPEG,
     PDF,
-    TXT
+    TXT,
+    SVG
 }

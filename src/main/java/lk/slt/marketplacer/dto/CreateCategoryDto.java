@@ -19,7 +19,7 @@ public class CreateCategoryDto {
     private String id;
     private String parentCategoryId;
     private String imageUrl;
-    private String icon;
+    private String iconUrl;
     @NotEmpty
     private String name;
     @NotNull

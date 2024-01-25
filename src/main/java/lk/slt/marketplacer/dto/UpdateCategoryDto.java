@@ -20,7 +20,7 @@ public class UpdateCategoryDto {
     private String name;
     private String parentCategoryId;
     private String imageUrl;
-    private String icon;
+    private String iconUrl;
     @Enumerated(EnumType.STRING)
     private CategoryType categoryType;
     @Enumerated(EnumType.STRING)

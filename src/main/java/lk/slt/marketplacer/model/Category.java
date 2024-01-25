@@ -29,7 +29,7 @@ public class Category implements Serializable {
     private CategoryType categoryType;
     private CategoryStatus categoryStatus;
     private String imageUrl;
-    private String icon;
+    private String iconUrl;
     @ManyToOne
     private Category parentCategory;
     private Boolean isFeatured;
