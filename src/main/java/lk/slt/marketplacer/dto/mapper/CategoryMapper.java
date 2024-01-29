@@ -50,19 +50,7 @@ public abstract class CategoryMapper {
     @Mapping(target = "parentCategory", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    @Mapping(target = "categoryType", source = "categoryType",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "imageUrl", source = "imageUrl",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "iconUrl", source = "iconUrl",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "categoryStatus", source = "categoryStatus",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "name", source = "name",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "isFeatured", source = "isFeatured",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto, @MappingTarget Category category);
+    public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto);
 
     @IterableMapping(qualifiedByName = "categoryToCategoryDto")
     public abstract List<CategoryDto> categoryListToCategoryDtoList(List<Category> categoryList);

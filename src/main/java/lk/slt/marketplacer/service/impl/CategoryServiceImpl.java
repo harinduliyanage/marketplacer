@@ -77,44 +77,39 @@ public class CategoryServiceImpl implements CategoryService {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
         //
-        if (parentCategoryId != null && categoryType != null && categoryName!=null && categoryStatus!=null) {
+        if (parentCategoryId != null && categoryType != null && categoryName != null && categoryStatus != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.categoryStatus.eq(categoryStatus)).and(qCategory.name.eq(categoryName))
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        }
-        else if (parentCategoryId != null && categoryType != null && categoryName!=null) {
+        } else if (parentCategoryId != null && categoryType != null && categoryName != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        }else if (parentCategoryId != null && categoryType != null && categoryStatus!=null) {
+        } else if (parentCategoryId != null && categoryType != null && categoryStatus != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.categoryStatus.eq(categoryStatus))
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        }
-        else if (categoryStatus != null && categoryType != null && categoryName!=null) {
+        } else if (categoryStatus != null && categoryType != null && categoryName != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
                     .and(qCategory.categoryStatus.eq(categoryStatus));
-        }
-        else if (parentCategoryId != null && categoryName != null && categoryStatus!=null) {
+        } else if (parentCategoryId != null && categoryName != null && categoryStatus != null) {
             expression = qCategory.categoryStatus.eq(categoryStatus).and(qCategory.name.eq(categoryName))
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        }
-        else if (parentCategoryId != null && categoryType != null) {
+        } else if (parentCategoryId != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        }else if (parentCategoryId != null && categoryName != null) {
+        } else if (parentCategoryId != null && categoryName != null) {
             expression = qCategory.name.eq(categoryName)
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
-        }else if (categoryName != null && categoryType != null) {
+        } else if (categoryName != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
                     .and(qCategory.name.eq(categoryName));
-        }
-        else if (parentCategoryId != null) {
+        } else if (parentCategoryId != null) {
             expression = parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
         } else if (categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType);
         } else if (categoryName != null) {
             expression = qCategory.name.eq(categoryName);
-        }else if (categoryStatus != null) {
+        } else if (categoryStatus != null) {
             expression = qCategory.categoryStatus.eq(categoryStatus);
-        }else {
+        } else {
             return categoryRepository.findAll(pageable);
         }
         return categoryRepository.findAll(expression, pageable);
@@ -122,23 +117,43 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category updateCategory(String parentId, String id, Category category) {
-        Category found = getCategoryById(id);
+        Category found = getCategory(id);
         String name = category.getName();
         //
-        if (parentId != null) {
+        if (null == category.getCategoryType()) {
+            category.setCategoryType(found.getCategoryType());
+        }
+        if (null == name) {
+            category.setName(found.getName());
+        } else {
+            if (!name.equals(found.getName()) && isNameAlreadyExists(category.getParentCategory(), name, category.getCategoryType())) {
+                throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, name));
+            }
+        }
+        if (null == parentId) {
+            category.setParentCategory(found.getParentCategory());
+        } else {
             Category foundParent = getCategoryById(parentId);
             category.setParentCategory(foundParent);
         }
-        //
-        if (!name.equals(found.getName()) && isNameAlreadyExists(category.getParentCategory(), name, category.getCategoryType())) {
-            throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, name));
-        } else {
-            category.setId(id);
-            Category updatedCategory = categoryRepository.save(category);
-            log.info("category has been successfully updated {}", updatedCategory);
-            //
-            return updatedCategory;
+        if (null == category.getImageUrl()) {
+            category.setImageUrl(found.getImageUrl());
         }
+        if (null == category.getIconUrl()) {
+            category.setIconUrl(found.getIconUrl());
+        }
+        if (null == category.getCategoryStatus()) {
+            category.setCategoryStatus(found.getCategoryStatus());
+        }
+        if (null == category.getIsFeatured()) {
+            category.setIsFeatured(found.getIsFeatured());
+        }
+        category.setId(found.getId());
+        Category updatedCategory = categoryRepository.save(category);
+        log.info("category has been successfully updated {}", updatedCategory);
+        //
+        return updatedCategory;
+
     }
 
     @Override
@@ -163,6 +178,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private Boolean isNameAlreadyExists(Category parentCategory, String name, CategoryType categoryType) {
+        System.out.println(name);
+        System.out.println(categoryType);
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
         //
