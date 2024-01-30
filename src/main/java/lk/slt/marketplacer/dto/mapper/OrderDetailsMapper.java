@@ -12,7 +12,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {ProductService.class})
+@Mapper(componentModel = "spring", uses = {ProductService.class, ProductMapper.class})
 public interface OrderDetailsMapper {
     OrderDetailsDto orderDetailsToOrderDetailsDto(OrderDetails orderDetails);
 

@@ -8,7 +8,7 @@ import lk.slt.marketplacer.service.ProductService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {ProductService.class})
+@Mapper(componentModel = "spring", uses = {ProductService.class, ProductMapper.class})
 public interface CartItemsMapper {
     CartItemsDto cartItemsToCartItemsDto(CartItems cartItems);
 
