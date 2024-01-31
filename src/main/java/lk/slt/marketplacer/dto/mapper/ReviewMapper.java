@@ -27,6 +27,8 @@ public abstract class ReviewMapper {
         target.setRating(review.getRating());
         target.setUser(userMapper.userToUserDto(review.getUser()));
         target.setProductId(review.getProduct().getId());
+        target.setCreatedAt(review.getCreatedAt());
+        target.setLastUpdatedAt(review.getLastUpdatedAt());
         //
         return  target;
     }
