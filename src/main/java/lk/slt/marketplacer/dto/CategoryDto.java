@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -23,4 +24,7 @@ public class CategoryDto {
     private CategoryDto parentCategory;
     private Boolean isFeatured;
     private List<CategoryDto> subCategories;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

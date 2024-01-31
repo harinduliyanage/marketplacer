@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,4 +17,7 @@ public class ReviewDto {
     private Integer rating;
     private String productId;
     private UserDto user;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

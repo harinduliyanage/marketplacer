@@ -2,7 +2,6 @@ package lk.slt.marketplacer.dto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotNull;
 import lk.slt.marketplacer.util.BannerType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +15,8 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 public class UpdateBannerDto {
     private String imageUrl;
+    @URL
     private String link;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private BannerType bannerType;
     private int index;

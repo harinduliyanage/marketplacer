@@ -33,6 +33,8 @@ public abstract class ProductMapper {
         target.setTags(product.getTags());
         target.setReOrderLevel(product.getReOrderLevel());
         target.setCategory(categoryMapper.mapCategoryWithParents(product.getCategory()));
+        target.setCreatedAt(product.getCreatedAt());
+        target.setLastUpdatedAt(product.getLastUpdatedAt());
 
         return target;
     }

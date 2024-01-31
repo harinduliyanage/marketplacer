@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -30,4 +31,7 @@ public class StoreDto {
     private String logoFilePath;
     //
     private StoreStatus storeStatus;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

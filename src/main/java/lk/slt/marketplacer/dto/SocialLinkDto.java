@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,4 +18,7 @@ public class SocialLinkDto {
     @NotEmpty
     private String link;
     private String icon;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

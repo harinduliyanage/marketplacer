@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -20,4 +21,7 @@ public class OrderDto {
     private AddressDto billingAddress;
     private String note;
     private List<OrderDetailsDto> orderDetails;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.Set;
 
 @Data
@@ -23,4 +24,7 @@ public class UserDto {
     private CartDto cart;
     private  WishlistDto wishlist;
     private Set<StoreDto> followedStores;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

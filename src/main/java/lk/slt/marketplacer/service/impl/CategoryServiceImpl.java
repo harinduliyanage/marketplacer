@@ -149,6 +149,7 @@ public class CategoryServiceImpl implements CategoryService {
             category.setIsFeatured(found.getIsFeatured());
         }
         category.setId(found.getId());
+        category.setCreatedAt(found.getCreatedAt());
         Category updatedCategory = categoryRepository.save(category);
         log.info("category has been successfully updated {}", updatedCategory);
         //
