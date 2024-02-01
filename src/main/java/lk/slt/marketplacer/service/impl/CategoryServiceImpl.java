@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -92,6 +93,15 @@ public class CategoryServiceImpl implements CategoryService {
         } else if (parentCategoryId != null && categoryName != null && categoryStatus != null) {
             expression = qCategory.categoryStatus.eq(categoryStatus).and(qCategory.name.eq(categoryName))
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        } else if (parentCategoryId != null && categoryStatus != null) {
+            expression = qCategory.categoryStatus.eq(categoryStatus)
+                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+        } else if (categoryName != null && categoryStatus != null) {
+            expression = qCategory.categoryStatus.eq(categoryStatus)
+                    .and(qCategory.name.eq(categoryName));
+        } else if (categoryType != null && categoryStatus != null) {
+            expression = qCategory.categoryStatus.eq(categoryStatus)
+                    .and(qCategory.categoryType.eq(categoryType));
         } else if (parentCategoryId != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
                     .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
@@ -112,7 +122,9 @@ public class CategoryServiceImpl implements CategoryService {
         } else {
             return categoryRepository.findAll(pageable);
         }
-        return categoryRepository.findAll(expression, pageable);
+        //
+        Page<Category> categories = categoryRepository.findAll(expression, pageable);
+        return categoryStatus == CategoryStatus.APPROVED ? filterApprovedSubCategories(categories) : categories;
     }
 
     @Override
@@ -200,5 +212,13 @@ public class CategoryServiceImpl implements CategoryService {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression = qCategory.id.eq(storeId);
         return categoryRepository.exists(expression);
+    }
+
+    private Page<Category> filterApprovedSubCategories(Page<Category> categories) {
+        return categories.map(category -> {
+            List<Category> subCategories = category.getSubCategories().stream().filter(category1 -> category1.getCategoryStatus() == CategoryStatus.APPROVED).toList();
+            category.setSubCategories(subCategories);
+            return category;
+        });
     }
 }
