@@ -80,22 +80,27 @@ public class CategoryServiceImpl implements CategoryService {
         //
         if (parentCategoryId != null && categoryType != null && categoryName != null && categoryStatus != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.categoryStatus.eq(categoryStatus)).and(qCategory.name.eq(categoryName))
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+                    .and(parentCategoryId.equals("null") ?
+                            qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (parentCategoryId != null && categoryType != null && categoryName != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+                    .and(parentCategoryId.equals("null") ?
+                            qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (parentCategoryId != null && categoryType != null && categoryStatus != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.categoryStatus.eq(categoryStatus))
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+                    .and(parentCategoryId.equals("null") ?
+                            qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (categoryStatus != null && categoryType != null && categoryName != null) {
             expression = qCategory.categoryType.eq(categoryType).and(qCategory.name.eq(categoryName))
                     .and(qCategory.categoryStatus.eq(categoryStatus));
         } else if (parentCategoryId != null && categoryName != null && categoryStatus != null) {
             expression = qCategory.categoryStatus.eq(categoryStatus).and(qCategory.name.eq(categoryName))
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+                    .and(parentCategoryId.equals("null") ?
+                            qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (parentCategoryId != null && categoryStatus != null) {
             expression = qCategory.categoryStatus.eq(categoryStatus)
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+                    .and(parentCategoryId.equals("null") ?
+                            qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (categoryName != null && categoryStatus != null) {
             expression = qCategory.categoryStatus.eq(categoryStatus)
                     .and(qCategory.name.eq(categoryName));
@@ -104,15 +109,18 @@ public class CategoryServiceImpl implements CategoryService {
                     .and(qCategory.categoryType.eq(categoryType));
         } else if (parentCategoryId != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+                    .and(parentCategoryId.equals("null") ?
+                            qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (parentCategoryId != null && categoryName != null) {
             expression = qCategory.name.eq(categoryName)
-                    .and(parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
+                    .and(parentCategoryId.equals("null") ?
+                            qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId)));
         } else if (categoryName != null && categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType)
                     .and(qCategory.name.eq(categoryName));
         } else if (parentCategoryId != null) {
-            expression = parentCategoryId.equals("null") ? qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
+            expression = parentCategoryId.equals("null") ?
+                    qCategory.parentCategory.isNull() : qCategory.parentCategory.eq(getCategoryById(parentCategoryId));
         } else if (categoryType != null) {
             expression = qCategory.categoryType.eq(categoryType);
         } else if (categoryName != null) {
@@ -192,8 +200,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private Boolean isNameAlreadyExists(Category parentCategory, String name, CategoryType categoryType) {
-        System.out.println(name);
-        System.out.println(categoryType);
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
         //
