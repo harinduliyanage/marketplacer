@@ -47,7 +47,6 @@ public abstract class CategoryMapper {
 
     @Mapping(target = "parentCategory", ignore = true)
     @Mapping(target = "subCategories", ignore = true)
-    @Mapping(target = "categoryStatus", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     public abstract Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);

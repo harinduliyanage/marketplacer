@@ -52,7 +52,6 @@ public class CategoryServiceImpl implements CategoryService {
             } else {
                 category.setId(UUID.randomUUID().toString());
             }
-            category.setCategoryStatus(CategoryStatus.IN_REVIEW);
             Category savedCategory = categoryRepository.save(category);
             log.info("category has been successfully created {}", savedCategory);
             //
