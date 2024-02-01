@@ -216,7 +216,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private Category filterApprovedSubCategories(Category category) {
-        List<Category> subCategories = category.getSubCategories().stream().filter(category1 -> category1.getCategoryStatus() == CategoryStatus.APPROVED).toList();
+        List<Category> subCategories = category.getSubCategories().stream().filter(subCategory ->
+                subCategory.getCategoryStatus() == CategoryStatus.APPROVED).toList();
+        //
         category.setSubCategories(subCategories);
         return category;
     }
