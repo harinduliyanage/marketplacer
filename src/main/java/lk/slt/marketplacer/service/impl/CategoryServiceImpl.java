@@ -67,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> found = categoryRepository.findOne(expression);
         //
         if (found.isPresent()) {
-            return found.get();
+            return filterApprovedSubCategories(found.get());
         } else {
             throw new CategoryNotFoundException(String.format(Constants.CATEGORY_NOT_FOUND_MSG, id));
         }
@@ -124,7 +124,8 @@ public class CategoryServiceImpl implements CategoryService {
         }
         //
         Page<Category> categories = categoryRepository.findAll(expression, pageable);
-        return categoryStatus == CategoryStatus.APPROVED ? filterApprovedSubCategories(categories) : categories;
+
+        return categoryStatus == CategoryStatus.APPROVED ? categories.map(this::filterApprovedSubCategories) : categories;
     }
 
     @Override
@@ -214,11 +215,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.exists(expression);
     }
 
-    private Page<Category> filterApprovedSubCategories(Page<Category> categories) {
-        return categories.map(category -> {
-            List<Category> subCategories = category.getSubCategories().stream().filter(category1 -> category1.getCategoryStatus() == CategoryStatus.APPROVED).toList();
-            category.setSubCategories(subCategories);
-            return category;
-        });
+    private Category filterApprovedSubCategories(Category category) {
+        List<Category> subCategories = category.getSubCategories().stream().filter(category1 -> category1.getCategoryStatus() == CategoryStatus.APPROVED).toList();
+        category.setSubCategories(subCategories);
+        return category;
     }
 }
