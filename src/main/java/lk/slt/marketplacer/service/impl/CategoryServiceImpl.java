@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
             category.setParentCategory(foundParent);
         }
         //
-        if (isNameAlreadyExists(category.getParentCategory(), category.getName(), category.getCategoryType())) {
+        if (isNameAlreadyExists(parentId, category.getName(), category.getCategoryType())) {
             throw new CategoryAlreadyExistsException(String
                     .format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, category.getName())
             );
@@ -146,7 +146,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (null == name) {
             category.setName(found.getName());
         } else {
-            if (!name.equals(found.getName()) && isNameAlreadyExists(category.getParentCategory(), name, category.getCategoryType())) {
+            if (!name.equals(found.getName()) && isNameAlreadyExists(parentId, name, category.getCategoryType())) {
                 throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, name));
             }
         }
@@ -198,18 +198,18 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
-    private Boolean isNameAlreadyExists(Category parentCategory, String name, CategoryType categoryType) {
+    private Boolean isNameAlreadyExists(String parentCategoryId, String name, CategoryType categoryType) {
         QCategory qCategory = QCategory.category;
         BooleanExpression expression;
         //
-        if (parentCategory == null) {
+        if (parentCategoryId == null) {
             expression = qCategory.name.eq(name)
                     .and(qCategory.categoryType.eq(categoryType))
                     .and(qCategory.parentCategory.isNull());
         } else {
             expression = qCategory.name.eq(name)
                     .and(qCategory.categoryType.eq(categoryType))
-                    .and(qCategory.parentCategory.eq(parentCategory));
+                    .and(qCategory.parentCategory.id.eq(parentCategoryId));
         }
         return categoryRepository.exists(expression);
     }
