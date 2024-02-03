@@ -131,7 +131,6 @@ public class CategoryServiceImpl implements CategoryService {
         }
         //
         Page<Category> categories = categoryRepository.findAll(expression, pageable);
-
         return categoryStatus == CategoryStatus.APPROVED ? categories.map(this::filterApprovedSubCategories) : categories;
     }
 
@@ -140,41 +139,47 @@ public class CategoryServiceImpl implements CategoryService {
         Category found = getCategory(id);
         String name = category.getName();
         //
-        if (null == category.getCategoryType()) {
-            category.setCategoryType(found.getCategoryType());
-        }
-        if (null == name) {
-            category.setName(found.getName());
-        } else {
-            if (!name.equals(found.getName()) && isNameAlreadyExists(parentId, name, category.getCategoryType())) {
-                throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, name));
-            }
-        }
         if (null == parentId) {
             category.setParentCategory(found.getParentCategory());
         } else {
             Category foundParent = getCategoryById(parentId);
             category.setParentCategory(foundParent);
         }
+        //
+        if (null == category.getCategoryType()) {
+            category.setCategoryType(found.getCategoryType());
+        }
+        //
+        if (null == name) {
+            category.setName(found.getName());
+        } else {
+            if (!name.equals(found.getName()) && isNameAlreadyExists(category.getParentCategory().getId(), name, category.getCategoryType())) {
+                throw new CategoryAlreadyExistsException(String.format(Constants.CATEGORY_NAME_ALREADY_EXISTS_MSG, name));
+            }
+        }
+        //
         if (null == category.getImageUrl()) {
             category.setImageUrl(found.getImageUrl());
         }
+        //
         if (null == category.getIconUrl()) {
             category.setIconUrl(found.getIconUrl());
         }
+        //
         if (null == category.getCategoryStatus()) {
             category.setCategoryStatus(found.getCategoryStatus());
         }
+        //
         if (null == category.getIsFeatured()) {
             category.setIsFeatured(found.getIsFeatured());
         }
+        //
         category.setId(found.getId());
         category.setCreatedAt(found.getCreatedAt());
         Category updatedCategory = categoryRepository.save(category);
         log.info("category has been successfully updated {}", updatedCategory);
         //
         return updatedCategory;
-
     }
 
     @Override
