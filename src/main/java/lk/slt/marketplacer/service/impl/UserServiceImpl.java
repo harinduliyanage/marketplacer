@@ -10,6 +10,7 @@ import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.UserService;
 import lk.slt.marketplacer.service.WishlistService;
 import lk.slt.marketplacer.util.Constants;
+import lk.slt.marketplacer.util.UserStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService {
                 user.setWishlist(createdWishlist);
                 // set default followed store
                 user.setFollowedStores(new ArrayList<>());
+                user.setUserStatus(UserStatus.ACTIVE);
                 User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);
