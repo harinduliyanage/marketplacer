@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
+import lk.slt.marketplacer.util.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private UserStatus userStatus;
     private String phone;
     private String birthDay;
     @ToString.Exclude

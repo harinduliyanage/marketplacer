@@ -1,5 +1,6 @@
 package lk.slt.marketplacer.dto;
 
+import lk.slt.marketplacer.util.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class UserDto {
     private String id;
     private String sub;
     private String username;
+    private UserStatus userStatus;
     private String email;
     private String firstName;
     private String lastName;
