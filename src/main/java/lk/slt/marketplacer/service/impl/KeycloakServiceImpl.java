@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -64,6 +65,38 @@ public class KeycloakServiceImpl {
             log.error(e.getMessage(), e);
             return null;
         }
+    }
+
+    public UserResource searchById(String id) {
+        keycloak.tokenManager().getAccessToken();
+        log.info("searching user on keycloak by id: {} ", id);
+        try {
+            return keycloak.realm(targetRealm)
+                    .users()
+                    .get(id);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    public void updateUser(String id, String email, Map<String, List<String>> attributes) {
+        UserResource userResource = searchById(id);
+        UserRepresentation user = userResource.toRepresentation();
+        // update email
+        user.setEmail(email);
+        // update attributes
+        user.setAttributes(attributes);
+        // update user with custom attributes
+        userResource.update(user);
+    }
+
+    public void setUserStatus(String id, boolean isEnabled) {
+        UserResource userResource = searchById(id);
+        UserRepresentation user = userResource.toRepresentation();
+        //
+        user.setEnabled(isEnabled);
+        userResource.update(user);
     }
 
     public String getRptTokens(String accessToken) {
