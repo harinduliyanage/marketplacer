@@ -18,10 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -125,6 +122,26 @@ public class UserServiceImpl implements UserService {
             List<Store> uniqueFollowedStores = user.getFollowedStores().stream().distinct().collect(Collectors.toList());
             user.setFollowedStores(uniqueFollowedStores);
             User updatedUser = userRepository.save(user);
+            // update user data in keycloak
+            Map<String, List<String>> attributes = new HashMap<>();
+            if(null != updatedUser.getFirstName()) {
+                attributes.put("firstName", List.of(updatedUser.getFirstName()));
+            }
+            if(null!=updatedUser.getLastName()) {
+                attributes.put("lastName", List.of(updatedUser.getLastName()));
+            }
+            if(null!=updatedUser.getPhone()) {
+                attributes.put("phone", List.of(updatedUser.getPhone()));
+            }
+            if(null!=updatedUser.getBirthDay()) {
+                attributes.put("birthDay", List.of(updatedUser.getBirthDay()));
+            }
+            if (!attributes.isEmpty()) {
+                keycloakService.updateUser(updatedUser.getSub(), updatedUser.getEmail(), attributes);
+            }
+            // update user status in keycloak
+            keycloakService.setUserStatus(updatedUser.getSub(), updatedUser.getUserStatus()==UserStatus.ACTIVE);
+            //
             log.info("user has been successfully updated {}", updatedUser);
             return updatedUser;
         }
