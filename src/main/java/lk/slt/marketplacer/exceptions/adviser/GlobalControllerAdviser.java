@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import javax.ws.rs.ClientErrorException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,4 +108,15 @@ public class GlobalControllerAdviser {
                 .message(ex.getMessage())
                 .build(), HttpStatus.BAD_REQUEST);
     }
+
+//    @ExceptionHandler({
+//            ClientErrorException.class,
+//    })
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public ResponseEntity<ErrorResponse> handleClientError(Exception ex) {
+//        return new ResponseEntity<>(ErrorResponse.builder()
+//                .code("SYS-404")
+//                .message(ex.getMessage())
+//                .build(), HttpStatus.NOT_FOUND);
+//    }
 }

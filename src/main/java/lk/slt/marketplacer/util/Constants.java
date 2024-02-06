@@ -37,4 +37,6 @@ public class Constants {
     public static final String REVIEW_NOT_FOUND_MSG = "Review '%s' not found of user '%s'";
     public static final String WISHLIST_NOT_FOUND_MSG = "Wishlist '%s' not found of user '%s'";
 
+    public static final String KEYCLOAK_USER_NOT_FOUND_MSG = "User not found in Keycloak";
+
 }

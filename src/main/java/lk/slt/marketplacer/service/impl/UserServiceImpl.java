@@ -118,29 +118,29 @@ public class UserServiceImpl implements UserService {
                     throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, user.getUsername()));
                 }
             }
+            //
             user.setId(id);
             List<Store> uniqueFollowedStores = user.getFollowedStores().stream().distinct().collect(Collectors.toList());
             user.setFollowedStores(uniqueFollowedStores);
-            User updatedUser = userRepository.save(user);
             // update user data in keycloak
             Map<String, List<String>> attributes = new HashMap<>();
-            if(null != updatedUser.getFirstName()) {
-                attributes.put("firstName", List.of(updatedUser.getFirstName()));
+            if(null != user.getFirstName()) {
+                attributes.put("firstName", List.of(user.getFirstName()));
             }
-            if(null!=updatedUser.getLastName()) {
-                attributes.put("lastName", List.of(updatedUser.getLastName()));
+            if(null!=user.getLastName()) {
+                attributes.put("lastName", List.of(user.getLastName()));
             }
-            if(null!=updatedUser.getPhone()) {
-                attributes.put("phone", List.of(updatedUser.getPhone()));
+            if(null!=user.getPhone()) {
+                attributes.put("phone", List.of(user.getPhone()));
             }
-            if(null!=updatedUser.getBirthDay()) {
-                attributes.put("birthDay", List.of(updatedUser.getBirthDay()));
+            if(null!=user.getBirthDay()) {
+                attributes.put("birthDay", List.of(user.getBirthDay()));
             }
-            if (!attributes.isEmpty()) {
-                keycloakService.updateUser(updatedUser.getSub(), updatedUser.getEmail(), attributes);
-            }
+            keycloakService.updateUser(user.getSub(), user.getUsername(), user.getEmail(), attributes);
             // update user status in keycloak
-            keycloakService.setUserStatus(updatedUser.getSub(), updatedUser.getUserStatus()==UserStatus.ACTIVE);
+            keycloakService.setUserStatus(user.getSub(), user.getUserStatus()==UserStatus.ACTIVE);
+            // update user in db
+            User updatedUser = userRepository.save(user);
             //
             log.info("user has been successfully updated {}", updatedUser);
             return updatedUser;
