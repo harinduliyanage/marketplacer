@@ -6,9 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
 @Table(name = "addresses")
@@ -30,4 +33,9 @@ public class Address implements Serializable {
     private String country;
     private String provinceOrState;
     private String contactNumber;
+    //
+    @CreationTimestamp
+    private Instant createdAt;
+    @UpdateTimestamp
+    private Instant lastUpdatedAt;
 }

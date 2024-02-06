@@ -1,11 +1,13 @@
 package lk.slt.marketplacer.dto;
 
+import lk.slt.marketplacer.util.CategoryStatus;
 import lk.slt.marketplacer.util.CategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -15,9 +17,14 @@ import java.util.List;
 public class CategoryDto {
     private String id;
     private String name;
+    private String imageUrl;
+    private String iconUrl;
+    private CategoryStatus categoryStatus;
     private CategoryType categoryType;
     private CategoryDto parentCategory;
-    private String imageUrl;
     private Boolean isFeatured;
     private List<CategoryDto> subCategories;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

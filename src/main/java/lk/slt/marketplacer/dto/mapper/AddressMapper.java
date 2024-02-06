@@ -16,9 +16,13 @@ public interface AddressMapper {
     AddressDto addressToAddressDto(Address address);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     Address createAddressDtoToAddress(CreateAddressDto createAddressDto);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "name", source = "name",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "addressLine1", source = "addressLine1",

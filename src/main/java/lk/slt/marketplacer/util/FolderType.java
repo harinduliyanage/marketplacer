@@ -6,6 +6,7 @@ public enum FolderType {
     STORE_LOGO,
     PRODUCT_IMAGE,
     CATEGORY_IMAGE,
+    CATEGORY_ICON,
     BANNER_IMAGE,
     PRODUCT_VIDEO
 }

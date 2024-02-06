@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,4 +19,7 @@ public class BannerDto {
     private BannerType bannerType;
     private int index;
     private Boolean isFeatured;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

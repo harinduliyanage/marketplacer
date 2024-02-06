@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -35,4 +36,7 @@ public class ProductDto {
     private List<String> videos;
     private List<String> images;
     private Set<String> tags;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

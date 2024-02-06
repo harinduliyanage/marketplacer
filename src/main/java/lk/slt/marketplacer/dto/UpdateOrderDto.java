@@ -1,5 +1,6 @@
 package lk.slt.marketplacer.dto;
 
+import lk.slt.marketplacer.util.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateOrderDto{
-    private String cartId;
+    private OrderStatus orderStatus;
     // For logged users
-    private String userId;
     private String shippingAddressId;
     private String billingAddressId;
     // For guest users
@@ -22,5 +22,4 @@ public class UpdateOrderDto{
     private CreateAddressDto billingAddress;
     //
     private String note;
-    private List<CreateOrderDetailsDto> orderDetails;
 }

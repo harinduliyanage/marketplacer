@@ -13,22 +13,29 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {StoreService.class, StoreMapper.class})
+@Mapper(componentModel = "spring", uses = {StoreService.class, StoreMapper.class, WishlistMapper.class, CartMapper.class})
 public interface UserMapper {
 
     UserDto userToUserDto(User user);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sub", ignore = true)
+    @Mapping(target = "userStatus", ignore = true)
     @Mapping(target = "addresses", ignore = true)
     @Mapping(target = "cart", ignore = true)
     @Mapping(target = "followedStores", ignore = true)
+    @Mapping(target = "wishlist", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     User createUserDtoToUser(CreateUserDto createUserDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sub", ignore = true)
     @Mapping(target = "addresses", ignore = true)
     @Mapping(target = "cart", ignore = true)
+    @Mapping(target = "wishlist", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "username", source = "username",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "firstName", source = "firstName",

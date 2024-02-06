@@ -27,6 +27,8 @@ public abstract class ReviewMapper {
         target.setRating(review.getRating());
         target.setUser(userMapper.userToUserDto(review.getUser()));
         target.setProductId(review.getProduct().getId());
+        target.setCreatedAt(review.getCreatedAt());
+        target.setLastUpdatedAt(review.getLastUpdatedAt());
         //
         return  target;
     }
@@ -34,10 +36,14 @@ public abstract class ReviewMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(source = "productId", target = "product")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     public abstract  Review createReviewDtoToReview(CreateReviewDto createReviewDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "text", source = "text",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "rating", source = "rating",

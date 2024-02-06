@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 public class CreateBannerDto {
     private String imageUrl;
+    @URL
     private String link;
     @NotNull
     @Enumerated(EnumType.STRING)

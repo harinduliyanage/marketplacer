@@ -29,6 +29,8 @@ public class S3FileServiceImpl implements FileService {
     private String region;
     @Value("${aws.s3.bucket}")
     private String bucketName;
+    @Value("${aws.s3.preSignUrlValidTime}")
+    private Integer validTimeAmount;
     //
     @PostConstruct
     private void init() {
@@ -49,7 +51,7 @@ public class S3FileServiceImpl implements FileService {
     public URL createUploadUrl(String filePath) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.HOUR, 72);
+        calendar.add(Calendar.SECOND, validTimeAmount);
         //
         URL preSignedUrl = amazonS3.generatePresignedUrl(bucketName, filePath, calendar.getTime(), HttpMethod.PUT);
         log.info("Pre-signed URL to upload a file to: [{}]", preSignedUrl.toString());

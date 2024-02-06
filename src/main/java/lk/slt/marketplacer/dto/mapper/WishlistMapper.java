@@ -15,9 +15,9 @@ public interface WishlistMapper {
 
     List<WishlistDto> wishlistListToWishlistDtoList(List<Wishlist> wishlists);
 
-    Wishlist wishlistDtoToWishlist(WishlistDto wishlistDto);
-
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(source = "productIds", target = "products")
     Wishlist updateWishlistDtoToWishlist(UpdateWishlistDto updateWishlistDto);
 }

@@ -4,15 +4,13 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import lk.slt.marketplacer.exceptions.UserAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.UserNotFoundException;
 import lk.slt.marketplacer.exceptions.UsernameInvalidException;
-import lk.slt.marketplacer.model.Cart;
-import lk.slt.marketplacer.model.QUser;
-import lk.slt.marketplacer.model.User;
-import lk.slt.marketplacer.model.Wishlist;
+import lk.slt.marketplacer.model.*;
 import lk.slt.marketplacer.repository.UserRepository;
 import lk.slt.marketplacer.service.CartService;
 import lk.slt.marketplacer.service.UserService;
 import lk.slt.marketplacer.service.WishlistService;
 import lk.slt.marketplacer.util.Constants;
+import lk.slt.marketplacer.util.UserStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author harindu.sul@gmail.com
@@ -57,11 +54,12 @@ public class UserServiceImpl implements UserService {
                 user.setCart(createdCart);
                 // create new wishlist to user
                 Wishlist wishlist = new Wishlist();
-                wishlist.setProducts(new HashSet<>());
+                wishlist.setProducts(new ArrayList<>());
                 Wishlist createdWishlist = wishlistService.createWishlist(wishlist);
                 user.setWishlist(createdWishlist);
                 // set default followed store
-                user.setFollowedStores(new HashSet<>());
+                user.setFollowedStores(new ArrayList<>());
+                user.setUserStatus(UserStatus.ACTIVE);
                 User savedUser = userRepository.save(user);
                 //
                 log.info("user has been successfully created {}", savedUser);
@@ -120,8 +118,30 @@ public class UserServiceImpl implements UserService {
                     throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, user.getUsername()));
                 }
             }
+            //
             user.setId(id);
+            List<Store> uniqueFollowedStores = user.getFollowedStores().stream().distinct().collect(Collectors.toList());
+            user.setFollowedStores(uniqueFollowedStores);
+            // update user data in keycloak
+            Map<String, List<String>> attributes = new HashMap<>();
+            if(null != user.getFirstName()) {
+                attributes.put("firstName", List.of(user.getFirstName()));
+            }
+            if(null!=user.getLastName()) {
+                attributes.put("lastName", List.of(user.getLastName()));
+            }
+            if(null!=user.getPhone()) {
+                attributes.put("phone", List.of(user.getPhone()));
+            }
+            if(null!=user.getBirthDay()) {
+                attributes.put("birthDay", List.of(user.getBirthDay()));
+            }
+            keycloakService.updateUser(user.getSub(), user.getUsername(), user.getEmail(), attributes);
+            // update user status in keycloak
+            keycloakService.setUserStatus(user.getSub(), user.getUserStatus()==UserStatus.ACTIVE);
+            // update user in db
             User updatedUser = userRepository.save(user);
+            //
             log.info("user has been successfully updated {}", updatedUser);
             return updatedUser;
         }

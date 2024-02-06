@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,4 +22,7 @@ public class AddressDto {
     private String country;
     private String provinceOrState;
     private String contactNumber;
+    //
+    private Instant createdAt;
+    private Instant lastUpdatedAt;
 }

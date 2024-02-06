@@ -17,15 +17,24 @@ public abstract class CategoryMapper {
         target.setId(category.getId());
         target.setName(category.getName());
         target.setImageUrl(category.getImageUrl());
+        target.setIconUrl(category.getIconUrl());
+        target.setCategoryStatus(category.getCategoryStatus());
         target.setCategoryType(category.getCategoryType());
         target.setIsFeatured(category.getIsFeatured());
+        target.setLastUpdatedAt(category.getLastUpdatedAt());
+        target.setCreatedAt(category.getCreatedAt());
         //
         if (null != category.getParentCategory()) {
             CategoryDto parentCategory = CategoryDto.builder()
-                    .id(category.getParentCategory().getId())
-                    .name(category.getParentCategory().getName())
-                    .categoryType(category.getParentCategory().getCategoryType())
-                    .isFeatured(category.getParentCategory().getIsFeatured())
+                    .id(category.getId())
+                    .name(category.getName())
+                    .imageUrl(category.getImageUrl())
+                    .iconUrl(category.getIconUrl())
+                    .categoryType(category.getCategoryType())
+                    .categoryStatus(category.getCategoryStatus())
+                    .isFeatured(category.getIsFeatured())
+                    .createdAt(category.getCreatedAt())
+                    .lastUpdatedAt(category.getLastUpdatedAt())
                     .build();
 
             target.setParentCategory(parentCategory);
@@ -38,17 +47,16 @@ public abstract class CategoryMapper {
 
     @Mapping(target = "parentCategory", ignore = true)
     @Mapping(target = "subCategories", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
     public abstract Category createCategoryDtoToCategory(CreateCategoryDto createCategoryDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "subCategories", ignore = true)
     @Mapping(target = "parentCategory", ignore = true)
-    @Mapping(target = "categoryType", source = "categoryType",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "name", source = "name",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-
-    public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto, @MappingTarget Category category);
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    public abstract Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto);
 
     @IterableMapping(qualifiedByName = "categoryToCategoryDto")
     public abstract List<CategoryDto> categoryListToCategoryDtoList(List<Category> categoryList);
@@ -60,17 +68,22 @@ public abstract class CategoryMapper {
      * @return
      */
     public CategoryDto mapCategoryWithParents(Category category) {
-        CategoryDto categoryDto = new CategoryDto();
+        CategoryDto target = new CategoryDto();
         //
-        categoryDto.setId(category.getId());
-        categoryDto.setName(category.getName());
-        categoryDto.setCategoryType(category.getCategoryType());
-        categoryDto.setImageUrl(category.getImageUrl());
-        categoryDto.setIsFeatured(category.getIsFeatured());
+        target.setId(category.getId());
+        target.setName(category.getName());
+        target.setCategoryType(category.getCategoryType());
+        target.setImageUrl(category.getImageUrl());
+        target.setIconUrl(category.getIconUrl());
+        target.setCategoryType(category.getCategoryType());
+        target.setCategoryStatus(category.getCategoryStatus());
+        target.setIsFeatured(category.getIsFeatured());
+        target.setLastUpdatedAt(category.getLastUpdatedAt());
+        target.setCreatedAt(category.getCreatedAt());
         if (null != category.getParentCategory()) {
-            categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
+            target.setParentCategory(mapCategoryWithParents(category.getParentCategory()));
         }
-        return categoryDto;
+        return target;
     }
 
     //
@@ -79,28 +92,15 @@ public abstract class CategoryMapper {
                 .map(sub -> CategoryDto.builder()
                         .id(sub.getId())
                         .name(sub.getName())
+                        .imageUrl(sub.getImageUrl())
+                        .iconUrl(sub.getIconUrl())
                         .subCategories(mapSubCategories(sub.getSubCategories()))
                         .categoryType(sub.getCategoryType())
+                        .categoryStatus(sub.getCategoryStatus())
                         .isFeatured(sub.getIsFeatured())
+                        .createdAt(sub.getCreatedAt())
+                        .lastUpdatedAt(sub.getLastUpdatedAt())
                         .build())
                 .collect(Collectors.toList());
-    }
-
-    private CategoryDto mapParentCategory(Category category) {
-        CategoryDto categoryDto = new CategoryDto();
-        //
-        if (category.getParentCategory() == null) {
-            categoryDto.setId(category.getId());
-            categoryDto.setName(category.getName());
-            categoryDto.setIsFeatured(category.getIsFeatured());
-            categoryDto.setCategoryType(category.getCategoryType());
-        } else {
-            categoryDto.setId(category.getId());
-            categoryDto.setName(category.getName());
-            categoryDto.setIsFeatured(category.getIsFeatured());
-            categoryDto.setCategoryType(category.getCategoryType());
-            categoryDto.setParentCategory(mapParentCategory(category.getParentCategory()));
-        }
-        return categoryDto;
     }
 }

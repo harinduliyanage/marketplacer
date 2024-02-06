@@ -1,10 +1,13 @@
 package lk.slt.marketplacer.service.impl;
 
 import jakarta.annotation.PostConstruct;
+import lk.slt.marketplacer.exceptions.KeycloakUserNotFoundException;
+import lk.slt.marketplacer.exceptions.UsernameInvalidException;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -17,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static lk.slt.marketplacer.util.Constants.KEYCLOAK_USER_NOT_FOUND_MSG;
 
 /**
  * @author harindu.sul@gmail.com
@@ -61,9 +66,46 @@ public class KeycloakServiceImpl {
                     .searchByUsername(username, true);
             return users.isEmpty() ? null : users.get(0);
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.info(e.getMessage(), e);
             return null;
         }
+    }
+
+    public UserResource findById(String id) {
+        keycloak.tokenManager().getAccessToken();
+        log.info("searching user on keycloak by id: {} ", id);
+        try {
+            UserResource userResource = keycloak.realm(targetRealm)
+                    .users()
+                    .get(id);
+            userResource.toRepresentation();
+            return userResource;
+        } catch (Exception e) {
+            log.info(e.getMessage(), e);
+            throw new KeycloakUserNotFoundException(KEYCLOAK_USER_NOT_FOUND_MSG);
+        }
+    }
+
+    public void updateUser(String id, String username, String email,  Map<String, List<String>> attributes) {
+        UserResource userResource = findById(id);
+        UserRepresentation user = userResource.toRepresentation();
+        // update email
+        user.setEmail(email);
+        user.setUsername(username);
+        // update attributes
+        if(!attributes.isEmpty()) {
+            user.setAttributes(attributes);
+        }
+        // update user with custom attributes
+        userResource.update(user);
+    }
+
+    public void setUserStatus(String id, boolean isEnabled) {
+        UserResource userResource = findById(id);
+        UserRepresentation user = userResource.toRepresentation();
+        //
+        user.setEnabled(isEnabled);
+        userResource.update(user);
     }
 
     public String getRptTokens(String accessToken) {

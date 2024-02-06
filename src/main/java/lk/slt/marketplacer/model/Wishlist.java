@@ -1,21 +1,17 @@
 package lk.slt.marketplacer.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name = "carts")
+@Table(name = "wishlists")
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,7 +22,8 @@ public class Wishlist implements Serializable {
     private String id;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    private Set<Product> products;
+    @ToString.Exclude
+    private List<Product> products;
     //
     @CreationTimestamp
     private Instant createdAt;

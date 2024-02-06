@@ -45,8 +45,8 @@ public class BannerControllerImpl implements BannerController {
 
     @Override
     public BannerDto updateBanner(String bannerId, UpdateBannerDto updateBannerDto) {
-        Banner banner = bannerMapper.updateBannerDtoToBanner(updateBannerDto);
-        Banner updatedBanner = bannerService.updateBanner(bannerId, banner);
+        Banner banner = bannerService.getBannerById(bannerId);
+        Banner updatedBanner = bannerService.updateBanner(bannerId, bannerMapper.updateBannerDtoToBanner(updateBannerDto, banner));
         return bannerMapper.bannerToBannerDto(updatedBanner);
     }
 

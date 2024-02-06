@@ -19,7 +19,7 @@ public abstract class StoreMapper {
     @Autowired
     SocialLinkMapper socialLinkMapper;
 
-    public StoreDto storeToStoreDto(Store store){
+    public StoreDto storeToStoreDto(Store store) {
         StoreDto target = new StoreDto();
         //
         target.setId(store.getId());
@@ -35,18 +35,22 @@ public abstract class StoreMapper {
         target.setTelephone(store.getTelephone());
         target.setBrFilePath(store.getBrFilePath());
         target.setLogoFilePath(store.getLogoFilePath());
-        return  target;
+        target.setCreatedAt(store.getCreatedAt());
+        target.setLastUpdatedAt(store.getLastUpdatedAt());
+        return target;
     }
 
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "products", ignore = true)
     @Mapping(target = "storeStatus", ignore = true)
     @Mapping(target = "category", ignore = true)
-    public abstract  Store createStoreDtoToStore(CreateStoreDto createStoreDto);
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    public abstract Store createStoreDtoToStore(CreateStoreDto createStoreDto);
 
 
-    public  Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto, @MappingTarget Store store){
-        if ( updateStoreDto == null ) {
+    public Store updateStoreDtoToStore(UpdateStoreDto updateStoreDto, @MappingTarget Store store) {
+        if (updateStoreDto == null) {
             return store;
         }
         // copy store object
@@ -66,53 +70,49 @@ public abstract class StoreMapper {
         mappedStore.setBrFilePath(store.getBrFilePath());
         mappedStore.setLogoFilePath(store.getLogoFilePath());
         mappedStore.setStoreStatus(store.getStoreStatus());
-
-        if ( updateStoreDto.getName() != null ) {
-            mappedStore.setName( updateStoreDto.getName() );
+        mappedStore.setCreatedAt(store.getCreatedAt());
+        //
+        if (updateStoreDto.getName() != null) {
+            mappedStore.setName(updateStoreDto.getName());
         }
-        if ( updateStoreDto.getDescription() != null ) {
-            mappedStore.setDescription( updateStoreDto.getDescription() );
+        if (updateStoreDto.getDescription() != null) {
+            mappedStore.setDescription(updateStoreDto.getDescription());
         }
-        if ( updateStoreDto.getTelephone() != null ) {
-            mappedStore.setTelephone( updateStoreDto.getTelephone() );
+        if (updateStoreDto.getTelephone() != null) {
+            mappedStore.setTelephone(updateStoreDto.getTelephone());
         }
-        if ( updateStoreDto.getFax() != null ) {
-            mappedStore.setFax( updateStoreDto.getFax() );
+        if (updateStoreDto.getFax() != null) {
+            mappedStore.setFax(updateStoreDto.getFax());
         }
-        if ( updateStoreDto.getAddress() != null ) {
-            mappedStore.setAddress( updateStoreDto.getAddress() );
+        if (updateStoreDto.getAddress() != null) {
+            mappedStore.setAddress(updateStoreDto.getAddress());
         }
-        if ( updateStoreDto.getEmail() != null ) {
-            mappedStore.setEmail( updateStoreDto.getEmail() );
+        if (updateStoreDto.getEmail() != null) {
+            mappedStore.setEmail(updateStoreDto.getEmail());
         }
-        if ( updateStoreDto.getWebsite() != null ) {
-            mappedStore.setWebsite( updateStoreDto.getWebsite() );
+        if (updateStoreDto.getWebsite() != null) {
+            mappedStore.setWebsite(updateStoreDto.getWebsite());
         }
-        if ( updateStoreDto.getBrFilePath() != null ) {
-            mappedStore.setBrFilePath( updateStoreDto.getBrFilePath() );
+        if (updateStoreDto.getBrFilePath() != null) {
+            mappedStore.setBrFilePath(updateStoreDto.getBrFilePath());
         }
-        if ( updateStoreDto.getLogoFilePath() != null ) {
-            mappedStore.setLogoFilePath( updateStoreDto.getLogoFilePath() );
+        if (updateStoreDto.getLogoFilePath() != null) {
+            mappedStore.setLogoFilePath(updateStoreDto.getLogoFilePath());
         }
-        if ( updateStoreDto.getStoreStatus() != null ) {
-            mappedStore.setStoreStatus( updateStoreDto.getStoreStatus() );
+        if (updateStoreDto.getStoreStatus() != null) {
+            mappedStore.setStoreStatus(updateStoreDto.getStoreStatus());
         }
-        if ( mappedStore.getSocialLinks() != null ) {
-            List<SocialLink> list = socialLinkMapper.socialLinkDtoListToSocialLinkList( updateStoreDto.getSocialLinks() );
-            if ( list != null ) {
+        //
+        List<SocialLink> list = socialLinkMapper.socialLinkDtoListToSocialLinkList(updateStoreDto.getSocialLinks());
+        if (list != null) {
+            if (mappedStore.getSocialLinks() != null) {
                 mappedStore.getSocialLinks().clear();
-                mappedStore.getSocialLinks().addAll( list );
             }
+            mappedStore.setSocialLinks(list);
         }
-        else {
-            List<SocialLink> list = socialLinkMapper.socialLinkDtoListToSocialLinkList( updateStoreDto.getSocialLinks() );
-            if ( list != null ) {
-                mappedStore.setSocialLinks( list );
-            }
-        }
-
+        //
         return mappedStore;
     }
 
-    public abstract  List<StoreDto> storeListToStoreDtoList(List<Store> storeList);
+    public abstract List<StoreDto> storeListToStoreDtoList(List<Store> storeList);
 }

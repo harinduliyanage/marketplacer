@@ -45,6 +45,9 @@ public class FileControllerImpl implements FileController {
             case CATEGORY_IMAGE:
                 filePathBuilder.append("category/").append(createFileDto.getCategoryId()).append("/images/");
                 break;
+            case CATEGORY_ICON:
+                filePathBuilder.append("category/").append(createFileDto.getCategoryId()).append("/icon/");
+                break;
             case BANNER_IMAGE:
                 filePathBuilder.append("banner/").append(createFileDto.getBannerId()).append("/images/");
                 break;
