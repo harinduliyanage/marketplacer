@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import java.util.Optional;
 @Service
@@ -33,6 +34,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Review getReview(String userId, String reviewId) {
         User foundUser = userService.getUser(userId);
         //
@@ -48,6 +50,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Page<Review> getUserReviews(String userId, Pageable pageable) {
         User foundUser = userService.getUser(userId);
         QReview qReview = QReview.review;
@@ -56,6 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Page<Review> getReviews(String productId, Pageable pageable) {
         if(null == productId){
             return reviewRepository.findAll(pageable);
@@ -67,6 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Review updateReview(String userId, String reviewId, Review review) {
         review.setId(reviewId);
         //
@@ -77,6 +82,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Review removeReview(String userId, String reviewId) {
         Review foundReview = getReview(userId, reviewId);
         //
