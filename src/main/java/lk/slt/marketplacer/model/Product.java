@@ -12,7 +12,6 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,8 +28,11 @@ public class Product implements Serializable {
     private String id;
     private String name;
     private String brand;
-    //@Lob
+    @Lob
+    @Column(columnDefinition="TEXT")
     private String description;
+    @Lob
+    @Column(columnDefinition="TEXT")
     private String specification;
     private Double price;
     private Double units;

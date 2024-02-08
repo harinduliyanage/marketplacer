@@ -23,7 +23,9 @@ public class Review implements Serializable {
     @Id
     @UuidGenerator
     private String id;
-
+    //
+    @Lob
+    @Column(columnDefinition="TEXT")
     private String text;
     private Integer rating;
     @ManyToOne

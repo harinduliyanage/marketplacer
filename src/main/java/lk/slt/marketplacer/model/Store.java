@@ -30,6 +30,8 @@ public class Store implements Serializable {
     private List<SocialLink> socialLinks;
     //
     private String name;
+    @Lob
+    @Column(columnDefinition="TEXT")
     private String description;
     @ManyToOne
     @JoinColumn(name = "category_id")
