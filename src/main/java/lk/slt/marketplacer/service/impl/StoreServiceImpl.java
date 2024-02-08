@@ -1,6 +1,7 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import jakarta.transaction.Transactional;
 import lk.slt.marketplacer.exceptions.*;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QStore;
@@ -75,6 +76,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Store getStore(String userId, String storeId) {
         User foundUser = userService.getUser(userId);
         //
@@ -90,6 +92,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Store updateStore(String userId, String storeId, String categoryId, Store store) {
         String name = store.getName();
         Store foundStore = getStore(userId, storeId);
@@ -115,6 +118,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Store removeStore(String userId, String storeId) {
         Store store = getStore(userId, storeId);
         //
@@ -123,6 +127,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Page<Store> getUserStores(String userId, Pageable pageable) {
         User user = userService.getUser(userId);
         QStore qStore = QStore.store;
@@ -131,6 +136,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Page<Store> getStores(StoreStatus storeStatus, Pageable pageable) {
         if(storeStatus==null) {
             return storeRepository.findAll(pageable);
@@ -142,6 +148,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public Store getStoreById(String storeId) {
         QStore qStore = QStore.store;
         BooleanExpression expression = qStore.id.eq(storeId);
