@@ -20,6 +20,8 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sub", ignore = true)
+    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "phone", ignore = true)
     @Mapping(target = "userStatus", ignore = true)
     @Mapping(target = "addresses", ignore = true)
     @Mapping(target = "cart", ignore = true)

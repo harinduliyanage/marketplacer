@@ -1,9 +1,9 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import lk.slt.marketplacer.exceptions.KeycloakUserNotFoundException;
 import lk.slt.marketplacer.exceptions.UserAlreadyExistsException;
 import lk.slt.marketplacer.exceptions.UserNotFoundException;
-import lk.slt.marketplacer.exceptions.UsernameInvalidException;
 import lk.slt.marketplacer.model.*;
 import lk.slt.marketplacer.repository.UserRepository;
 import lk.slt.marketplacer.service.CartService;
@@ -39,14 +39,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        if (isUserNameAlreadyExists(user.getId(), user.getUsername())) {
-            throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, user.getUsername()));
-        } else if (isEmailAlreadyExists(user.getId(), user.getEmail())) {
+
+        if (isEmailAlreadyExists(user.getId(), user.getEmail())) {
             throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, user.getEmail()));
         } else {
-            UserRepresentation userRepresentation = keycloakService.searchByUsername(user.getUsername());
-            if (null != userRepresentation) {
+            UserRepresentation userRepresentation = keycloakService.searchByEmail(user.getEmail());
+            if (null == userRepresentation) {
+                throw new KeycloakUserNotFoundException(String.format(Constants.KEYCLOAK_USER_EMAIL_NOT_FOUND_MSG, user.getEmail()));
+            } else if (isUserNameAlreadyExists(user.getId(), userRepresentation.getUsername())) {
+                throw new UserAlreadyExistsException(String.format(Constants.USERNAME_ALREADY_EXISTS_MSG, user.getUsername()));
+            } else {
+                // set user data from keycloak
                 user.setSub(userRepresentation.getId());
+                user.setUsername(userRepresentation.getUsername());
+                if (null != userRepresentation.getAttributes() && null != userRepresentation.getAttributes().get("phone")) {
+                    user.setPhone(userRepresentation.getAttributes().get("phone").get(0));
+                }
                 // create new cart to user
                 Cart cart = new Cart();
                 cart.setCartItems(new ArrayList<>());
@@ -65,8 +73,6 @@ public class UserServiceImpl implements UserService {
                 log.info("user has been successfully created {}", savedUser);
                 //
                 return savedUser;
-            } else {
-                throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, user.getUsername()));
             }
         }
     }
@@ -111,11 +117,11 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException(String.format(Constants.EMAIL_ALREADY_EXISTS_MSG, user.getEmail()));
         } else {
             if (!username.equalsIgnoreCase(user.getUsername())) {
-                UserRepresentation userRepresentation = keycloakService.searchByUsername(user.getUsername());
+                UserRepresentation userRepresentation = keycloakService.searchByEmail(user.getEmail());
                 if (null != userRepresentation) {
                     user.setSub(userRepresentation.getId());
                 } else {
-                    throw new UsernameInvalidException(String.format(Constants.USERNAME_INVALID_MSG, user.getUsername()));
+                    throw new KeycloakUserNotFoundException(String.format(Constants.KEYCLOAK_USER_EMAIL_NOT_FOUND_MSG, user.getEmail()));
                 }
             }
             //
@@ -124,21 +130,21 @@ public class UserServiceImpl implements UserService {
             user.setFollowedStores(uniqueFollowedStores);
             // update user data in keycloak
             Map<String, List<String>> attributes = new HashMap<>();
-            if(null != user.getFirstName()) {
+            if (null != user.getFirstName()) {
                 attributes.put("firstName", List.of(user.getFirstName()));
             }
-            if(null!=user.getLastName()) {
+            if (null != user.getLastName()) {
                 attributes.put("lastName", List.of(user.getLastName()));
             }
-            if(null!=user.getPhone()) {
+            if (null != user.getPhone()) {
                 attributes.put("phone", List.of(user.getPhone()));
             }
-            if(null!=user.getBirthDay()) {
+            if (null != user.getBirthDay()) {
                 attributes.put("birthDay", List.of(user.getBirthDay()));
             }
             keycloakService.updateUser(user.getSub(), user.getUsername(), user.getEmail(), attributes);
             // update user status in keycloak
-            keycloakService.setUserStatus(user.getSub(), user.getUserStatus()==UserStatus.ACTIVE);
+            keycloakService.setUserStatus(user.getSub(), user.getUserStatus() == UserStatus.ACTIVE);
             // update user in db
             User updatedUser = userRepository.save(user);
             //

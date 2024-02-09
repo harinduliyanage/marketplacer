@@ -9,7 +9,7 @@ public class Constants {
     public static final String USER_NOT_FOUND_MSG = "User '%s' not found";
     public static final String USERNAME_ALREADY_EXISTS_MSG = "User already exists given username '%s'";
     public static final String EMAIL_ALREADY_EXISTS_MSG = "User already exists given email '%s'";
-    public static final String USERNAME_INVALID_MSG = "Invalid username '%s'";
+    public static final String KEYCLOAK_USER_EMAIL_NOT_FOUND_MSG = "User not found of keycloak given email '%s'";
     public static final String STORE_NOT_FOUND_OF_USER_MSG = "Store '%s' not found of user '%s'";
     public static final String STORE_NOT_FOUND_MSG = "Store not found given id '%s'";
     public static final String STORE_STATUS_INVALID_MSG = "'%s' can not be assign to unapproved store";

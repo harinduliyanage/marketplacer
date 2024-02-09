@@ -2,7 +2,6 @@ package lk.slt.marketplacer.service.impl;
 
 import jakarta.annotation.PostConstruct;
 import lk.slt.marketplacer.exceptions.KeycloakUserNotFoundException;
-import lk.slt.marketplacer.exceptions.UsernameInvalidException;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
@@ -57,13 +56,13 @@ public class KeycloakServiceImpl {
     }
 
 
-    public UserRepresentation searchByUsername(String username) {
+    public UserRepresentation searchByEmail(String email) {
         keycloak.tokenManager().getAccessToken();
-        log.info("searching user on keycloak by username: {} ", username);
+        log.info("searching user on keycloak by email: {} ", email);
         try {
             List<UserRepresentation> users = keycloak.realm(targetRealm)
                     .users()
-                    .searchByUsername(username, true);
+                    .searchByEmail(email, true);
             return users.isEmpty() ? null : users.get(0);
         } catch (Exception e) {
             log.info(e.getMessage(), e);
