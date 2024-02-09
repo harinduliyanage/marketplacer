@@ -52,8 +52,13 @@ public class UserServiceImpl implements UserService {
                 // set user data from keycloak
                 user.setSub(userRepresentation.getId());
                 user.setUsername(userRepresentation.getUsername());
-                if (null != userRepresentation.getAttributes() && null != userRepresentation.getAttributes().get("phone")) {
-                    user.setPhone(userRepresentation.getAttributes().get("phone").get(0));
+                if (null != userRepresentation.getAttributes()) {
+                    if(null != userRepresentation.getAttributes().get("phone")) {
+                        user.setPhone(userRepresentation.getAttributes().get("phone").get(0));
+                    }
+                    if(null != userRepresentation.getAttributes().get("birthDay")) {
+                        user.setBirthDay(userRepresentation.getAttributes().get("birthDay").get(0));
+                    }
                 }
                 // create new cart to user
                 Cart cart = new Cart();

@@ -24,6 +24,7 @@ public interface UserMapper {
     @Mapping(target = "phone", ignore = true)
     @Mapping(target = "userStatus", ignore = true)
     @Mapping(target = "addresses", ignore = true)
+    @Mapping(target = "birthDay", ignore = true)
     @Mapping(target = "cart", ignore = true)
     @Mapping(target = "followedStores", ignore = true)
     @Mapping(target = "wishlist", ignore = true)
