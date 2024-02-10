@@ -24,7 +24,7 @@ public class Cart implements Serializable {
     @UuidGenerator
     private String id;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private List<CartItems> cartItems;
     //
     @CreationTimestamp

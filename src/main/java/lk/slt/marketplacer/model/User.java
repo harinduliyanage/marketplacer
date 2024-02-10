@@ -39,7 +39,7 @@ public class User implements Serializable {
     private String phone;
     private String birthDay;
     @ToString.Exclude
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Cart cart;
     @ToString.Exclude
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

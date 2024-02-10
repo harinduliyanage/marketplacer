@@ -20,7 +20,7 @@ public class CartItems implements Serializable {
     @Id
     @UuidGenerator
     private String id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", updatable = false)
     @ToString.Exclude
     private Product product;

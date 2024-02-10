@@ -1,7 +1,6 @@
 package lk.slt.marketplacer.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import jakarta.transaction.Transactional;
 import lk.slt.marketplacer.exceptions.*;
 import lk.slt.marketplacer.model.Category;
 import lk.slt.marketplacer.model.QStore;
@@ -19,8 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
+
 
 import java.util.Optional;
 import java.util.UUID;
