@@ -21,13 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @Slf4j
-@Transactional
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
@@ -37,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     private CategoryService categoryService;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Product createProduct(String userId, String storeId, String categoryId, Product product) {
         Store store = storeService.getStore(userId, storeId);
         Category category = categoryService.getCategoryById(categoryId);
@@ -57,6 +58,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Product getProduct(String userId, String storeId, String productId) {
         Store store = storeService.getStore(userId, storeId);
         //
@@ -73,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Page<Product> getStoreProducts(String userId, String storeId, Pageable pageable) {
         Store store = storeService.getStore(userId, storeId);
         QProduct qProduct = QProduct.product;
@@ -81,6 +84,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Page<Product> getProducts(String categoryIds, Pageable pageable) {
         QProduct qProduct = QProduct.product;
         BooleanExpression expression;
@@ -100,6 +104,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Product updateProduct(String userId, String storeId, String categoryId, String productId, Product product) {
         if (categoryId != null) {
             Category category = categoryService.getCategoryById(categoryId);
@@ -117,6 +122,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Product removeProduct(String userId, String storeId, String productId) {
         Product product = getProduct(userId, storeId, productId);
         productRepository.deleteById(productId);
@@ -125,6 +131,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Product getProductById(String productId) {
         Optional<Product> found = productRepository.findById(productId);
         //
