@@ -98,6 +98,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Page<User> getUsers(String sub, String email, Pageable pageable) {
         if (email != null && sub != null) {
             QUser qUser = QUser.user;
